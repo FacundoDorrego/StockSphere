@@ -13,12 +13,11 @@ namespace Repositorio
     {
         private AccesoDatos accesoDatos = new AccesoDatos();
 
-        public List<Proveedor> ObtenerProveedores()
+        public List<Proveedor> ObtenerProveedoresxEmpresa(int empresaID)
         {
             List<Proveedor> proveedores = new List<Proveedor>();
-            string consulta = "SELECT * FROM dbo.Proveedores";
-
-            accesoDatos.SetearConsulta(consulta);
+            accesoDatos.SetearSp("ObtenerProveedores");
+            accesoDatos.SetearParametros("@EmpresaID", empresaID);
             accesoDatos.EjecutarLectura();
 
             while (accesoDatos.Lector.Read())
@@ -29,7 +28,8 @@ namespace Repositorio
                     Nombre = accesoDatos.Lector["Nombre"].ToString(),
                     Telefono = accesoDatos.Lector["Telefono"].ToString(),
                     Email = accesoDatos.Lector["Email"].ToString(),
-                    Direccion = accesoDatos.Lector["Direccion"].ToString()
+                    Direccion = accesoDatos.Lector["Direccion"].ToString(),
+                    EmpresaID = Convert.ToInt32(accesoDatos.Lector["EmpresaID"])
                 });
             }
 
@@ -39,7 +39,7 @@ namespace Repositorio
 
         public void AgregarProveedor(Proveedor proveedor)
         {
-            accesoDatos.SetearSp("dbo.AgregarProveedor");
+            accesoDatos.SetearSp("AgregarProveedor");
             accesoDatos.SetearParametros("@Nombre", proveedor.Nombre);
             accesoDatos.SetearParametros("@Telefono", proveedor.Telefono );
             accesoDatos.SetearParametros("@Email", proveedor.Email);
@@ -49,7 +49,7 @@ namespace Repositorio
 
         public void ActualizarProveedor(Proveedor proveedor)
         {
-            accesoDatos.SetearSp("dbo.ActualizarProveedor");
+            accesoDatos.SetearSp("ActualizarProveedor");
             accesoDatos.SetearParametros("@ProveedorID", proveedor.ProveedorID);
             accesoDatos.SetearParametros("@Nombre", proveedor.Nombre);
             accesoDatos.SetearParametros("@Telefono", proveedor.Telefono);
@@ -60,7 +60,7 @@ namespace Repositorio
 
         public void EliminarProveedor(int proveedorID)
         {
-            accesoDatos.SetearSp("dbo.EliminarProveedor");
+            accesoDatos.SetearSp("EliminarProveedor");
             accesoDatos.SetearParametros("@ProveedorID", proveedorID);
             accesoDatos.EjecutarAccion();
         }

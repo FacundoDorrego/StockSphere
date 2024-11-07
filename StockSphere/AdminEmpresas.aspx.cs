@@ -9,7 +9,7 @@ using Clases;
 
 namespace StockSphere
 {
-    public partial class Empresas : System.Web.UI.Page
+    public partial class AdminEmpresas : System.Web.UI.Page
     {
         private RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
         private int usuarioID;
@@ -39,7 +39,8 @@ namespace StockSphere
             try
             {
                 List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasPorUsuario(usuarioID);
-                dgvEmpresas.DataSource = empresas;
+                Empresas
+                dgv.DataSource = empresas;
                 dgvEmpresas.DataBind(); // Esto vincula los datos al GridView
             }
             catch (Exception ex)
@@ -79,6 +80,7 @@ namespace StockSphere
             int empresaID = Convert.ToInt32(dgvEmpresas.DataKeys[e.RowIndex].Value);
             try
             {
+                
                 AccesoDatos accesoDatos = new AccesoDatos();
                 accesoDatos.SetearSp("EliminarEmpresa");
                 accesoDatos.SetearParametros("@EmpresaID", empresaID);
@@ -90,6 +92,18 @@ namespace StockSphere
             {
                 lblMensaje.Text = "Error al eliminar la empresa: " + ex.Message;
                 lblMensaje.Visible = true;
+            }
+        }
+
+        protected void dgvEmpresas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "VerDetalles")
+            {
+                // Obtener el ID de la empresa desde el CommandArgument
+                int empresaID = Convert.ToInt32(e.CommandArgument);
+
+                // Redirigir a la página de detalles de la empresa pasando el ID como parámetro
+                Response.Redirect("Empresa.aspx?empresaID=" + empresaID);
             }
         }
     }

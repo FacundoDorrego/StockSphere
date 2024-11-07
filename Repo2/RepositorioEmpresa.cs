@@ -11,8 +11,48 @@ namespace Repositorio
 
     public class RepositorioEmpresa
     {
-        
 
+        public Empresa ObtenerEmpresa(int idEmpre)
+        {
+            Empresa aux = new Empresa();
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+
+                accesoDatos.SetearConsulta("SELECT * FROM Empresas WHERE EmpresaID = @Empre ");
+                accesoDatos.SetearParametros("@Empre", idEmpre);
+                accesoDatos.EjecutarLectura();
+
+                if (accesoDatos.Lector != null && accesoDatos.Lector.HasRows)
+                {
+                    while (accesoDatos.Lector.Read())
+                    {
+
+                        aux.EmpresaID = Convert.ToInt32(accesoDatos.Lector["EmpresaID"]);
+                        aux.Nombre = accesoDatos.Lector["Nombre"].ToString();
+                        aux.UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]);
+                        aux.FechaCreacion = Convert.ToDateTime(accesoDatos.Lector["FechaCreacion"]);
+                        aux.Activa = Convert.ToBoolean(accesoDatos.Lector["Activa"]);
+                        
+                    }
+                }
+                else
+                {
+                    throw new Exception("Error al cargar la empresa.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al obtener la empresa", ex);
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion(); 
+            }
+
+            return aux;
+        }
         public List<Empresa> ObtenerEmpresasPorUsuario(int idUsu)
         {
             List<Empresa> empresas = new List<Empresa>();
@@ -50,7 +90,7 @@ namespace Repositorio
             }
             finally
             {
-                accesoDatos.CerrarConexion(); // Asegurarse de que la conexión se cierre correctamente
+                accesoDatos.CerrarConexion(); 
             }
 
             return empresas;
