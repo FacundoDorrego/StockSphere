@@ -9,7 +9,7 @@ using Clases;
 
 namespace StockSphere
 {
-    public partial class AdminEmpresas : System.Web.UI.Page
+    public partial class Empresas : System.Web.UI.Page
     {
         private RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
         private int usuarioID;
@@ -39,8 +39,8 @@ namespace StockSphere
             try
             {
                 List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasPorUsuario(usuarioID);
-                Empresas
-                dgv.DataSource = empresas;
+                
+                dgvEmpresas.DataSource = empresas;
                 dgvEmpresas.DataBind(); // Esto vincula los datos al GridView
             }
             catch (Exception ex)
@@ -53,6 +53,12 @@ namespace StockSphere
         protected void btnCrearEmpresa_Click(object sender, EventArgs e)
         {
             string nombre = txtNombreEmpresa.Text;
+            if (string.IsNullOrEmpty(nombre))
+            {
+                lblMensaje.Text = "Debe ingresar un nombre para la empresa.";
+                lblMensaje.Visible = true;
+                return;
+            }
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
@@ -97,13 +103,13 @@ namespace StockSphere
 
         protected void dgvEmpresas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "VerDetalles")
+            if (e.CommandName == "GestionEmpresa")
             {
                 // Obtener el ID de la empresa desde el CommandArgument
                 int empresaID = Convert.ToInt32(e.CommandArgument);
 
                 // Redirigir a la página de detalles de la empresa pasando el ID como parámetro
-                Response.Redirect("Empresa.aspx?empresaID=" + empresaID);
+                Response.Redirect("GestionEmpresa.aspx?empresaID=" + empresaID);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Repositorio
         public List<Proveedor> ObtenerProveedoresxEmpresa(int empresaID)
         {
             List<Proveedor> proveedores = new List<Proveedor>();
-            accesoDatos.SetearSp("ObtenerProveedores");
+            accesoDatos.SetearSp("ObtenerProveedoresxEmpresa");
             accesoDatos.SetearParametros("@EmpresaID", empresaID);
             accesoDatos.EjecutarLectura();
 

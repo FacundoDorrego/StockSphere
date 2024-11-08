@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminEmpresas.aspx.cs" Inherits="StockSphere.Empresas" %>
+﻿<%@ Page Title="AdminEmpresas" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminEmpresas.aspx.cs" Inherits="StockSphere.Empresas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container">
         <h2>Administrar Empresas</h2>
@@ -20,23 +20,23 @@
 
         <!-- Lista de Empresas -->
         <h4>Listado de empresas</h4>
-        <asp:GridView ID="dgvEmpresas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvEmpresas_RowCommand" DataKeyNames="EmpresaID">
-            <Columns>
-                <asp:BoundField DataField="EmpresaID" HeaderText="ID" SortExpression="EmpresaID" HeaderStyle-CssClass="text-center" />
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" HeaderStyle-CssClass="text-center" />
-                <asp:BoundField DataField="FechaCreacion" HeaderText="Fecha Creación" SortExpression="FechaCreacion" HeaderStyle-CssClass="text-center" />
-                <asp:CheckBoxField DataField="Activa" HeaderText="Activa" SortExpression="Activa" HeaderStyle-CssClass="text-center" />
+<asp:GridView ID="dgvEmpresas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvEmpresas_RowCommand" OnRowDeleting="dgvEmpresas_RowDeleting" DataKeyNames="EmpresaID">
+    <Columns>
+        <asp:BoundField DataField="EmpresaID" HeaderText="ID" SortExpression="EmpresaID" HeaderStyle-CssClass="text-center" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" HeaderStyle-CssClass="text-center" />
+        <asp:BoundField DataField="FechaCreacion" HeaderText="Fecha Creación" SortExpression="FechaCreacion" HeaderStyle-CssClass="text-center" />
+        <asp:CheckBoxField DataField="Activa" HeaderText="Activa" SortExpression="Activa" HeaderStyle-CssClass="text-center" />
 
-                <!--<asp:TemplateField>
-                    <ItemTemplate>
-                        <asp:Button ID="btnVerDetalles" runat="server" Text="Ver Detalles" 
-                                    CommandName="VerDetalles" CommandArgument='<%# Eval("EmpresaID") %>' class="btn btn-info" />
-                    </ItemTemplate>
-                </asp:TemplateField>-->
+        <asp:TemplateField>
+            <ItemTemplate>
+                <asp:Button ID="btnGestionEmpresa" runat="server" Text="Gestionar Empresa" 
+                            CommandName="GestionEmpresa" CommandArgument='<%# Eval("EmpresaID") %>' class="btn btn-info" />
+            </ItemTemplate>
+        </asp:TemplateField>
 
-                <asp:CommandField ShowDeleteButton="True" HeaderText="Opciones" DeleteText="Eliminar" ButtonType="Button" HeaderStyle-CssClass="text-center" />
-            </Columns>
-        </asp:GridView>
+        <asp:CommandField ShowDeleteButton="True" HeaderText="Opciones" DeleteText="Eliminar" ButtonType="Button" HeaderStyle-CssClass="text-center" />
+    </Columns>
+</asp:GridView>
 
         <asp:Label ID="lblMensaje" runat="server"></asp:Label>
     </div>

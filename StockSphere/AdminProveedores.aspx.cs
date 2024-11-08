@@ -18,7 +18,7 @@ namespace StockSphere
 
         }
         
-        protected void dgvProveedores_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        /*protected void dgvProveedores_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int proveedorID = Convert.ToInt32(dgvProveedores.DataKeys[e.RowIndex].Value);  // Accede a la clave primaria del proveedor
             try
@@ -34,8 +34,9 @@ namespace StockSphere
                 lblMensaje.Text = "Error al eliminar el proveedor: " + ex.Message;
                 lblMensaje.Visible = true;
             }
-        }
-        private void CargarProveedores()
+        }*/
+
+        /*private void CargarProveedores()
         {
             try
             {
@@ -48,7 +49,7 @@ namespace StockSphere
                 lblMensaje.Text = "Error al cargar los proveedores: " + ex.Message;
                 lblMensaje.Visible = true;
             }
-        }
+        }*/
     }
 
 }

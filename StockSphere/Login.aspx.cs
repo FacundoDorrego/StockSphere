@@ -29,9 +29,7 @@ namespace StockSphere
                 {
                     
                     Session.Add("usuario", usuario);
-                    lblMessage.Text = "ID USUARIO: " + usuario.UsuarioID.ToString();
-                    lblMessage.Visible = true;
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
+                    Response.Redirect("AdminEmpresas.aspx");
                 }
                 else
                 {

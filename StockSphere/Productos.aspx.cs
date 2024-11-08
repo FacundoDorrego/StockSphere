@@ -7,16 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace StockSphere
 {
-    public partial class _Default : Page
+    public partial class Productos : System.Web.UI.Page
     {
+        //Hacer que se puedan agregar o eliminar productos. Tambien listar en base al id de la empresa.
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-
-        protected void btnIniciarSesion_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Login.aspx");
         }
     }
 }
