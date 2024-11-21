@@ -67,6 +67,11 @@ namespace StockSphere
             Response.Redirect("Proveedores.aspx?empresaID=" + lblEmpresaID.Text);
 
         }
+
+        protected void btnProductos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Productos.aspx?empresaID=" + lblEmpresaID.Text);
+        }
     }
 
 

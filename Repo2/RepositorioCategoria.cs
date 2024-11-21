@@ -15,9 +15,7 @@ namespace Repositorio
         public List<Categoria> ObtenerCategorias()
         {
             List<Categoria> categorias = new List<Categoria>();
-            string consulta = "SELECT * FROM dbo.Categorias";
-
-            accesoDatos.SetearConsulta(consulta);
+           accesoDatos.SetearSp("ObtenerCategorias");
             accesoDatos.EjecutarLectura();
 
             while (accesoDatos.Lector.Read())
@@ -40,6 +38,7 @@ namespace Repositorio
             accesoDatos.SetearParametros("@Nombre", categoria.Nombre);
             accesoDatos.SetearParametros("@Descripcion", categoria.Descripcion ?? (object)DBNull.Value);
             accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
         }
 
         public void ActualizarCategoria(Categoria categoria)
@@ -49,6 +48,7 @@ namespace Repositorio
             accesoDatos.SetearParametros("@Nombre", categoria.Nombre);
             accesoDatos.SetearParametros("@Descripcion", categoria.Descripcion ?? (object)DBNull.Value);
             accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
         }
 
         public void EliminarCategoria(int categoriaID)
@@ -56,6 +56,7 @@ namespace Repositorio
             accesoDatos.SetearSp("dbo.EliminarCategoria");
             accesoDatos.SetearParametros("@CategoriaID", categoriaID);
             accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
         }
     }
 

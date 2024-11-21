@@ -18,6 +18,7 @@
        
         function cerrarFormulario(idFormulario) {
             document.getElementById(idFormulario).style.display = 'none';
+            dgvEmpresas.EditIndex = -1;
         }
 
         function abrirModalEliminar(empresaID) {
@@ -25,7 +26,7 @@
             var modal = new bootstrap.Modal(document.getElementById('modalConfirmarEliminar'));
             modal.show();
         }
-</script>
+    </script>
 
     <div class="container">
         <asp:HiddenField ID="hiddenEmpresaID" runat="server" />
@@ -81,7 +82,7 @@
 
 
         <h4>Listado de empresas</h4>
-        <asp:GridView ID="dgvEmpresas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvEmpresas_RowCommand" OnRowEditing="dgvEmpresas_RowEditing" DataKeyNames="EmpresaID">
+        <asp:GridView ID="dgvEmpresas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered " OnRowCommand="dgvEmpresas_RowCommand" OnRowEditing="dgvEmpresas_RowEditing" DataKeyNames="EmpresaID">
             <Columns>
                 <asp:BoundField DataField="EmpresaID" HeaderText="ID" SortExpression="EmpresaID" HeaderStyle-CssClass="text-center" />
                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" HeaderStyle-CssClass="text-center" />

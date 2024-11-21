@@ -33,7 +33,7 @@
             </div>
             <div class="card-footer text-center">
                 <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" OnClick="btnRegresar_Click" />
-                <asp:Button ID="btnProductos" runat="server" Text="Productos" CssClass="btn btn-primary mx-2"  />
+                <asp:Button ID="btnProductos" runat="server" Text="Productos" CssClass="btn btn-primary mx-2" OnClick="btnProductos_Click" />
                 <asp:Button ID="btnProveedores" runat="server" Text="Proveedores" CssClass="btn btn-primary mx-2" OnClick="btnProveedores_Click" />
             </div>
         </div>

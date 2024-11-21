@@ -17,7 +17,7 @@ namespace Repositorio
         {
             List<Proveedor> proveedores = new List<Proveedor>();
             accesoDatos.SetearSp("ObtenerProveedoresxEmpresa");
-            accesoDatos.SetearParametros("@EmpresaID", empresaID);
+            accesoDatos.SetearParametros("@empresaID", empresaID);
             accesoDatos.EjecutarLectura();
 
             while (accesoDatos.Lector.Read())
@@ -46,6 +46,7 @@ namespace Repositorio
             accesoDatos.SetearParametros("@Direccion", proveedor.Direccion);
             accesoDatos.SetearParametros("@EmpresaId", proveedor.EmpresaID);
             accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
         }
 
         public void ActualizarProveedor(Proveedor proveedor)
@@ -58,6 +59,7 @@ namespace Repositorio
             accesoDatos.SetearParametros("@Direccion", proveedor.Direccion);
             accesoDatos.SetearParametros("@EmpresaId", proveedor.EmpresaID);
             accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
         }
 
         public void EliminarProveedor(int proveedorID)
@@ -65,6 +67,7 @@ namespace Repositorio
             accesoDatos.SetearSp("EliminarProveedor");
             accesoDatos.SetearParametros("@ProveedorID", proveedorID);
             accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
         }
     }
 

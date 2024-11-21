@@ -12,7 +12,7 @@ namespace StockSphere
     public partial class AdminProveedores : System.Web.UI.Page
     {
         private RepositorioProveedor repositorioProveedor = new RepositorioProveedor();
-        private int provedorID;
+        private int proveedorID;
         protected void Page_Load(object sender, EventArgs e)
         {
 

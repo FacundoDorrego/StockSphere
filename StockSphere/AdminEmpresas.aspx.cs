@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Repositorio;
 using Clases;
+using System.Reflection;
 
 namespace StockSphere
 {
@@ -109,8 +110,9 @@ namespace StockSphere
         protected void dgvEmpresas_RowEditing(object sender, GridViewEditEventArgs e)
         {
             int empresaID = Convert.ToInt32(dgvEmpresas.DataKeys[e.NewEditIndex].Value);
-
+            txtNombreEmpresaActualizar.Text = dgvEmpresas.Rows[e.NewEditIndex].Cells[1].Text;
             hiddenEmpresaID.Value = empresaID.ToString();
+            dgvEmpresas.EditIndex = -1;
             ClientScript.RegisterStartupScript(this.GetType(), "MostrarActualizar", "mostrarFormulario('divActualizarEmpresa');", true);
 
         }
@@ -130,18 +132,19 @@ namespace StockSphere
                         lblMensaje.Visible = true;
                         return;
                     }
-                    
+                    RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
+                    Empresa auxfecha = repositorioEmpresa.ObtenerEmpresa(empresaID);
+                    DateTime fechaCreacion = auxfecha.FechaCreacion;
                     string nombrenuevo = txtNombreEmpresaActualizar.Text;
                     Empresa auxEmpresa = new Empresa
                     {
                         EmpresaID = empresaID,
                         Nombre = nombrenuevo,
                         UsuarioID = usuarioID,
-                        FechaCreacion = DateTime.Now,
+                        FechaCreacion = auxfecha.FechaCreacion,
                         Activa = true
                     };
 
-                    RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
                     repositorioEmpresa.ActualizarEmpresa(auxEmpresa);
                     dgvEmpresas.EditIndex = -1;
                     CargarEmpresas();
