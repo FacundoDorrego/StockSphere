@@ -16,12 +16,19 @@ namespace StockSphere
         {
             if (!IsPostBack)
             {
+                if (Session["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                }
+                else
+                {
+                    empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+                    CargarDetallesEmpresa(empresaID);
 
-                empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+                }
 
-                // Cargar los detalles de la empresa
 
-                CargarDetallesEmpresa(empresaID);
+
             }
         }
         private void CargarDetallesEmpresa(int empresaID)
@@ -46,7 +53,7 @@ namespace StockSphere
                 Session.Add("empresaSelec", empresaSelec);
             }
 
-           
+
         }
 
         protected void btnRegresar_Click(object sender, EventArgs e)

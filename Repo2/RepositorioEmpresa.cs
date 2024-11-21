@@ -96,11 +96,11 @@ namespace Repositorio
             return empresas;
         }
 
-        // Agregar una empresa
+        
         public void AgregarEmpresa(Empresa empresa)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
-            accesoDatos.SetearSp("dbo.AgregarEmpresa"); // Procedimiento almacenado que agrega la empresa
+            accesoDatos.SetearSp("AgregarEmpresa"); 
             accesoDatos.SetearParametros("@Nombre", empresa.Nombre);
             accesoDatos.SetearParametros("@UsuarioID", empresa.UsuarioID);
             accesoDatos.SetearParametros("@FechaCreacion", empresa.FechaCreacion);
@@ -109,22 +109,22 @@ namespace Repositorio
             accesoDatos.CerrarConexion();
         }
 
-        // Actualizar una empresa
+        
         public void ActualizarEmpresa(Empresa empresa)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
-            accesoDatos.SetearSp("dbo.ActualizarEmpresa"); // Procedimiento almacenado que actualiza la empresa
+            accesoDatos.SetearSp("ActualizarEmpresa"); 
             accesoDatos.SetearParametros("@EmpresaID", empresa.EmpresaID);
             accesoDatos.SetearParametros("@Nombre", empresa.Nombre);
             accesoDatos.EjecutarAccion();
             accesoDatos.CerrarConexion();
         }
 
-        // Eliminar una empresa
+        
         public void EliminarEmpresa(int empresaID)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
-            accesoDatos.SetearSp("dbo.EliminarEmpresa"); // Procedimiento almacenado que elimina la empresa
+            accesoDatos.SetearSp("EliminarEmpresa");
             accesoDatos.SetearParametros("@EmpresaID", empresaID);
             accesoDatos.EjecutarAccion();
             accesoDatos.CerrarConexion();

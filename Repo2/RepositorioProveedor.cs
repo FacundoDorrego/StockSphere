@@ -44,6 +44,7 @@ namespace Repositorio
             accesoDatos.SetearParametros("@Telefono", proveedor.Telefono );
             accesoDatos.SetearParametros("@Email", proveedor.Email);
             accesoDatos.SetearParametros("@Direccion", proveedor.Direccion);
+            accesoDatos.SetearParametros("@EmpresaId", proveedor.EmpresaID);
             accesoDatos.EjecutarAccion();
         }
 
@@ -55,6 +56,7 @@ namespace Repositorio
             accesoDatos.SetearParametros("@Telefono", proveedor.Telefono);
             accesoDatos.SetearParametros("@Email", proveedor.Email);
             accesoDatos.SetearParametros("@Direccion", proveedor.Direccion);
+            accesoDatos.SetearParametros("@EmpresaId", proveedor.EmpresaID);
             accesoDatos.EjecutarAccion();
         }
 
