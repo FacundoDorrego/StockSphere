@@ -13,20 +13,21 @@
         function cerrarFormulario(idFormulario) {
             document.getElementById(idFormulario).style.display = 'none';
         }
-
-        function abrirModalEliminar(productoID) {
-            document.getElementById('<%= hiddenProductoIDEliminar.ClientID %>').value = productoID;
-            var modal = new bootstrap.Modal(document.getElementById('modalConfirmarEliminar'));
-
-            modal.show();
+        function confirmarEliminacion() {
+            return confirm("¿Estás seguro de que deseas eliminar este producto?");
         }
+
+
     </script>
 
     <div class="container">
-        <h2>Productos</h2>
         <div class="d-flex justify-content-center my-4">
-
-            <asp:Button ID="btnMostrarAgregar" runat="server" Text="Agregar Producto" CssClass="btn btn-primary" OnClientClick="mostrarFormulario('divAgregarProducto'); return false;" OnClick="btnMostrarAgregar_Click" />
+            <h2>Modulo de gestion - Productos</h2>
+        </div>
+        <div class="d-flex justify-content-center my-4">
+            <asp:Button ID="btnMostrarAgregar" CssClass="btn btn-success" runat="server" Text="Agregar Producto" OnClientClick="mostrarFormulario('divAgregarProducto'); return false;" OnClick="btnMostrarAgregar_Click" />
+            <asp:Button ID="btnMostrarListado" runat="server" Text="Listado de Productos" CssClass="btn btn-primary mx-2" OnClick="btnMostrarListado_Click" />
+            <asp:Button ID="btnMostrarMovimientos" runat="server" Text="Movimientos de Stock" CssClass="btn btn-primary" OnClick="btnMostrarMovimientos_Click" />
         </div>
 
         <div id="divAgregarProducto" class="card shadow-lg mb-4" style="display: none;">
@@ -43,8 +44,13 @@
                     <asp:TextBox ID="txtPrecioProducto" runat="server" class="form-control" Placeholder="Precio del producto" />
                     <label for="txtStockProducto">Stock</label>
                     <asp:TextBox ID="txtStockProducto" runat="server" class="form-control" Placeholder="Stock del producto" />
+
                     <label for="ddlCategoriaProducto">Categoría</label>
                     <asp:DropDownList ID="ddlCategoriaProducto" runat="server" CssClass="form-control">
+                    </asp:DropDownList>
+
+                    <label for="ddlProveedor">Proveedor</label>
+                    <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-control">
                     </asp:DropDownList>
                 </div>
                 <div class="d-flex justify-content-center">
@@ -73,6 +79,9 @@
                     <label for="ddlCategoriaProductoActualizar">Categoría</label>
                     <asp:DropDownList ID="ddlCategoriaProductoActualizar" runat="server" CssClass="form-control">
                     </asp:DropDownList>
+                    <label for="ddlProveedorActualizar">Proveedor</label>
+                    <asp:DropDownList ID="ddlProveedorActualizar" runat="server" CssClass="form-control">
+                    </asp:DropDownList>
                 </div>
                 <div class="d-flex justify-content-center">
                     <asp:Button ID="btnActualizarProducto" runat="server" Text="Actualizar Producto" CssClass="btn btn-warning" OnClick="btnActualizarProducto_Click" />
@@ -82,9 +91,10 @@
                 </div>
             </div>
         </div>
-
-        <h4>Lista de Productos</h4>
-        <asp:GridView ID="dgvProductos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvProductos_RowCommand" OnRowEditing="dgvProductos_RowEditing" DataKeyNames="ProductoID">
+        <asp:HiddenField ID="hiddenProductoIDEliminar" runat="server" />
+        <asp:HiddenField ID="hiddenStockEliminar" runat="server" />
+        <h4 id="listprod" runat="server" visible="false">Lista de Productos</h4>
+        <asp:GridView ID="dgvProductos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvProductos_RowCommand" OnRowEditing="dgvProductos_RowEditing" DataKeyNames="ProductoID,Stock">
             <Columns>
                 <asp:BoundField DataField="ProductoID" HeaderText="ID" HeaderStyle-CssClass="text-center" />
                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-CssClass="text-center" />
@@ -92,37 +102,30 @@
                 <asp:BoundField DataField="Precio" HeaderText="Precio" HeaderStyle-CssClass="text-center" />
                 <asp:BoundField DataField="Stock" HeaderText="Stock" HeaderStyle-CssClass="text-center" />
                 <asp:BoundField DataField="CategoriaID" HeaderText="Categoría" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="ProveedorID" HeaderText="Proveedor" HeaderStyle-CssClass="text-center" />
                 <asp:TemplateField HeaderText="Opciones" HeaderStyle-CssClass="text-center">
                     <ItemTemplate>
                         <asp:Button ID="btnActualizar" runat="server" Text="Actualizar" CssClass="btn btn-warning" CommandName="Edit" CommandArgument='<%# Eval("ProductoID") %>' OnClientClick="document.getElementById('<%= hiddenProductoID.ClientID %>').value = this.commandArgument; mostrarFormulario('divActualizarProducto'); return false;" />
-                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClientClick='<%# "abrirModalEliminar(" + Eval("ProductoID") + "); return false;" %>' />
+                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="Eliminar" CommandArgument='<%# Eval("ProductoID") + "," + Eval("Stock") %>' OnClientClick="return confirmarEliminacion();" OnRowCommand="dgvProductos_RowCommand" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
+        <h4 id="movstock" runat="server" visible="false">Movimientos de Stock</h4>
+        <asp:GridView ID="dgvMovimientos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered">
+            <Columns>
+                <asp:BoundField DataField="MovimientoID" HeaderText="ID" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="EmpresaID" HeaderText="Empresa" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="UsuarioID" HeaderText="Usuario" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="ProductoID" HeaderText="Producto" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="TipoMovimiento" HeaderText="Tipo de Movimiento" HeaderStyle-CssClass="text-center" />
+                <asp:BoundField DataField="Observaciones" HeaderText="Observaciones" HeaderStyle-CssClass="text-center" />
+            </Columns>
+        </asp:GridView>
 
-        <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Confirmar Eliminación</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ¿Estás seguro de que deseas eliminar este producto?
-                   
-                    </div>
-                    <div class="modal-footer">
-                        <asp:HiddenField ID="hiddenProductoIDEliminar" runat="server" />
-                        <asp:HiddenField ID="hiddenStockProductoEliminar" runat="server" />
-
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <asp:Button ID="btnConfirmarEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnConfirmarEliminar_Click" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
         <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
     </div>
 </asp:Content>

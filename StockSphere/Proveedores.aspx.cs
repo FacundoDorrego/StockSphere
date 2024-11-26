@@ -173,7 +173,11 @@ namespace StockSphere
             ClientScript.RegisterStartupScript(this.GetType(), "MostrarActualizar", "mostrarFormulario('divActualizarProveedor');", true);
         }
 
-        
+        protected void btnRegresar_Click1(object sender, EventArgs e)
+        {
+            int empresaIDVolver = Convert.ToInt32(Request.QueryString["empresaID"]);
+            Response.Redirect("GestionEmpresa.aspx?empresaID=" + empresaIDVolver);
+        }
     }
 }
 

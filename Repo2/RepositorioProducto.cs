@@ -23,6 +23,7 @@ public class RepositorioProducto
                 Precio = Convert.ToDecimal(accesoDatos.Lector["Precio"]),
                 Stock = Convert.ToInt32(accesoDatos.Lector["Stock"]),
                 CategoriaID = (int)(accesoDatos.Lector["CategoriaID"]),
+                ProveedorID = (int)(accesoDatos.Lector["ProveedorID"]),
                 EmpresaID = (int)(accesoDatos.Lector["EmpresaID"])
             });
         }
@@ -40,6 +41,7 @@ public class RepositorioProducto
         accesoDatos.SetearParametros("@Stock", producto.Stock);
         accesoDatos.SetearParametros("@CategoriaID", producto.CategoriaID);
         accesoDatos.SetearParametros("@EmpresaID", producto.EmpresaID);
+        accesoDatos.SetearParametros("ProveedorID", producto.ProveedorID);
         accesoDatos.EjecutarAccion();
         accesoDatos.CerrarConexion();
     }
@@ -53,6 +55,7 @@ public class RepositorioProducto
         accesoDatos.SetearParametros("@Precio", producto.Precio);
         accesoDatos.SetearParametros("@Stock", producto.Stock);
         accesoDatos.SetearParametros("@CategoriaID", producto.CategoriaID);
+        accesoDatos.SetearParametros("ProveedorID", producto.ProveedorID);
         accesoDatos.EjecutarAccion();
         accesoDatos.CerrarConexion();
     }
@@ -65,7 +68,7 @@ public class RepositorioProducto
         accesoDatos.CerrarConexion();
     }
 
-    public void ActualizarStock(int productoID, int cantidad,int empresaId)
+    public void ActualizarStock(int productoID, int cantidad, int empresaId)
     {
         accesoDatos.SetearSp("ActualizarStock");
         accesoDatos.SetearParametros("@ProductoID", productoID);
@@ -75,15 +78,29 @@ public class RepositorioProducto
         accesoDatos.CerrarConexion();
     }
 
-    public void MovimientoInventario(int productoID, int cantidad, string tipoMovimiento, string obs)
+    
+
+    public int ObtenerUltimoIdProducto()
     {
-        accesoDatos.SetearSp("MovimientoInventarioSP");
-        accesoDatos.SetearParametros("@ProductoID", productoID);
-        accesoDatos.SetearParametros("@Cantidad", cantidad);
-        accesoDatos.SetearParametros("@TipoMovimiento", tipoMovimiento);
-        accesoDatos.SetearParametros("@Obs", obs);
-        accesoDatos.EjecutarAccion();
-        accesoDatos.CerrarConexion();
+        int id = 0;
+        try
+        {
+            accesoDatos.SetearSp("ObtenerUltimoIdProducto");
+            accesoDatos.EjecutarLectura();
+            while (accesoDatos.Lector.Read())
+            {
+                id = Convert.ToInt32(accesoDatos.Lector["ProductoID"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            accesoDatos.CerrarConexion();
+        }
+        return id;
     }
 
 }

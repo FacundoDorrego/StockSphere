@@ -21,6 +21,7 @@ namespace Repositorio
 
         public void SetearSp(string sp)
         {
+            comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = sp;
         }
@@ -55,7 +56,8 @@ namespace Repositorio
 
         public void SetearParametros(string nombre, object valor)
         {
-            comando.Parameters.AddWithValue(nombre, valor);
+            comando.Parameters.AddWithValue(nombre, valor ?? DBNull.Value);
+
         }
 
         public void EjecutarAccion()
@@ -63,13 +65,20 @@ namespace Repositorio
             comando.Connection = conexion;
             try
             {
-                conexion.Open();
+                if (conexion.State != System.Data.ConnectionState.Open)
+                    conexion.Open();
+
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 throw new Exception("Error al ejecutar la acción: " + ex.Message);
             }
+            finally
+            {
+                conexion.Close();
+            }
         }
+
     }
 }

@@ -11,7 +11,14 @@ namespace StockSphere
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["usuario"] != null) 
+            {
+                lnkLogin.Visible = false; 
+            }
+            else
+            {
+                lnkLogin.Visible = true; 
+            }
         }
     }
 }

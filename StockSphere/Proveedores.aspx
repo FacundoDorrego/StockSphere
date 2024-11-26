@@ -99,7 +99,7 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info"  OnClientClick="window.history.back(); return false;" />
+        <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click1" />
         
         <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">

@@ -24,6 +24,24 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Button btnMostrarAgregar;
 
         /// <summary>
+        /// Control btnMostrarListado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMostrarListado;
+
+        /// <summary>
+        /// Control btnMostrarMovimientos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMostrarMovimientos;
+
+        /// <summary>
         /// Control txtNombreProducto.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,15 @@ namespace StockSphere
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCategoriaProducto;
+
+        /// <summary>
+        /// Control ddlProveedor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
 
         /// <summary>
         /// Control btnAgregarProducto.
@@ -123,6 +150,15 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.DropDownList ddlCategoriaProductoActualizar;
 
         /// <summary>
+        /// Control ddlProveedorActualizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedorActualizar;
+
+        /// <summary>
         /// Control btnActualizarProducto.
         /// </summary>
         /// <remarks>
@@ -130,15 +166,6 @@ namespace StockSphere
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnActualizarProducto;
-
-        /// <summary>
-        /// Control dgvProductos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvProductos;
 
         /// <summary>
         /// Control hiddenProductoIDEliminar.
@@ -150,22 +177,58 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.HiddenField hiddenProductoIDEliminar;
 
         /// <summary>
-        /// Control hiddenStockProductoEliminar.
+        /// Control hiddenStockEliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenStockProductoEliminar;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenStockEliminar;
 
         /// <summary>
-        /// Control btnConfirmarEliminar.
+        /// Control listprod.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmarEliminar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl listprod;
+
+        /// <summary>
+        /// Control dgvProductos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvProductos;
+
+        /// <summary>
+        /// Control movstock.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl movstock;
+
+        /// <summary>
+        /// Control dgvMovimientos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvMovimientos;
+
+        /// <summary>
+        /// Control btnRegresar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRegresar;
 
         /// <summary>
         /// Control lblMensaje.
