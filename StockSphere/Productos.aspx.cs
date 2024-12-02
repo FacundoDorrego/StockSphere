@@ -177,7 +177,6 @@ namespace StockSphere
 
                     dgvProductos.DataSource = productosxEmpresa;
                     dgvProductos.DataBind();
-                    Session["Productos"] = productosxEmpresa;
                 }
                 else
                 {
@@ -436,11 +435,11 @@ namespace StockSphere
                     lblMensaje.Text = "Por favor, ingrese una cantidad válida.";
                     return;
                 }
-                int cantidad = int.Parse(txtCantidad.Text);
+                int cantidadIngresada = int.Parse(txtCantidad.Text);
 
                 if (productoID != "0")
                 {
-                    if (cantidad <= 0)
+                    if (cantidadIngresada <= 0)
                     {
                         lblMensaje.Text = "Por favor, ingrese una cantidad válida.";
                         return;
@@ -450,15 +449,17 @@ namespace StockSphere
                         RepositorioProducto repoProducto = new RepositorioProducto();
                         RepositorioMovimientoInventario repoMovInv = new RepositorioMovimientoInventario();
                         int stockAnterior = repoProducto.ObtenerStock(int.Parse(productoID));
-                        int stockActual = stockAnterior + int.Parse(txtCantidad.Text);
+                        int stockActual = stockAnterior + cantidadIngresada;
                         repoProducto.ActualizarStock(int.Parse(productoID), stockActual);
                         int empresaIDStock = Convert.ToInt32(Request.QueryString["empresaID"]);
                         Usuario usuario = (Usuario)Session["usuario"];
                         int usuarioIDStock = usuario.UsuarioID;
                         DateTime fechamov = DateTime.Now;
-                        repoMovInv.MovimientoInventario(int.Parse(productoID), stockAnterior, "Ingreso de Stock", "Stock agregado",fechamov,usuarioIDStock, empresaIDStock);
+                        repoMovInv.MovimientoInventario(int.Parse(productoID), cantidadIngresada, "Ingreso de Stock", "Stock agregado", fechamov, usuarioIDStock, empresaIDStock);
                         lblResultado.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior}) (Stock Actual: {stockActual})";
                         lblMensaje.Text = "Stock Agregado con exito";
+                        
+
                         CargarDivs();
                         dgvProductos.DataBind();
                         dgvMovimientos.DataBind();
@@ -497,7 +498,8 @@ namespace StockSphere
                         RepositorioProducto repoProducto = new RepositorioProducto();
                         RepositorioMovimientoInventario repoMovInv = new RepositorioMovimientoInventario();
                         //Aca obtener el producto seleccionado
-                        int stockAnterior = repoProducto.ObtenerStock(int.Parse(productoID));
+                        Producto productoSeleccionado = repoProducto.ObtenerProductoxID(int.Parse(productoID));
+                        int stockAnterior = productoSeleccionado.Stock;
                         //Usar funcion repoProducto.ObtenerProductoxID(productoID) para obtener el producto seleccionado
                         if (stockAnterior < cantidadVendida)
                         {
@@ -505,7 +507,7 @@ namespace StockSphere
                             return;
                         }
                         int stockActual = stockAnterior - cantidadVendida;
-                        int stockVendido = stockActual * -1;
+                        int stockVendido = cantidadVendida * -1;
                         repoProducto.ActualizarStock(int.Parse(productoID), stockActual);
                         int empresaIDVenta = Convert.ToInt32(Request.QueryString["empresaID"]);
                         Usuario usuario = (Usuario)Session["usuario"];
@@ -513,10 +515,10 @@ namespace StockSphere
                         DateTime fechamov = DateTime.Now;
                         repoMovInv.MovimientoInventario(int.Parse(productoID), stockVendido, "Venta", "Producto vendido", fechamov, usuarioIDVenta, empresaIDVenta);
                         lblResultadoVenta.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior}) (Stock Actual: {stockVendido})";
-                        lblMensaje.Text = "Venta realizada con éxito";
+                        lblMensaje.Text = "Venta registrada con éxito";
                         CargarDivs();
                     }
-                    
+
                 }
 
             }
@@ -524,6 +526,16 @@ namespace StockSphere
             {
                 lblMensaje.Text = "Hubo un error al vender el producto." + ex;
             }
+        }
+
+        protected void ddlProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            string productoID = ddlProductosVenta.SelectedValue;
+            string nombreProducto = ddlProductosVenta.SelectedItem.Text;
+            RepositorioProducto repoProducto = new RepositorioProducto();
+            int stockAnterior = repoProducto.ObtenerStock(int.Parse(productoID));
+            lblResultado.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior})";
         }
     }
 }

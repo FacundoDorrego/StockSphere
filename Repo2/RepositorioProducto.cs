@@ -126,8 +126,7 @@ public class RepositorioProducto
         {
             accesoDatos.SetearSp("ObtenerProductoxID");
             accesoDatos.SetearParametros("@ProductoID", productoID);
-            accesoDatos.EjecutarAccion();
-            accesoDatos.CerrarConexion();
+            accesoDatos.EjecutarLectura();
             while (accesoDatos.Lector.Read())
             {
                 productoSeleccionado = new Producto

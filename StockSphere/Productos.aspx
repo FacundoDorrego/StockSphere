@@ -21,9 +21,16 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            const dropdownElement = document.getElementById('<%= ddlProductos.ClientID %>');
-            if (dropdownElement) {
-                const dropdown = new Choices(dropdownElement, {
+            const dropdownElementProductos = document.getElementById('<%= ddlProductos.ClientID %>');
+            const dropdownElementVentas = document.getElementById('<%= ddlProductosVenta.ClientID %>');
+            if (dropdownElementProductos) {
+                const dropdown = new Choices(dropdownElementProductos, {
+                    searchPlaceholderValue: 'Escriba para buscar...',
+                    shouldSort: false,
+                });
+            }
+            if (dropdownElementVentas) {
+                const dropdown = new Choices(dropdownElementVentas, {
                     searchPlaceholderValue: 'Escriba para buscar...',
                     shouldSort: false,
                 });
@@ -116,7 +123,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group mb-3">
-                    <asp:DropDownList ID="ddlProductos" runat="server" CssClass="form-select"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlProductos" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlProductos_SelectedIndexChanged"></asp:DropDownList>
                     <asp:Label ID="lblResultado" runat="server"></asp:Label>
                     <div class="form-group mb-3">
                         <label for="txtCantidad">Cantidad</label>
@@ -187,7 +194,6 @@
                 <asp:BoundField DataField="Observaciones" HeaderText="Observaciones" HeaderStyle-CssClass="text-center" />
             </Columns>
         </asp:GridView>
-
         <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
     </div>
 
