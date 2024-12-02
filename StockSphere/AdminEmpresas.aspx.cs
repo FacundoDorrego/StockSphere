@@ -79,22 +79,7 @@ namespace StockSphere
 
         }
 
-        protected void dgvEmpresas_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            int empresaID = Convert.ToInt32(dgvEmpresas.DataKeys[e.RowIndex].Value);
-            try
-            {
-                RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
-                repositorioEmpresa.EliminarEmpresa(empresaID);
-                lblMensaje.Text = "¡Eliminado!";
-                CargarEmpresas();
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = "Error al eliminar la empresa: " + ex.Message;
-                lblMensaje.Visible = true;
-            }
-        }
+       
 
         protected void dgvEmpresas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -133,7 +118,7 @@ namespace StockSphere
                         return;
                     }
                     RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
-                    Empresa auxfecha = repositorioEmpresa.ObtenerEmpresa(empresaID);
+                    Empresa auxfecha = repositorioEmpresa.ObtenerEmpresaxID(empresaID);
                     DateTime fechaCreacion = auxfecha.FechaCreacion;
                     string nombrenuevo = txtNombreEmpresaActualizar.Text;
                     Empresa auxEmpresa = new Empresa

@@ -39,7 +39,7 @@ namespace StockSphere
             }
             Usuario usuario = (Usuario)Session["usuario"];
 
-            var empresaSelec = repositorioEmpresa.ObtenerEmpresa(empresaID);
+            var empresaSelec = repositorioEmpresa.ObtenerEmpresaxID(empresaID);
             if (empresaSelec == null || empresaSelec.UsuarioID != usuario.UsuarioID)
             {
                 Response.Redirect("AdminEmpresas.aspx");
@@ -71,6 +71,11 @@ namespace StockSphere
         protected void btnProductos_Click(object sender, EventArgs e)
         {
             Response.Redirect("Productos.aspx?empresaID=" + lblEmpresaID.Text);
+        }
+
+        protected void btnCategorias_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Categorias.aspx?empresaID=" + lblEmpresaID.Text);
         }
     }
 

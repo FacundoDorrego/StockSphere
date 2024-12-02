@@ -91,11 +91,18 @@ namespace StockSphere
                 RepositorioCategoria repoCategoria = new RepositorioCategoria();
                 List<Categoria> categorias = repoCategoria.ObtenerCategorias();
                 List<Categoria> categoriasEmpresa = new List<Categoria>();
-                ddlCategoriaProducto.DataSource = categorias;
+                foreach (Categoria categoria in categorias)
+                {
+                    if (categoria.EmpresaID == Convert.ToInt32(Request.QueryString["empresaID"]))
+                    {
+                        categoriasEmpresa.Add(categoria);
+                    }
+                }
+                ddlCategoriaProducto.DataSource = categoriasEmpresa;
                 ddlCategoriaProducto.DataTextField = "Nombre";
                 ddlCategoriaProducto.DataValueField = "CategoriaID";
                 ddlCategoriaProducto.DataBind();
-                ddlCategoriaProductoActualizar.DataSource = categorias;
+                ddlCategoriaProductoActualizar.DataSource = categoriasEmpresa;
                 ddlCategoriaProductoActualizar.DataTextField = "Nombre";
                 ddlCategoriaProductoActualizar.DataValueField = "CategoriaID";
                 ddlCategoriaProductoActualizar.DataBind();
@@ -497,6 +504,7 @@ namespace StockSphere
                     {
                         RepositorioProducto repoProducto = new RepositorioProducto();
                         RepositorioMovimientoInventario repoMovInv = new RepositorioMovimientoInventario();
+
                         //Aca obtener el producto seleccionado
                         Producto productoSeleccionado = repoProducto.ObtenerProductoxID(int.Parse(productoID));
                         int stockAnterior = productoSeleccionado.Stock;
@@ -530,12 +538,28 @@ namespace StockSphere
 
         protected void ddlProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            string productoID = ddlProductosVenta.SelectedValue;
-            string nombreProducto = ddlProductosVenta.SelectedItem.Text;
+            string productoID = ddlProductos.SelectedValue;
+            string nombreProducto = ddlProductos.SelectedItem.Text;
             RepositorioProducto repoProducto = new RepositorioProducto();
             int stockAnterior = repoProducto.ObtenerStock(int.Parse(productoID));
             lblResultado.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior})";
+            ClientScript.RegisterStartupScript(this.GetType(), "AgregarStock", "mostrarFormulario('divAgregarStock');", true);
+        }
+
+        protected void ddlProductosVenta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int productoId = int.Parse(ddlProductosVenta.SelectedValue);
+            RepositorioProducto repoProducto = new RepositorioProducto();
+            Producto productoSeleccionado=repoProducto.ObtenerProductoxID(productoId);
+            if (productoSeleccionado != null)
+            {
+                txtNombreProdVenta.Text = productoSeleccionado.Nombre;
+                txtDescripcionProdVenta.Text = productoSeleccionado.Descripcion;
+                txtMarcaProdVenta.Text = productoSeleccionado.Marca;
+                txtPrecioProdVenta.Text = productoSeleccionado.Precio.ToString("F2");
+                txtStockProdVenta.Text = productoSeleccionado.Stock.ToString();
+                ClientScript.RegisterStartupScript(this.GetType(), "RegistrarVenta", "mostrarFormulario('divRegistrarVenta');", true);
+            }
         }
     }
 }

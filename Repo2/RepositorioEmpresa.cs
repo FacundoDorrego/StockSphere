@@ -12,54 +12,14 @@ namespace Repositorio
     public class RepositorioEmpresa
     {
 
-        public Empresa ObtenerEmpresa(int idEmpre)
-        {
-            Empresa aux = new Empresa();
-            AccesoDatos accesoDatos = new AccesoDatos();
-            try
-            {
 
-                accesoDatos.SetearConsulta("SELECT * FROM Empresas WHERE EmpresaID = @Empre ");
-                accesoDatos.SetearParametros("@Empre", idEmpre);
-                accesoDatos.EjecutarLectura();
-
-                if (accesoDatos.Lector != null && accesoDatos.Lector.HasRows)
-                {
-                    while (accesoDatos.Lector.Read())
-                    {
-
-                        aux.EmpresaID = Convert.ToInt32(accesoDatos.Lector["EmpresaID"]);
-                        aux.Nombre = accesoDatos.Lector["Nombre"].ToString();
-                        aux.UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]);
-                        aux.FechaCreacion = Convert.ToDateTime(accesoDatos.Lector["FechaCreacion"]);
-                        aux.Activa = Convert.ToBoolean(accesoDatos.Lector["Activa"]);
-                        
-                    }
-                }
-                else
-                {
-                    throw new Exception("Error al cargar la empresa.");
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("Error al obtener la empresa", ex);
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion(); 
-            }
-
-            return aux;
-        }
         public List<Empresa> ObtenerEmpresasPorUsuario(int idUsu)
         {
             List<Empresa> empresas = new List<Empresa>();
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                
+
                 accesoDatos.SetearSp("ObtenerEmpresasPorUsuario");
                 accesoDatos.SetearParametros("@UsuarioID", idUsu);
                 accesoDatos.EjecutarLectura();
@@ -85,22 +45,65 @@ namespace Repositorio
             }
             catch (Exception ex)
             {
-                
+
                 throw new Exception("Error al obtener las empresas", ex);
             }
             finally
             {
-                accesoDatos.CerrarConexion(); 
+                accesoDatos.CerrarConexion();
             }
 
             return empresas;
         }
 
-        
+        public Empresa ObtenerEmpresaxID(int idEmpre)
+        {
+            Empresa aux = new Empresa();
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+
+                accesoDatos.SetearSp("ObtenerEmpresaxID");
+                accesoDatos.SetearParametros("@EmpresaID", idEmpre);
+                accesoDatos.EjecutarLectura();
+
+                if (accesoDatos.Lector != null && accesoDatos.Lector.HasRows)
+                {
+                    while (accesoDatos.Lector.Read())
+                    {
+                        aux = new Empresa
+                        {
+
+                            EmpresaID = Convert.ToInt32(accesoDatos.Lector["EmpresaID"]),
+                            Nombre = accesoDatos.Lector["Nombre"].ToString(),
+                            UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]),
+                            FechaCreacion = Convert.ToDateTime(accesoDatos.Lector["FechaCreacion"]),
+                            Activa = Convert.ToBoolean(accesoDatos.Lector["Activa"])
+                        };
+
+                    }
+                }
+                else
+                {
+                    throw new Exception("No se encontró la empresa.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al obtener la empresa", ex);
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+
+            return aux;
+        }
         public void AgregarEmpresa(Empresa empresa)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
-            accesoDatos.SetearSp("AgregarEmpresa"); 
+            accesoDatos.SetearSp("AgregarEmpresa");
             accesoDatos.SetearParametros("@Nombre", empresa.Nombre);
             accesoDatos.SetearParametros("@UsuarioID", empresa.UsuarioID);
             accesoDatos.SetearParametros("@FechaCreacion", empresa.FechaCreacion);
@@ -109,18 +112,18 @@ namespace Repositorio
             accesoDatos.CerrarConexion();
         }
 
-        
+
         public void ActualizarEmpresa(Empresa empresa)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
-            accesoDatos.SetearSp("ActualizarEmpresa"); 
+            accesoDatos.SetearSp("ActualizarEmpresa");
             accesoDatos.SetearParametros("@EmpresaID", empresa.EmpresaID);
             accesoDatos.SetearParametros("@Nombre", empresa.Nombre);
             accesoDatos.EjecutarAccion();
             accesoDatos.CerrarConexion();
         }
 
-        
+
         public void EliminarEmpresa(int empresaID)
         {
             AccesoDatos accesoDatos = new AccesoDatos();

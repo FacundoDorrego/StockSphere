@@ -11,107 +11,71 @@ namespace StockSphere
 {
 
 
-    public partial class Proveedores
+    public partial class Categorias
     {
 
         /// <summary>
-        /// Control hiddenProveedorID.
+        /// Control hiddenCategoriaID.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenProveedorID;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenCategoriaID;
 
         /// <summary>
-        /// Control txtNombreProv.
+        /// Control txtNombreCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreProv;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreCategoria;
 
         /// <summary>
-        /// Control txtTelefonoProv.
+        /// Control txtDescCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTelefonoProv;
+        protected global::System.Web.UI.WebControls.TextBox txtDescCategoria;
 
         /// <summary>
-        /// Control txtDireccProv.
+        /// Control btnAgregarCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDireccProv;
+        protected global::System.Web.UI.WebControls.Button btnAgregarCategoria;
 
         /// <summary>
-        /// Control txtEmailProv.
+        /// Control txtNombreCatActualizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmailProv;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreCatActualizar;
 
         /// <summary>
-        /// Control Button1.
+        /// Control txtDescCatActualizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.TextBox txtDescCatActualizar;
 
         /// <summary>
-        /// Control txtNombreProveedorActualizar.
+        /// Control btnActualizarCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreProveedorActualizar;
-
-        /// <summary>
-        /// Control txtTelefonoProveedorActualizar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTelefonoProveedorActualizar;
-
-        /// <summary>
-        /// Control txtDireccionProveedorActualizar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDireccionProveedorActualizar;
-
-        /// <summary>
-        /// Control txtEmailProveedorActualizar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmailProveedorActualizar;
-
-        /// <summary>
-        /// Control btnActualizarProveedor.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActualizarProveedor;
+        protected global::System.Web.UI.WebControls.Button btnActualizarCategoria;
 
         /// <summary>
         /// Control btnMostrarAgregar.
@@ -132,13 +96,13 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control dgvProveedores.
+        /// Control dgvCategorias.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvProveedores;
+        protected global::System.Web.UI.WebControls.GridView dgvCategorias;
 
         /// <summary>
         /// Control btnRegresar.
@@ -150,13 +114,13 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Button btnRegresar;
 
         /// <summary>
-        /// Control hiddenProveedorIDEliminar.
+        /// Control hiddenCategoriaIDEliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenProveedorIDEliminar;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenCategoriaIDEliminar;
 
         /// <summary>
         /// Control btnConfirmarEliminar.

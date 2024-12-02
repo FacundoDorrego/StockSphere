@@ -8,12 +8,15 @@
         public string Clave { get; set; }
         public int Rol { get; set; }
 
-        public Usuario(string user, string pass)
+        public Usuario(string correo, string clave)
         {
-            CorreoElectronico = user;
-            Clave = pass;
+            CorreoElectronico = correo;
+            Clave = clave;
         }
 
+        public Usuario()
+        {
+        }
     }
 
 }

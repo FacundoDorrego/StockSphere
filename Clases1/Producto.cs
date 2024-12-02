@@ -10,7 +10,6 @@ namespace Clases
     {
         public int ProductoID { get; set; }
         public string Descripcion { get; set; }
-        public int CantidadDisponible { get; set; }
         public string Nombre { get; set; }
         public decimal Precio { get; set; }
         public int Stock { get; set; }

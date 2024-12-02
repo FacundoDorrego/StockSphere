@@ -111,7 +111,7 @@ namespace StockSphere
                 RepositorioProveedor repositorioProveedor = new RepositorioProveedor();
                 repositorioProveedor.EliminarProveedor(proveedorID);
                 lblMensaje.Text = "¡Eliminado!";
-                CargarProveedores(Convert.ToInt32(Request.QueryString["empresaID"]));
+                
             }
             catch (Exception ex)
             {
@@ -119,6 +119,10 @@ namespace StockSphere
                 
                 lblMensaje.Visible = true;
 
+            }
+            finally
+            {
+                CargarProveedores(Convert.ToInt32(Request.QueryString["empresaID"]));
             }
         }
 
@@ -166,8 +170,8 @@ namespace StockSphere
             int proveedorID = Convert.ToInt32(dgvProveedores.DataKeys[e.NewEditIndex].Value);
             txtNombreProveedorActualizar.Text = dgvProveedores.Rows[e.NewEditIndex].Cells[1].Text;
             txtTelefonoProveedorActualizar.Text = dgvProveedores.Rows[e.NewEditIndex].Cells[2].Text;
-            txtEmailProveedorActualizar.Text = dgvProveedores.Rows[e.NewEditIndex].Cells[3].Text;
-            txtDireccionProveedorActualizar.Text = dgvProveedores.Rows[e.NewEditIndex].Cells[4].Text;
+            txtDireccionProveedorActualizar.Text = dgvProveedores.Rows[e.NewEditIndex].Cells[3].Text;
+            txtEmailProveedorActualizar.Text = dgvProveedores.Rows[e.NewEditIndex].Cells[4].Text;
             hiddenProveedorID.Value = proveedorID.ToString();
             dgvProveedores.EditIndex = -1;
             ClientScript.RegisterStartupScript(this.GetType(), "MostrarActualizar", "mostrarFormulario('divActualizarProveedor');", true);

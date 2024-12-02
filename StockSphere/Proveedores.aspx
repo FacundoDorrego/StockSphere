@@ -82,6 +82,7 @@
             <asp:Button ID="btnMostrarAgregar" runat="server" Text="Agregar Proveedor" CssClass="btn btn-primary" OnClientClick="mostrarFormulario('divAgregarProveedor'); return false;" />
         </div>
 
+        <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
         
         <h4>Lista de Proveedores</h4>
         <asp:GridView ID="dgvProveedores" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvProveedores_RowCommand" OnRowEditing="dgvProveedores_RowEditing" DataKeyNames="ProveedorID">
@@ -120,6 +121,5 @@
             </div>
         </div>
        
-        <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
     </div>
 </asp:Content>

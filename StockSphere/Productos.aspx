@@ -35,6 +35,8 @@
                     shouldSort: false,
                 });
             }
+            
+            
         });
 
 
@@ -123,7 +125,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group mb-3">
-                    <asp:DropDownList ID="ddlProductos" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlProductos_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlProductos" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlProductos_SelectedIndexChanged"></asp:DropDownList>
                     <asp:Label ID="lblResultado" runat="server"></asp:Label>
                     <div class="form-group mb-3">
                         <label for="txtCantidad">Cantidad</label>
@@ -139,27 +141,52 @@
                 </div>
             </div>
         </div>
+
+
         <div id="divRegistrarVenta" class="card shadow-lg mb-4" style="display: none;">
             <div class="card-header">
                 <h4>Registrar Venta</h4>
             </div>
             <div class="card-body">
                 <div class="form-group mb-3">
-                    <asp:DropDownList ID="ddlProductosVenta" runat="server" CssClass="form-select"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlProductosVenta" runat="server" CssClass="form-select" AutoPostBack="True" OnSelectedIndexChanged="ddlProductosVenta_SelectedIndexChanged"></asp:DropDownList>
                     <asp:Label ID="lblResultadoVenta" runat="server"></asp:Label>
-                    <div class="form-group mb-3">
-                        <label for="txtCantidadVenta">Cantidad Vendida</label>
-                        <asp:TextBox ID="txtCantidadVenta" runat="server" class="form-control" Placeholder="Cantidad a vender" />
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <asp:Button ID="btnConfirmarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-danger" OnClick="btnConfirmarVenta_Click" />
-                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="txtCantidadVenta">Cantidad Vendida</label>
+                    <asp:TextBox ID="txtCantidadVenta" runat="server" class="form-control" Placeholder="Cantidad a vender" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="txtNombreProdVenta">Nombre</label>
+                    <asp:TextBox ID="txtNombreProdVenta" runat="server" class="form-control" Placeholder="Nombre del producto" ReadOnly="true" BackColor="LightGray"></asp:TextBox>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="txtDescripcionProdVenta">Descripción</label>
+                    <asp:TextBox ID="txtDescripcionProdVenta" runat="server" class="form-control" Placeholder="Descripción del producto" ReadOnly="True" BackColor="LightGray"></asp:TextBox>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="txtMarcaProdVenta">Marca</label>
+                    <asp:TextBox ID="txtMarcaProdVenta" runat="server" class="form-control" Placeholder="Marca" ReadOnly="True" BackColor="LightGray"></asp:TextBox>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="txtPrecioProdVenta">Precio</label>
+                    <asp:TextBox ID="txtPrecioProdVenta" runat="server" class="form-control" Placeholder="Precio del producto" ReadOnly="True" BackColor="LightGray"></asp:TextBox>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="txtStockProdVenta">Stock</label>
+                    <asp:TextBox ID="txtStockProdVenta" runat="server" class="form-control" Placeholder="Stock del producto" ReadOnly="True" BackColor="LightGray"></asp:TextBox>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <asp:Button ID="btnConfirmarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-danger" OnClick="btnConfirmarVenta_Click" />
                 </div>
                 <div class="d-flex justify-content-center mt-3">
                     <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divRegistrarVenta')">Cerrar</button>
                 </div>
             </div>
         </div>
+
+
+
         <asp:HiddenField ID="hiddenProductoIDEliminar" runat="server" />
         <asp:HiddenField ID="hiddenStockEliminar" runat="server" />
         <h4 id="listprod" runat="server" visible="false">Lista de Productos</h4>
