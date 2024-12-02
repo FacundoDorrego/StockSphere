@@ -17,6 +17,7 @@ namespace Clases
         public int CategoriaID { get; set; }
         public int ProveedorID { get; set; }
         public int EmpresaID { get; set; }
+        public string Marca { get; set; }
     }
 
 }

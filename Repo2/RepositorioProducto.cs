@@ -24,7 +24,8 @@ public class RepositorioProducto
                 Stock = Convert.ToInt32(accesoDatos.Lector["Stock"]),
                 CategoriaID = (int)(accesoDatos.Lector["CategoriaID"]),
                 ProveedorID = (int)(accesoDatos.Lector["ProveedorID"]),
-                EmpresaID = (int)(accesoDatos.Lector["EmpresaID"])
+                EmpresaID = (int)(accesoDatos.Lector["EmpresaID"]),
+                Marca = accesoDatos.Lector["Marca"].ToString()
             });
         }
 
@@ -42,6 +43,7 @@ public class RepositorioProducto
         accesoDatos.SetearParametros("@CategoriaID", producto.CategoriaID);
         accesoDatos.SetearParametros("@EmpresaID", producto.EmpresaID);
         accesoDatos.SetearParametros("ProveedorID", producto.ProveedorID);
+        accesoDatos.SetearParametros("@Marca", producto.Marca);
         accesoDatos.EjecutarAccion();
         accesoDatos.CerrarConexion();
     }
@@ -56,6 +58,7 @@ public class RepositorioProducto
         accesoDatos.SetearParametros("@Stock", producto.Stock);
         accesoDatos.SetearParametros("@CategoriaID", producto.CategoriaID);
         accesoDatos.SetearParametros("ProveedorID", producto.ProveedorID);
+        accesoDatos.SetearParametros("@Marca", producto.Marca);
         accesoDatos.EjecutarAccion();
         accesoDatos.CerrarConexion();
     }
@@ -68,17 +71,30 @@ public class RepositorioProducto
         accesoDatos.CerrarConexion();
     }
 
-    public void ActualizarStock(int productoID, int cantidad, int empresaId)
+    public void ActualizarStock(int productoID, int cantidad)
     {
         accesoDatos.SetearSp("ActualizarStock");
         accesoDatos.SetearParametros("@ProductoID", productoID);
         accesoDatos.SetearParametros("@Cantidad", cantidad);
-        accesoDatos.SetearParametros("@EmpresaID", empresaId);
         accesoDatos.EjecutarAccion();
         accesoDatos.CerrarConexion();
     }
 
-    
+    public int ObtenerStock(int productoID)
+    {
+        int stock = 0;
+        accesoDatos.SetearSp("ObtenerStock");
+        accesoDatos.SetearParametros("@ProductoID", productoID);
+        accesoDatos.EjecutarLectura();
+        while (accesoDatos.Lector.Read())
+        {
+            stock = Convert.ToInt32(accesoDatos.Lector["Stock"]);
+        }
+        accesoDatos.CerrarConexion();
+        return stock;
+    }
+
+
 
     public int ObtenerUltimoIdProducto()
     {
@@ -101,6 +117,42 @@ public class RepositorioProducto
             accesoDatos.CerrarConexion();
         }
         return id;
+    }
+
+    public Producto ObtenerProductoxID(int productoID)
+    {
+        Producto productoSeleccionado = new Producto();
+        try
+        {
+            accesoDatos.SetearSp("ObtenerProductoxID");
+            accesoDatos.SetearParametros("@ProductoID", productoID);
+            accesoDatos.EjecutarAccion();
+            accesoDatos.CerrarConexion();
+            while (accesoDatos.Lector.Read())
+            {
+                productoSeleccionado = new Producto
+                {
+                    ProductoID = Convert.ToInt32(accesoDatos.Lector["ProductoID"]),
+                    Nombre = accesoDatos.Lector["Nombre"].ToString(),
+                    Descripcion = accesoDatos.Lector["Descripcion"].ToString(),
+                    Precio = Convert.ToDecimal(accesoDatos.Lector["Precio"]),
+                    Stock = Convert.ToInt32(accesoDatos.Lector["Stock"]),
+                    CategoriaID = (int)(accesoDatos.Lector["CategoriaID"]),
+                    ProveedorID = (int)(accesoDatos.Lector["ProveedorID"]),
+                    EmpresaID = (int)(accesoDatos.Lector["EmpresaID"]),
+                    Marca = accesoDatos.Lector["Marca"].ToString()
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            accesoDatos.CerrarConexion();
+        }
+        return productoSeleccionado;
     }
 
 }
