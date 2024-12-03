@@ -10,6 +10,7 @@ namespace Clases
     {
         public int VentaID { get; set; }
         public decimal Monto { get; set; }
+        public int Cantidad { get; set; }
         public DateTime FechaVenta { get; set; }
         public Empresa Empresa { get; set; }
         public Usuario Usuario { get; set; }

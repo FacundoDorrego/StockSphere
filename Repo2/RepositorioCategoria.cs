@@ -47,7 +47,7 @@ namespace Repositorio
             Categoria categoria = new Categoria();
             try
             {
-                accesoDatos.SetearSp("ObtenerCategoriaxID");
+                accesoDatos.SetearSp("ObtenerCategoriasxID");
                 accesoDatos.SetearParametros("@CategoriaID", CategoriaID);
                 accesoDatos.EjecutarLectura();
                 while (accesoDatos.Lector.Read())

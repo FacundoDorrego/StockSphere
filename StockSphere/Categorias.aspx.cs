@@ -126,7 +126,7 @@ namespace StockSphere
             }
             finally
             {
-                CargarCategorias(Convert.ToInt32(Request.QueryString["empresaID"]));
+                CargarCategorias(empresaID);
             }
         }
 
@@ -162,7 +162,7 @@ namespace StockSphere
             }
             finally
             {
-                CargarCategorias(Convert.ToInt32(Request.QueryString["empresaID"]));
+                CargarCategorias(empresaID);
             }
         }
 

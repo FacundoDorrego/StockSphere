@@ -36,6 +36,7 @@
                 <asp:Button ID="btnProductos" runat="server" Text="Productos" CssClass="btn btn-primary mx-2" OnClick="btnProductos_Click" />
                 <asp:Button ID="btnProveedores" runat="server" Text="Proveedores" CssClass="btn btn-primary mx-2" OnClick="btnProveedores_Click" />
                 <asp:Button ID="btnCategorias" runat="server" Text="Categorias" CssClass="btn btn-primary mx-2" OnClick="btnCategorias_Click" />
+                <asp:Button ID="btnDashboardReportes" runat="server" Text="Dashboard de reportes" CssClass="btn btn-info mx-2" OnClick="btnDashboardReportes_Click1" />
             </div>
         </div>
     </div>

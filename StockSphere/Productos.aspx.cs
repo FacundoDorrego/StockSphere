@@ -171,6 +171,8 @@ namespace StockSphere
                 RepositorioProducto repoProducto = new RepositorioProducto();
                 List<Producto> productos = repoProducto.ObtenerProductos();
                 List<Producto> productosxEmpresa = new List<Producto>();
+                ddlProductos.Items.Clear();
+                ddlProductosVenta.Items.Clear();
 
                 foreach (Producto producto in productos)
                 {
@@ -187,20 +189,19 @@ namespace StockSphere
                 }
                 else
                 {
-                    ddlProductos.Items.Add(new ListItem("No hay productos disponibles", "-1"));
                     lblMensaje.Text = "No hay productos para mostrar.";
                 }
-
-                ddlProductos.Items.Clear();
-                ddlProductos.Items.Insert(0, new ListItem("Seleccione un producto", "0"));
+                
 
                 if (dgvProductos.DataSource != null)
                 {
 
+                    ddlProductos.Items.Insert(0, new ListItem("Seleccione un producto", "0"));
                     ddlProductos.DataSource = dgvProductos.DataSource;
                     ddlProductos.DataTextField = "Nombre";
                     ddlProductos.DataValueField = "ProductoID";
                     ddlProductos.DataBind();
+                    ddlProductosVenta.Items.Insert(0, new ListItem("Seleccione un producto", "0"));
                     ddlProductosVenta.DataSource = dgvProductos.DataSource;
                     ddlProductosVenta.DataTextField = "Nombre";
                     ddlProductosVenta.DataValueField = "ProductoID";
@@ -208,8 +209,8 @@ namespace StockSphere
                 }
                 else
                 {
-
-                    ddlProductos.Items.Add(new ListItem("No hay productos disponibles", "-1"));
+                    ddlProductos.Items.Add(new ListItem("No hay productos disponibles", "0"));
+                    ddlProductosVenta.Items.Add(new ListItem("No hay productos disponibles", "0"));
                 }
 
             }
@@ -465,7 +466,7 @@ namespace StockSphere
                         repoMovInv.MovimientoInventario(int.Parse(productoID), cantidadIngresada, "Ingreso de Stock", "Stock agregado", fechamov, usuarioIDStock, empresaIDStock);
                         lblResultado.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior}) (Stock Actual: {stockActual})";
                         lblMensaje.Text = "Stock Agregado con exito";
-                        
+
 
                         CargarDivs();
                         dgvProductos.DataBind();
@@ -482,7 +483,6 @@ namespace StockSphere
         protected void btnConfirmarVenta_Click(object sender, EventArgs e)
         {
             //Agregar reporte de venta.
-            //Modificar para traer el objeto producto seleccionado y no solo el ID
             try
             {
                 string productoID = ddlProductosVenta.SelectedValue;
@@ -504,11 +504,15 @@ namespace StockSphere
                     {
                         RepositorioProducto repoProducto = new RepositorioProducto();
                         RepositorioMovimientoInventario repoMovInv = new RepositorioMovimientoInventario();
-
-                        //Aca obtener el producto seleccionado
+                        RepositorioVenta repoVenta = new RepositorioVenta();
+                        RepositorioCategoria repoCategoria = new RepositorioCategoria();
+                        RepositorioUsuario repoUsuario = new RepositorioUsuario();
+                        RepositorioEmpresa repoEmpresa = new RepositorioEmpresa();
+                        Usuario usuarioVenta = (Usuario)Session["usuario"];
                         Producto productoSeleccionado = repoProducto.ObtenerProductoxID(int.Parse(productoID));
+                        Empresa empresaVenta = repoEmpresa.ObtenerEmpresaxID(productoSeleccionado.EmpresaID);
+                        Categoria categoriaVenta = repoCategoria.ObtenerCategoriaxID(productoSeleccionado.CategoriaID);
                         int stockAnterior = productoSeleccionado.Stock;
-                        //Usar funcion repoProducto.ObtenerProductoxID(productoID) para obtener el producto seleccionado
                         if (stockAnterior < cantidadVendida)
                         {
                             lblMensaje.Text = "No hay suficiente stock para realizar la venta.";
@@ -518,12 +522,22 @@ namespace StockSphere
                         int stockVendido = cantidadVendida * -1;
                         repoProducto.ActualizarStock(int.Parse(productoID), stockActual);
                         int empresaIDVenta = Convert.ToInt32(Request.QueryString["empresaID"]);
-                        Usuario usuario = (Usuario)Session["usuario"];
-                        int usuarioIDVenta = usuario.UsuarioID;
-                        DateTime fechamov = DateTime.Now;
-                        repoMovInv.MovimientoInventario(int.Parse(productoID), stockVendido, "Venta", "Producto vendido", fechamov, usuarioIDVenta, empresaIDVenta);
+                        int usuarioIDVenta = usuarioVenta.UsuarioID;
+                        DateTime fechaVenta = DateTime.Now;
+                        repoVenta.AgregarVenta(new Venta
+                        {
+                            Monto = productoSeleccionado.Precio * cantidadVendida,
+                            Cantidad = cantidadVendida,
+                            FechaVenta = fechaVenta,
+                            Empresa = empresaVenta,
+                            Usuario = usuarioVenta,
+                            Producto = productoSeleccionado,
+                            Categoria = categoriaVenta
+                        });
+                        repoMovInv.MovimientoInventario(int.Parse(productoID), stockVendido, "Venta", "Producto vendido", fechaVenta, usuarioIDVenta, empresaIDVenta);
                         lblResultadoVenta.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior}) (Stock Actual: {stockVendido})";
                         lblMensaje.Text = "Venta registrada con éxito";
+                        btnConfirmarVenta.Visible = false;
                         CargarDivs();
                     }
 
@@ -550,15 +564,21 @@ namespace StockSphere
         {
             int productoId = int.Parse(ddlProductosVenta.SelectedValue);
             RepositorioProducto repoProducto = new RepositorioProducto();
-            Producto productoSeleccionado=repoProducto.ObtenerProductoxID(productoId);
+            Producto productoSeleccionado = repoProducto.ObtenerProductoxID(productoId);
             if (productoSeleccionado != null)
             {
+                btnConfirmarVenta.Visible = true;
                 txtNombreProdVenta.Text = productoSeleccionado.Nombre;
                 txtDescripcionProdVenta.Text = productoSeleccionado.Descripcion;
                 txtMarcaProdVenta.Text = productoSeleccionado.Marca;
                 txtPrecioProdVenta.Text = productoSeleccionado.Precio.ToString("F2");
                 txtStockProdVenta.Text = productoSeleccionado.Stock.ToString();
                 ClientScript.RegisterStartupScript(this.GetType(), "RegistrarVenta", "mostrarFormulario('divRegistrarVenta');", true);
+            }
+            if(ddlProductosVenta.Items.Count == 1)
+            {
+                btnConfirmarVenta.Visible = true;
+                
             }
         }
     }
