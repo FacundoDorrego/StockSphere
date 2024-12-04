@@ -80,13 +80,11 @@ namespace StockSphere
 
         protected void btnDashboardReportes_Click(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btnDashboardReportes_Click1(object sender, EventArgs e)
-        {
             Response.Redirect("DashboardReportes.aspx?empresaID=" + lblEmpresaID.Text);
+
         }
+
+        
     }
 
 

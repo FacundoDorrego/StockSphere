@@ -50,7 +50,7 @@ namespace Repositorios
                 {
                     listaVentas.Add(new Venta
                     {
-                        VentaID = Convert.ToInt32(accesoDatos.Lector["VentaID"]),
+                        VentasID = Convert.ToInt32(accesoDatos.Lector["VentasID"]),
                         Monto = Convert.ToDecimal(accesoDatos.Lector["Monto"]),
                         Cantidad = Convert.ToInt32(accesoDatos.Lector["Cantidad"]),
                         FechaVenta = Convert.ToDateTime(accesoDatos.Lector["FechaVenta"]),

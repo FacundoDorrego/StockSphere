@@ -35,20 +35,19 @@
                         shouldSort: false,
                     });
                 } else if (dropdownElement && dropdownElement.options.length === 0) {
-                    // Si no hay opciones válidas, deshabilitar el Dropdown
                     dropdownElement.disabled = true;
                 }
             }
             inicializarDropdown(dropdownElementProductos);
             inicializarDropdown(dropdownElementVentas);
         });
-        // Inicializar ambos DropDownList
+
         function forzarPostBack() {
             var ddl = document.getElementById('<%= ddlProductosVenta.ClientID %>');
             var actualIndex = ddl.selectedIndex;
-            ddl.selectedIndex = -1;  // Forzar un cambio temporal
-            ddl.selectedIndex = actualIndex;  // Restaurar el índice original
-            __doPostBack(ddl.id, '');  // Forzar el postback
+            ddl.selectedIndex = -1;  
+            ddl.selectedIndex = actualIndex;  
+            __doPostBack(ddl.id, '');  
         }
         </script>
     <div class="container">

@@ -25,6 +25,7 @@ namespace Repositorio
                 {
                     usuario.UsuarioID = (int)accesoDatos.Lector["UsuarioID"];
                     usuario.Rol = (int)(accesoDatos.Lector["RolID"]);
+                    usuario.NombreUsuario = accesoDatos.Lector["NombreUsuario"].ToString();
                     return true;
 
                 }
@@ -60,7 +61,8 @@ namespace Repositorio
                         UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]),
                         CorreoElectronico = accesoDatos.Lector["CorreoElectronico"].ToString(),
                         Clave = accesoDatos.Lector["Clave"].ToString(),
-                        Rol = Convert.ToInt32(accesoDatos.Lector["RolID"])
+                        Rol = Convert.ToInt32(accesoDatos.Lector["RolID"]),
+                        NombreUsuario = accesoDatos.Lector["NombreUsuario"].ToString()
                     };
                 }
             } catch (Exception ex)
@@ -74,7 +76,7 @@ namespace Repositorio
             return aux;
         }
         
-        public void CrearUsuario(string correo,string clave,int rol)
+        public void CrearUsuario(string correo,string clave,string nombreUsuario,int rol)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
             try
@@ -82,6 +84,7 @@ namespace Repositorio
                 accesoDatos.SetearSp("CrearUsuario");
                 accesoDatos.SetearParametros("@Correo", correo);
                 accesoDatos.SetearParametros("@Clave", clave);
+                accesoDatos.SetearParametros("@NombreUsuario", nombreUsuario);
                 accesoDatos.SetearParametros("@Rol", rol);
                 accesoDatos.EjecutarAccion();
             }

@@ -8,7 +8,7 @@ namespace Clases
 {
     public class Venta
     {
-        public int VentaID { get; set; }
+        public int VentasID { get; set; }
         public decimal Monto { get; set; }
         public int Cantidad { get; set; }
         public DateTime FechaVenta { get; set; }
