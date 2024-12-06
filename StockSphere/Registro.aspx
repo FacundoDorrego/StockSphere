@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="StockSphere.Login" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="StockSphere.Registro" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -8,13 +8,18 @@
             <div class="col-md-6 col-lg-5">
                 <div class="card shadow-lg">
                     <div class="card-header text-center">
-                        <h4>Iniciar sesión</h4>
+                        <h4>Registrarse</h4>
                     </div>
                     <div class="card-body text-center">
 
                         <div class="form-group mb-4">
+                            <label for="txtNombre" class="form-label">Nombre de usuario</label>
+                            <asp:TextBox ID="txtNombre" runat="server" class="form-control mx-auto" Placeholder="Nombre de usuario" />
+                        </div>
+
+                        <div class="form-group mb-4">
                             <label for="txtUsername" class="form-label">Correo electrónico</label>
-                            <asp:TextBox ID="txtUsername" runat="server" class="form-control mx-auto" Placeholder="Correo electrónico" />
+                            <asp:TextBox ID="txtCorreo" runat="server" class="form-control mx-auto" Placeholder="Correo electrónico" />
                         </div>
 
                         <div class="form-group mb-4">
@@ -23,14 +28,11 @@
                         </div>
 
                         <div class="d-flex justify-content-center card-body">
-                            <asp:Button ID="btnLogin" runat="server" class="btn btn-primary" Text="Iniciar sesión" OnClick="btnLogin_Click" />
+                            <asp:Button ID="btnRegistrar" runat="server" class="btn btn-primary" Text="Registrarse" OnClick="btnRegistrar_Click" />
                         </div>
-                        
+
 
                         <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Visible="false" class="mt-3"></asp:Label>
-                    </div>
-                    <div class="card-footer text-center">
-                        <small>¿No tienes cuenta? <a href="Registro.aspx">Regístrate aquí</a></small>
                     </div>
                 </div>
             </div>

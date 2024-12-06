@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositorio
+namespace Repositorios
 {
     public class RepositorioUsuario
     {
-        public bool Loguear(Usuario usuario){
+        public bool Loguear(Usuario usuario)
+        {
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
@@ -24,7 +25,7 @@ namespace Repositorio
                 while (accesoDatos.Lector.Read())
                 {
                     usuario.UsuarioID = (int)accesoDatos.Lector["UsuarioID"];
-                    usuario.Rol = (int)(accesoDatos.Lector["RolID"]);
+                    usuario.RolID = (int)(accesoDatos.Lector["RolID"]);
                     usuario.NombreUsuario = accesoDatos.Lector["NombreUsuario"].ToString();
                     return true;
 
@@ -61,11 +62,12 @@ namespace Repositorio
                         UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]),
                         CorreoElectronico = accesoDatos.Lector["CorreoElectronico"].ToString(),
                         Clave = accesoDatos.Lector["Clave"].ToString(),
-                        Rol = Convert.ToInt32(accesoDatos.Lector["RolID"]),
+                        RolID = Convert.ToInt32(accesoDatos.Lector["RolID"]),
                         NombreUsuario = accesoDatos.Lector["NombreUsuario"].ToString()
                     };
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -75,17 +77,91 @@ namespace Repositorio
             }
             return aux;
         }
-        
-        public void CrearUsuario(string correo,string clave,string nombreUsuario,int rol)
+
+        public void CrearUsuario(Usuario aux)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
                 accesoDatos.SetearSp("CrearUsuario");
-                accesoDatos.SetearParametros("@Correo", correo);
-                accesoDatos.SetearParametros("@Clave", clave);
-                accesoDatos.SetearParametros("@NombreUsuario", nombreUsuario);
-                accesoDatos.SetearParametros("@Rol", rol);
+                accesoDatos.SetearParametros("@Correo", aux.CorreoElectronico);
+                accesoDatos.SetearParametros("@Clave", aux.Clave);
+                accesoDatos.SetearParametros("@NombreUsuario", aux.NombreUsuario);
+                accesoDatos.SetearParametros("@Rol", aux.RolID);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+
+        public List<Usuario> ObtenerUsuarios()
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            List<Usuario> lista = new List<Usuario>();
+            try
+            {
+                accesoDatos.SetearSp("ObtenerUsuarios");
+                accesoDatos.EjecutarLectura();
+                while (accesoDatos.Lector.Read())
+                {
+                    Usuario aux = new Usuario
+                    {
+                        UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]),
+                        CorreoElectronico = accesoDatos.Lector["CorreoElectronico"].ToString(),
+                        Clave = accesoDatos.Lector["Clave"].ToString(),
+                        RolID = Convert.ToInt32(accesoDatos.Lector["RolID"]),
+                        NombreUsuario = accesoDatos.Lector["NombreUsuario"].ToString()
+                    };
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+
+        public void ModificarUsuario(Usuario aux)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                accesoDatos.SetearSp("ModificarUsuario");
+                accesoDatos.SetearParametros("@UsuarioID", aux.UsuarioID);
+                accesoDatos.SetearParametros("@Correo", aux.CorreoElectronico);
+                accesoDatos.SetearParametros("@Clave", aux.Clave);
+                accesoDatos.SetearParametros("@NombreUsuario", aux.NombreUsuario);
+                accesoDatos.SetearParametros("@Rol", aux.RolID);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+
+        public void EliminarUsuario(int usuarioID)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                accesoDatos.SetearSp("EliminarUsuario");
+                accesoDatos.SetearParametros("@UsuarioID", usuarioID);
                 accesoDatos.EjecutarAccion();
             }
             catch (Exception ex)

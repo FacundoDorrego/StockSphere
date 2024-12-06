@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Clases;
-using Repositorio;
 using Repositorios;
 
 namespace StockSphere
@@ -55,6 +54,7 @@ namespace StockSphere
             try
             {
                 RepositorioMovimientoInventario repomov = new RepositorioMovimientoInventario();
+                
                 List<MovimientoInventario> movimientoInventarios = repomov.ObtenerMovimientos();
                 List<MovimientoInventario> movimientosxEmpresa = new List<MovimientoInventario>();
 
@@ -169,6 +169,7 @@ namespace StockSphere
             try
             {
                 RepositorioProducto repoProducto = new RepositorioProducto();
+                
                 List<Producto> productos = repoProducto.ObtenerProductos();
                 List<Producto> productosxEmpresa = new List<Producto>();
                 ddlProductos.Items.Clear();

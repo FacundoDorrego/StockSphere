@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Clases;
-using Repositorio;
 using Repositorios;
 
 namespace StockSphere
@@ -46,14 +45,14 @@ namespace StockSphere
                         TotalVentas = g.Sum(v => v.Monto)
                     })
                     .ToList();
-                // Calcular el total de todas las ventas
+                
                 decimal totalVentas = ventas.Sum(v => v.Monto);
                 lblTotalVentas.Text = "Total Ventas: $" + totalVentas.ToString("F2");
                 hfChartData.Value = Newtonsoft.Json.JsonConvert.SerializeObject(resumenVentas);
             }
             else
             {
-                // Si no hay ventas, ocultar el gráfico y mostrar mensaje
+                
                 hfChartData.Value = string.Empty;
                 lblTotalVentas.Text = "No hay ventas registradas.";
             }
@@ -72,6 +71,12 @@ namespace StockSphere
                 listVentas.Visible = true;
                 dgvVentas.Visible = true;
             }
+        }
+
+        protected void btnRegresar_Click(object sender, EventArgs e)
+        {
+            int empresaIDVolver = Convert.ToInt32(Request.QueryString["empresaID"]);
+            Response.Redirect("GestionEmpresa.aspx?empresaID=" + empresaIDVolver);
         }
     }
 }

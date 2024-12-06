@@ -6,7 +6,7 @@
         public string NombreUsuario { get; set; }
         public string CorreoElectronico { get; set; }
         public string Clave { get; set; }
-        public int Rol { get; set; }
+        public int RolID { get; set; }
 
         public Usuario(string correo, string clave)
         {

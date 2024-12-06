@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Data.SqlClient;
 
-namespace Repositorio
+namespace Repositorios
 {
     public class AccesoDatos
     {

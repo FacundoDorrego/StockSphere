@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
-using Repositorio;
+using Repositorios;
 using Clases;
 
 namespace StockSphere
@@ -14,7 +14,7 @@ namespace StockSphere
             {
                 Response.Redirect("AdminEmpresas.aspx");
             }
-            lblMessage.Visible = false;
+            lblMensaje.Visible = false;
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -37,18 +37,20 @@ namespace StockSphere
                 else
                 {
                    
-                    lblMessage.Visible = true;
-                    lblMessage.Text = "Credenciales incorrectas. Por favor, intente de nuevo.";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.Visible = true;
+                    lblMensaje.Text = "Credenciales incorrectas. Por favor, intente de nuevo.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
                 }
             }
             catch (Exception ex)
             {
                 
-                lblMessage.Visible = true;
-                lblMessage.Text = "Error: " + ex.Message;
-                lblMessage.ForeColor = System.Drawing.Color.Red;
+                lblMensaje.Visible = true;
+                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
         }
+
+       
     }
 }

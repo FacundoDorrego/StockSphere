@@ -92,7 +92,7 @@
                 <asp:TemplateField HeaderText="Gestion Empresa" HeaderStyle-CssClass="text-center">
                     <ItemTemplate>
                         <asp:Button ID="btnGestionEmpresa" runat="server" Text="Gestionar Empresa"
-                            CommandName="GestionEmpresa" CommandArgument='<%# Eval("EmpresaID") %>' class="btn btn-info" />
+                            CommandName="GestionEmpresa" CommandArgument='<%# Eval("EmpresaID") %>' class="btn btn-info align-content-center" />
 
                     </ItemTemplate>
                 </asp:TemplateField>

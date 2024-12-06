@@ -11,44 +11,35 @@ namespace StockSphere
 {
 
 
-    public partial class DashboardReportes
+    public partial class GestionUsuarios
     {
 
         /// <summary>
-        /// Control btnMostrarVentas.
+        /// Control btnMostrarUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnMostrarVentas;
+        protected global::System.Web.UI.WebControls.Button btnMostrarUsuarios;
 
         /// <summary>
-        /// Control lblTotalVentas.
+        /// Control listUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalVentas;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl listUsuarios;
 
         /// <summary>
-        /// Control listVentas.
+        /// Control dgvUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl listVentas;
-
-        /// <summary>
-        /// Control dgvVentas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvVentas;
+        protected global::System.Web.UI.WebControls.GridView dgvUsuarios;
 
         /// <summary>
         /// Control btnRegresar.
@@ -60,12 +51,21 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Button btnRegresar;
 
         /// <summary>
-        /// Control hfChartData.
+        /// Control hiddenUsuarioIDEliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfChartData;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenUsuarioIDEliminar;
+
+        /// <summary>
+        /// Control btnConfirmarEliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmarEliminar;
     }
 }

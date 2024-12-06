@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link href="~/Icono.png" rel="shortcut icon" type="image/x-icon" />
 </head>
@@ -17,19 +18,17 @@
     <form runat="server">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <div class="container">
-                    <a class="navbar-brand d-inline align-content-center" href="/AdminEmpresas.aspx">
-                        <img src="/Icono.png" alt="" width="50" height="50" class="d-inline-block">
-                        StockSphere
-                    </a>
-                </div>
+                <a class="navbar-brand d-inline align-content-center" href="/AdminEmpresas.aspx">
+                    <img src="/Icono.png" alt="Icono" width="50" height="50" class="d-inline-block">
+                    StockSphere
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-content-center">
                         <li class="nav-item">
-                            <a class="nav-link" id="lnkLogin" runat="server" href="~/Login">Iniciar Sesion</a>
+                            <a class="nav-link" id="lnkLogin" runat="server" href="~/Login">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" runat="server" href="~/">Inicio</a>
@@ -37,10 +36,27 @@
                         <li class="nav-item">
                             <a class="nav-link" runat="server" href="~/AdminEmpresas">Empresas</a>
                         </li>
+
+                        <asp:PlaceHolder ID="phAdminMenu" runat="server">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Menu Administrador</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="GestionUsuarios">Modulo de gestion - Usuarios</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                        </asp:PlaceHolder>
+
+                        <li class="nav-item">
+                            <asp:Button ID="btnCerrar" class="btn btn-outline-danger" runat="server" Text="Cerrar Sesión" OnClick="btnCerrar_Click" />
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+
 
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">

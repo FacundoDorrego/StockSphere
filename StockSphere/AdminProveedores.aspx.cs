@@ -1,5 +1,5 @@
 ﻿using Clases;
-using Repositorio;
+using Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,43 +13,45 @@ namespace StockSphere
     {
         private RepositorioProveedor repositorioProveedor = new RepositorioProveedor();
         private int proveedorID;
+        private int empresaID;
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
         
-        /*protected void dgvProveedores_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void dgvProveedores_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int proveedorID = Convert.ToInt32(dgvProveedores.DataKeys[e.RowIndex].Value);  // Accede a la clave primaria del proveedor
+            int proveedorID = Convert.ToInt32(dgvProveedores.DataKeys[e.RowIndex].Value); 
             try
             {
                 AccesoDatos accesoDatos = new AccesoDatos();
-                accesoDatos.SetearSp("EliminarProveedor");  // Procedimiento almacenado para eliminar proveedor
+                accesoDatos.SetearSp("EliminarProveedor");  
                 accesoDatos.SetearParametros("@ProveedorID", proveedorID);
                 accesoDatos.EjecutarAccion();
-                CargarProveedores();  // Recargar la lista de proveedores
+                CargarProveedores();  
             }
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al eliminar el proveedor: " + ex.Message;
                 lblMensaje.Visible = true;
             }
-        }*/
+        }
 
-        /*private void CargarProveedores()
+        private void CargarProveedores()
         {
             try
             {
-                List<Proveedor> proveedores = repositorioProveedor.ObtenerProveedores();
+                empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+                List<Proveedor> proveedores = repositorioProveedor.ObtenerProveedoresxEmpresa(empresaID);
                 dgvProveedores.DataSource = proveedores;
-                dgvProveedores.DataBind(); // Esto vincula los datos al GridView
+                dgvProveedores.DataBind();
             }
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al cargar los proveedores: " + ex.Message;
                 lblMensaje.Visible = true;
             }
-        }*/
+        }
     }
 
 }

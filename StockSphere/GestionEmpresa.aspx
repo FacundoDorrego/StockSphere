@@ -3,7 +3,7 @@
     <div class="container mt-4">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center">
-                <h3>Gestion de la empresa</h3>
+                <h2>Gestion de la empresa</h2>
             </div>
             <div class="card-body">
                 <div class="mb-3">
