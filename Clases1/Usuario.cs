@@ -1,4 +1,9 @@
-﻿namespace Clases
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace Clases
 {
     public class Usuario
     {
@@ -12,6 +17,14 @@
         {
             CorreoElectronico = correo;
             Clave = clave;
+        }
+        
+        public Usuario(string nombre, string correo, string clave, int rol)
+        {
+            NombreUsuario = nombre;
+            CorreoElectronico = correo;
+            Clave = clave;
+            RolID = rol;
         }
 
         public Usuario()

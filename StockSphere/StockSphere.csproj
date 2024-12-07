@@ -233,6 +233,7 @@
     <Content Include="Default.aspx" />
     <Content Include="AdminEmpresas.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="GestionEmpleados.aspx" />
     <Content Include="GestionUsuarios.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -329,6 +330,13 @@
     </Compile>
     <Compile Include="AdminEmpresas.aspx.designer.cs">
       <DependentUpon>AdminEmpresas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionEmpleados.aspx.cs">
+      <DependentUpon>GestionEmpleados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionEmpleados.aspx.designer.cs">
+      <DependentUpon>GestionEmpleados.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionUsuarios.aspx.cs">
       <DependentUpon>GestionUsuarios.aspx</DependentUpon>

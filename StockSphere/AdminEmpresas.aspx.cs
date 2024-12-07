@@ -14,6 +14,7 @@ namespace StockSphere
     {
         private RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
         private int usuarioID;
+        private int usuarioRol;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,10 +23,17 @@ namespace StockSphere
             {
                 Response.Redirect("Login.aspx");
             }
+            
             else
             {
                 Usuario usuario = (Usuario)Session["usuario"];
+                if (usuario.RolID == 3)
+                {
+                    Empleado empleado = (Empleado)Session["empleado"];
+                    Response.Redirect("GestionEmpresa.aspx?empresaID=" + empleado.Empresa.EmpresaID, false);
+                }
                 usuarioID = usuario.UsuarioID;
+                usuarioRol = usuario.RolID;
             }
 
             if (!IsPostBack)
@@ -37,17 +45,34 @@ namespace StockSphere
 
         private void CargarEmpresas()
         {
-            try
+            if (usuarioRol == 1)
             {
-                List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasPorUsuario(usuarioID);
-                List<Empresa> empresasActivas = empresas.Where(e => e.Activa).ToList();
-                dgvEmpresas.DataSource = empresasActivas;
-                dgvEmpresas.DataBind();
+                try
+                {
+                    List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasAdmin();
+                    dgvEmpresas.DataSource = empresas;
+                    dgvEmpresas.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = "Error al cargar las empresas: " + ex.Message;
+                    lblMensaje.Visible = true;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                lblMensaje.Text = "Error al cargar las empresas: " + ex.Message;
-                lblMensaje.Visible = true;
+                try
+                {
+                    List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasPorUsuario(usuarioID);
+                    List<Empresa> empresasActivas = empresas.Where(e => e.Activa).ToList();
+                    dgvEmpresas.DataSource = empresasActivas;
+                    dgvEmpresas.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = "Error al cargar las empresas: " + ex.Message;
+                    lblMensaje.Visible = true;
+                }
             }
         }
 
@@ -79,7 +104,7 @@ namespace StockSphere
 
         }
 
-       
+
 
         protected void dgvEmpresas_RowCommand(object sender, GridViewCommandEventArgs e)
         {

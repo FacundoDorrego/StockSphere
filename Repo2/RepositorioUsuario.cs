@@ -87,7 +87,7 @@ namespace Repositorios
                 accesoDatos.SetearParametros("@Correo", aux.CorreoElectronico);
                 accesoDatos.SetearParametros("@Clave", aux.Clave);
                 accesoDatos.SetearParametros("@NombreUsuario", aux.NombreUsuario);
-                accesoDatos.SetearParametros("@Rol", aux.RolID);
+                accesoDatos.SetearParametros("@RolID", aux.RolID);
                 accesoDatos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -138,11 +138,11 @@ namespace Repositorios
             try
             {
                 accesoDatos.SetearSp("ModificarUsuario");
-                accesoDatos.SetearParametros("@UsuarioID", aux.UsuarioID);
+                accesoDatos.SetearParametros("@NombreUsuario", aux.NombreUsuario);
                 accesoDatos.SetearParametros("@Correo", aux.CorreoElectronico);
                 accesoDatos.SetearParametros("@Clave", aux.Clave);
-                accesoDatos.SetearParametros("@NombreUsuario", aux.NombreUsuario);
-                accesoDatos.SetearParametros("@Rol", aux.RolID);
+                accesoDatos.SetearParametros("@RolID", aux.RolID);
+                accesoDatos.SetearParametros("@UsuarioID", aux.UsuarioID);
                 accesoDatos.EjecutarAccion();
             }
             catch (Exception ex)

@@ -12,6 +12,47 @@ namespace Repositorios
     public class RepositorioEmpresa
     {
 
+        public List<Empresa> ObtenerEmpresasAdmin()
+        {
+            List<Empresa> empresas = new List<Empresa>();
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+
+                accesoDatos.SetearConsulta("SELECT * FROM Empresas");
+                accesoDatos.EjecutarLectura();
+
+                if (accesoDatos.Lector != null && accesoDatos.Lector.HasRows)
+                {
+                    while (accesoDatos.Lector.Read())
+                    {
+                        empresas.Add(new Empresa
+                        {
+                            EmpresaID = Convert.ToInt32(accesoDatos.Lector["EmpresaID"]),
+                            Nombre = accesoDatos.Lector["Nombre"].ToString(),
+                            UsuarioID = Convert.ToInt32(accesoDatos.Lector["UsuarioID"]),
+                            FechaCreacion = Convert.ToDateTime(accesoDatos.Lector["FechaCreacion"]),
+                            Activa = Convert.ToBoolean(accesoDatos.Lector["Activa"])
+                        });
+                    }
+                }
+                else
+                {
+                    throw new Exception("No se encontraron empresas para el usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al obtener las empresas", ex);
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+
+            return empresas;
+        }
 
         public List<Empresa> ObtenerEmpresasPorUsuario(int idUsu)
         {

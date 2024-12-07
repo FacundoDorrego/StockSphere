@@ -86,8 +86,7 @@ namespace StockSphere
         private void CargarCategorias()
         {
             try
-            {
-                //Agregar que las categorias se relaciones mediante el ID de la empresa
+            {           
                 RepositorioCategoria repoCategoria = new RepositorioCategoria();
                 List<Categoria> categorias = repoCategoria.ObtenerCategorias();
                 List<Categoria> categoriasEmpresa = new List<Categoria>();
@@ -368,14 +367,9 @@ namespace StockSphere
                 {
                     int productoID = Convert.ToInt32(args[0]);
                     int stock = Convert.ToInt32(args[1]);
-
-                    Debug.WriteLine($"CommandArgument recibido: ProductoID = {productoID}, Stock = {stock}");
-
-
                     RepositorioProducto repoProducto = new RepositorioProducto();
                     repoProducto.EliminarProducto(productoID);
                     int stockNegativo = stock * -1;
-
                     int empresaIDEliminar = Convert.ToInt32(Request.QueryString["empresaID"]);
                     Usuario usuario = (Usuario)Session["usuario"];
                     int usuarioIDEliminar = usuario.UsuarioID;
@@ -483,7 +477,6 @@ namespace StockSphere
 
         protected void btnConfirmarVenta_Click(object sender, EventArgs e)
         {
-            //Agregar reporte de venta.
             try
             {
                 string productoID = ddlProductosVenta.SelectedValue;

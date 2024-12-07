@@ -22,25 +22,50 @@ namespace StockSphere
                 }
                 else
                 {
-                    empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
-                    CargarDetallesEmpresa(empresaID);
+                    if (Request.QueryString["empresaID"] != null)
+                    {
+                        Usuario usuario = (Usuario)Session["usuario"];
+                        if (usuario.RolID == 3)
+                        {
+                            Empleado empleado = (Empleado)Session["empleado"];
+                            empresaID = empleado.Empresa.EmpresaID;
+                            CargarDetallesEmpresa(empresaID);
+                            OcultarBotonesEmpleados();
 
+                        }
+                        else
+                        {
+                            empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+                            CargarDetallesEmpresa(empresaID);
+
+                        }
+                    }
                 }
-
-
 
             }
         }
-        private void CargarDetallesEmpresa(int empresaID)
+
+        protected void OcultarBotonesEmpleados()
         {
+            Usuario usuario = (Usuario)Session["usuario"];
+            if (usuario.RolID == 3)
+            {
+                btnProveedores.Visible = false;
+                btnCategorias.Visible = false;
+                btnDashboardReportes.Visible = false;
+                btnGestionEmpleados.Visible = false;
+            }
+        }
+
+        protected void CargarDetallesEmpresa(int empresaID)
+        {
+            Empresa empresaSelec = repositorioEmpresa.ObtenerEmpresaxID(empresaID);
             if (empresaID == 0)
             {
                 Response.Redirect("AdminEmpresas.aspx");
             }
-            Usuario usuario = (Usuario)Session["usuario"];
 
-            var empresaSelec = repositorioEmpresa.ObtenerEmpresaxID(empresaID);
-            if (empresaSelec == null || empresaSelec.UsuarioID != usuario.UsuarioID)
+            if (empresaSelec == null)
             {
                 Response.Redirect("AdminEmpresas.aspx");
             }
@@ -84,7 +109,10 @@ namespace StockSphere
 
         }
 
-        
+        protected void btnGestionEmpleados_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("GestionEmpleados.aspx?empresaID=" + lblEmpresaID.Text);
+        }
     }
 
 

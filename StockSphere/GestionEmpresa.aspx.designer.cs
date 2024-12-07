@@ -51,15 +51,6 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Label lblActivo;
 
         /// <summary>
-        /// Control btnRegresar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegresar;
-
-        /// <summary>
         /// Control btnProductos.
         /// </summary>
         /// <remarks>
@@ -87,6 +78,15 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Button btnCategorias;
 
         /// <summary>
+        /// Control btnGestionEmpleados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGestionEmpleados;
+
+        /// <summary>
         /// Control btnDashboardReportes.
         /// </summary>
         /// <remarks>
@@ -94,5 +94,14 @@ namespace StockSphere
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDashboardReportes;
+
+        /// <summary>
+        /// Control btnRegresar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRegresar;
     }
 }

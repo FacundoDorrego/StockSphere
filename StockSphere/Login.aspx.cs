@@ -21,6 +21,7 @@ namespace StockSphere
         {
             Usuario usuario;
             RepositorioUsuario repousuario = new RepositorioUsuario();
+            RepositorioEmpleado repoEmpleado = new RepositorioEmpleado();
 
             try
             {
@@ -32,7 +33,18 @@ namespace StockSphere
                 {
                     
                     Session.Add("usuario", usuario);
-                    Response.Redirect("AdminEmpresas.aspx");
+                    if(usuario.RolID == 3)
+                    {
+                        Empleado empleado = repoEmpleado.ObtenerEmpleado(usuario.UsuarioID);
+                        Session.Add("empleado", empleado);
+                        Response.Redirect("GestionEmpresa.aspx?empresaID=" + empleado.Empresa.EmpresaID,false);
+                    }
+                    else
+                    {
+                    Response.Redirect("AdminEmpresas.aspx",false);
+
+                    }
+                    Context.ApplicationInstance.CompleteRequest();
                 }
                 else
                 {

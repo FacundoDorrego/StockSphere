@@ -32,11 +32,12 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" OnClick="btnRegresar_Click" />
-                <asp:Button ID="btnProductos" runat="server" Text="Productos" CssClass="btn btn-primary mx-2" OnClick="btnProductos_Click" />
+                <asp:Button ID="btnProductos" runat="server" Text="Gestion de productos" CssClass="btn btn-primary mx-2" OnClick="btnProductos_Click" />
                 <asp:Button ID="btnProveedores" runat="server" Text="Proveedores" CssClass="btn btn-primary mx-2" OnClick="btnProveedores_Click" />
                 <asp:Button ID="btnCategorias" runat="server" Text="Categorias" CssClass="btn btn-primary mx-2" OnClick="btnCategorias_Click" />
-                <asp:Button ID="btnDashboardReportes" runat="server" Text="Dashboard y reportes" CssClass="btn btn-info mx-2" OnClick="btnDashboardReportes_Click" />
+                <asp:Button ID="btnGestionEmpleados" runat="server" Text="Gestion de empleados" CssClass="btn btn-outline-info mx-2" OnClick="btnGestionEmpleados_Click" />
+                <asp:Button ID="btnDashboardReportes" runat="server" Text="Dashboard y reportes" CssClass="btn btn-outline-info mx-2" OnClick="btnDashboardReportes_Click" />
+                <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" OnClick="btnRegresar_Click" />
             </div>
         </div>
     </div>
