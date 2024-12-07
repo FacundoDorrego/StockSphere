@@ -19,8 +19,8 @@
             dgvProveedores.EditIndex = -1;
         }
 
-        function abrirModalEliminar(proveedorID) {
-            document.getElementById('<%= hiddenUsuarioIDEliminar.ClientID %>').value = proveedorID;
+        function abrirModalEliminar(usuarioID) {
+            document.getElementById('<%= hiddenUsuarioIDEliminar.ClientID %>').value = usuarioID;
             var modal = new bootstrap.Modal(document.getElementById('modalConfirmarEliminar'));
 
             modal.show();

@@ -15,6 +15,7 @@ namespace StockSphere
     {
         private int empresaID;
         private int usuarioID;
+        private int usuarioRolID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,9 +27,21 @@ namespace StockSphere
                 }
                 else
                 {
-                    empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
                     Usuario usuario = (Usuario)Session["usuario"];
-                    usuarioID = usuario.UsuarioID;
+
+                    if (usuario.RolID == 3)
+                    {
+                        Empleado empleado = (Empleado)Session["empleado"];
+                        usuarioID = empleado.Usuario.UsuarioID;
+                        usuarioRolID = empleado.Usuario.RolID;
+                        OcultarBotonesEmpleados();
+                    }
+                    else
+                    {
+                        usuarioID = usuario.UsuarioID;
+                        usuarioRolID = usuario.RolID;
+                    }
+                    empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
                     CargarProductos();
                     CargarMovimientos();
                     CargarProveedores();
@@ -39,7 +52,16 @@ namespace StockSphere
                 }
             }
         }
-
+        protected void OcultarBotonesEmpleados()
+        {
+            Empleado empleado = (Empleado)Session["empleado"];
+            if (empleado.Usuario.RolID == 3)
+            {
+                btnActualizarProducto.Visible = false;
+                btnMostrarMovimientos.Visible = false;
+                dgvProductos.Columns[8].Visible = false;
+            }
+        }
         private void CargarDivs()
         {
             CargarProductos();
@@ -54,7 +76,7 @@ namespace StockSphere
             try
             {
                 RepositorioMovimientoInventario repomov = new RepositorioMovimientoInventario();
-                
+
                 List<MovimientoInventario> movimientoInventarios = repomov.ObtenerMovimientos();
                 List<MovimientoInventario> movimientosxEmpresa = new List<MovimientoInventario>();
 
@@ -86,7 +108,7 @@ namespace StockSphere
         private void CargarCategorias()
         {
             try
-            {           
+            {
                 RepositorioCategoria repoCategoria = new RepositorioCategoria();
                 List<Categoria> categorias = repoCategoria.ObtenerCategorias();
                 List<Categoria> categoriasEmpresa = new List<Categoria>();
@@ -165,10 +187,11 @@ namespace StockSphere
         private void CargarProductos()
         {
             int empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+            Empresa empresaSelec = (Empresa)Session["empresaSelec"];
             try
             {
                 RepositorioProducto repoProducto = new RepositorioProducto();
-                
+
                 List<Producto> productos = repoProducto.ObtenerProductos();
                 List<Producto> productosxEmpresa = new List<Producto>();
                 ddlProductos.Items.Clear();
@@ -191,11 +214,19 @@ namespace StockSphere
                 {
                     lblMensaje.Text = "No hay productos para mostrar.";
                 }
-                
+
 
                 if (dgvProductos.DataSource != null)
                 {
+                    if (usuarioRolID == 1)
+                    {
 
+                        if (empresaSelec == null || empresaSelec.UsuarioID != usuarioID)
+                        {
+                            Response.Redirect("AdminEmpresas.aspx");
+
+                        }
+                    }
                     ddlProductos.Items.Insert(0, new ListItem("Seleccione un producto", "0"));
                     ddlProductos.DataSource = dgvProductos.DataSource;
                     ddlProductos.DataTextField = "Nombre";
@@ -569,10 +600,10 @@ namespace StockSphere
                 txtStockProdVenta.Text = productoSeleccionado.Stock.ToString();
                 ClientScript.RegisterStartupScript(this.GetType(), "RegistrarVenta", "mostrarFormulario('divRegistrarVenta');", true);
             }
-            if(ddlProductosVenta.Items.Count == 1)
+            if (ddlProductosVenta.Items.Count == 1)
             {
                 btnConfirmarVenta.Visible = true;
-                
+
             }
         }
     }

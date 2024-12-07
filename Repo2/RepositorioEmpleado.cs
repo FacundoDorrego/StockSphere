@@ -14,12 +14,13 @@ namespace Repositorios
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-            accesoDatos.SetearSp("AgregarEmpleado");
-            accesoDatos.SetearParametros("@UsuarioID", auxEmpleado.Usuario.UsuarioID);
-            accesoDatos.SetearParametros("@EmpresaID", auxEmpleado.Empresa.EmpresaID);
-            accesoDatos.EjecutarAccion();
+                accesoDatos.SetearSp("AgregarEmpleado");
+                accesoDatos.SetearParametros("@UsuarioID", auxEmpleado.Usuario.UsuarioID);
+                accesoDatos.SetearParametros("@EmpresaID", auxEmpleado.Empresa.EmpresaID);
+                accesoDatos.EjecutarAccion();
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -33,7 +34,7 @@ namespace Repositorios
         {
             AccesoDatos accesoDatos = new AccesoDatos();
             RepositorioEmpresa repoEmpresa = new RepositorioEmpresa();
-            RepositorioUsuario  repoUsuario = new RepositorioUsuario();
+            RepositorioUsuario repoUsuario = new RepositorioUsuario();
             Empleado auxEmpleado = new Empleado();
             try
             {
@@ -57,6 +58,33 @@ namespace Repositorios
             {
                 accesoDatos.CerrarConexion();
             }
+        }
+
+        public List<Empleado> ObtenerEmpleadosxEmpresa(int empresaID)
+        {
+            List<Empleado> listaEmpleados = new List<Empleado>();
+            try
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
+                accesoDatos.SetearSp("ObtenerEmpleadosxEmpresa");
+                accesoDatos.SetearParametros("@EmpresaID", empresaID);
+                accesoDatos.EjecutarLectura();
+                while (accesoDatos.Lector.Read())
+                {
+                    Empleado auxEmpleado = new Empleado();
+                    RepositorioUsuario repoUsuario = new RepositorioUsuario();
+                    RepositorioEmpresa repoEmpresa = new RepositorioEmpresa();
+                    auxEmpleado.Usuario = repoUsuario.ObtenerUsuarioxID((int)accesoDatos.Lector["UsuarioID"]);
+                    auxEmpleado.Empresa = repoEmpresa.ObtenerEmpresaxID((int)accesoDatos.Lector["EmpresaID"]);
+                    auxEmpleado.EmpleadoID = (int)accesoDatos.Lector["EmpleadoID"];
+                    listaEmpleados.Add(auxEmpleado);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return listaEmpleados;
         }
     }
 }

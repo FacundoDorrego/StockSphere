@@ -72,7 +72,7 @@
             <asp:Button ID="btnMostrarAgregar" CssClass="btn btn-success" runat="server" Text="Agregar Producto" OnClientClick="mostrarFormulario('divAgregarProducto'); return false;" OnClick="btnMostrarAgregar_Click" />
             <asp:Button ID="btnAgregarStock" runat="server" Text="Agregar Stock" CssClass="btn btn-primary mx-2" OnClientClick="mostrarFormulario('divAgregarStock'); return false;" />
             <asp:Button ID="btnMostrarListado" runat="server" Text="Listado de Productos" CssClass="btn btn-primary mx-2" OnClick="btnMostrarListado_Click" />
-            <asp:Button ID="btnMostrarMovimientos" runat="server" Text="Movimientos de Stock" CssClass="btn btn-primary mx-2" OnClick="btnMostrarMovimientos_Click" />
+            <asp:Button ID="btnMostrarMovimientos" runat="server" Text="Movimientos de Stock" CssClass="btn btn-primary mx-2" OnClick="btnMostrarMovimientos_Click"/>
             <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-info mx-2" OnClientClick="mostrarFormulario('divRegistrarVenta'); return false;" />
         </div>
 
@@ -96,7 +96,6 @@
                     <label for="ddlCategoriaProducto">Categoría</label>
                     <asp:DropDownList ID="ddlCategoriaProducto" runat="server" CssClass="form-control">
                     </asp:DropDownList>
-
                     <label for="ddlProveedor">Proveedor</label>
                     <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-control">
                     </asp:DropDownList>
