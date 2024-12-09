@@ -102,7 +102,7 @@
                             <asp:BoundField DataField="RolID" HeaderText="Rol ID" HeaderStyle-CssClass="text-center sticky-top bg-light" />
                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="text-center sticky-top bg-light">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditar" runat="server" Text="Modificar" CssClass="btn btn-warning" CommandName="Edit" CommandArgument='<%# Eval("UsuarioID") %>' OnClientClick="document.getElementById('<%= hiddenUsuarioID.ClientID %>').value = this.commandArgument; mostrarFormulario('divModificarUsuario'); return false;" />
+                                    <asp:Button ID="btnEditar" runat="server" Text="Modificar" CssClass="btn btn-outline-primary mx-2" CommandName="Edit" CommandArgument='<%# Eval("UsuarioID") %>' OnClientClick="document.getElementById('<%= hiddenUsuarioID.ClientID %>').value = this.commandArgument; mostrarFormulario('divModificarUsuario'); return false;" />
                                     <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="Eliminar" CommandArgument='<%# Eval("UsuarioID") %>' OnClientClick='<%# "abrirModalEliminar(" + Eval("UsuarioID") + "); return false;" %>' OnRowCommand="dgvUsuarios_RowCommand" />
                                 </ItemTemplate>
                             </asp:TemplateField>

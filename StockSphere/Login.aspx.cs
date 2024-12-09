@@ -35,7 +35,7 @@ namespace StockSphere
                     Session.Add("usuario", usuario);
                     if(usuario.RolID == 3)
                     {
-                        Empleado empleado = repoEmpleado.ObtenerEmpleado(usuario.UsuarioID);
+                        Empleado empleado = repoEmpleado.ObtenerEmpleadoxIDUsu(usuario.UsuarioID);
                         Session.Add("empleado", empleado);
                         Response.Redirect("GestionEmpresa.aspx?empresaID=" + empleado.Empresa.EmpresaID,false);
                     }

@@ -224,7 +224,7 @@
                 <asp:BoundField DataField="ProveedorID" HeaderText="Proveedor" HeaderStyle-CssClass="text-center sticky-top bg-light" />
                 <asp:TemplateField HeaderText="Opciones" HeaderStyle-CssClass="text-center sticky-top bg-light">
                     <ItemTemplate>
-                        <asp:Button ID="btnActualizar" runat="server" Text="Actualizar" CssClass="btn btn-warning" CommandName="Edit" CommandArgument='<%# Eval("ProductoID") %>' OnClientClick="document.getElementById('<%= hiddenProductoID.ClientID %>').value = this.commandArgument; mostrarFormulario('divActualizarProducto'); return false;" />
+                        <asp:Button ID="btnActualizar" runat="server" Text="Actualizar" CssClass="btn btn-outline-primary mx-2" CommandName="Edit" CommandArgument='<%# Eval("ProductoID") %>' OnClientClick="document.getElementById('<%= hiddenProductoID.ClientID %>').value = this.commandArgument; mostrarFormulario('divActualizarProducto'); return false;" />
                         <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="Eliminar" CommandArgument='<%# Eval("ProductoID") + "," + Eval("Stock") %>' OnClientClick="return confirmarEliminacion();" OnRowCommand="dgvProductos_RowCommand" />
                     </ItemTemplate>
                 </asp:TemplateField>

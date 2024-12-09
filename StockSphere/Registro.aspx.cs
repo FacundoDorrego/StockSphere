@@ -39,14 +39,16 @@ namespace StockSphere
                         return;
                     }
                 }
-                   repoUsuario.CrearUsuario(usuario);
-                   lblMensaje.Text = "Usuario registrado correctamente.";   
-            } catch (Exception ex)
+                repoUsuario.CrearUsuario(usuario);
+                lblMensaje.Text = "Usuario registrado correctamente.";
+                Response.Redirect("Login.aspx");
+            }
+            catch (Exception ex)
             {
                 lblMensaje.Text = "Error al registrar usuario: " + ex.Message;
                 lblMensaje.Visible = true;
             }
-          
+
         }
     }
 }

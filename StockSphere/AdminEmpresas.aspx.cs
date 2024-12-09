@@ -32,6 +32,11 @@ namespace StockSphere
                     Empleado empleado = (Empleado)Session["empleado"];
                     Response.Redirect("GestionEmpresa.aspx?empresaID=" + empleado.Empresa.EmpresaID, false);
                 }
+                if (usuario.RolID == 2)
+                {
+                    dgvEmpresas.Columns[3].Visible = false;
+                    dgvEmpresas.Columns[5].Visible = false;
+                }
                 usuarioID = usuario.UsuarioID;
                 usuarioRol = usuario.RolID;
             }

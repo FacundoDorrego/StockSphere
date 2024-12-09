@@ -74,8 +74,8 @@
                     <canvas id="chartVentas" style="width: 100%; max-width: 400px; margin: auto;"></canvas>
                 </div>
                 <div class="container my-4">
-                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                         <h4 id="listVentas" runat="server" visible="false">Lista de Ventas</h4>
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                         <asp:GridView ID="dgvVentas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" Visible="false">
                             <Columns>
                                 <asp:BoundField DataField="VentasID" HeaderText="Venta N°:" HeaderStyle-CssClass="text-center sticky-top bg-light" />

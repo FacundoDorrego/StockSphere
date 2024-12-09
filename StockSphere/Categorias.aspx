@@ -86,9 +86,9 @@
                 <asp:BoundField DataField="EmpresaID" HeaderText="EmpresaID" HeaderStyle-CssClass="text-center" />
                 <asp:TemplateField HeaderText="Opciones" HeaderStyle-CssClass="text-center">
                     <ItemTemplate>
-                        <asp:Button ID="btnActualizar" runat="server" Text="Actualizar" CssClass="btn btn-warning"
+                        <asp:Button ID="btnActualizar" runat="server" Text="Actualizar" CssClass="btn btn-outline-primary mx-2"
                             CommandName="Edit" CommandArgument='<%# Eval("CategoriaID") %>'
-                            OnClientClick='<%# "document.getElementById(\"" + hiddenCategoriaID.ClientID + "\").value = \"" + Eval("CategoriaID") + "\"; mostrarFormulario(\"divActualizarCategoria\"); return false;" %>'/>
+                            OnClientClick='<%# "document.getElementById(\"" + hiddenCategoriaID.ClientID + "\").value = \"" + Eval("CategoriaID") + "\"; mostrarFormulario(\"divActualizarCategoria\"); return false;" %>' />
                         <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClientClick='<%# "abrirModalEliminar(" + Eval("CategoriaID") + "); return false;" %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
