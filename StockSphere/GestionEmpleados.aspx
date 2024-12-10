@@ -31,6 +31,7 @@
         }
 </script>
     <asp:HiddenField ID="hiddenEmpleadoID" runat="server" />
+    <!--hacer filtros--->
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white text-center">
             <h2>Módulo de Gestión - Empleados</h2>
@@ -102,7 +103,8 @@
                 </div>
                 <asp:Label ID="lblMensajeMod" runat="server" ForeColor="Red" Visible="false" class="mt-3"></asp:Label>
             </div>
-            <asp:GridView ID="dgvEmpleados" runat="server" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" OnRowCommand="dgvEmpleados_RowCommand" OnRowEditing="dgvEmpleados_RowEditing" DataKeyNames="EmpleadoID">
+            <h4 id="lblListaEmpleados" runat="server" visible="false">Lista de empleados registrados</h4>
+            <asp:GridView ID="dgvEmpleados" runat="server" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" OnRowCommand="dgvEmpleados_RowCommand" OnRowEditing="dgvEmpleados_RowEditing" DataKeyNames="EmpleadoID" Visible="false">
                 <Columns>
                     <asp:BoundField DataField="EmpleadoID" HeaderText="ID del empleado" />
                     <asp:BoundField DataField="Usuario.UsuarioID" HeaderText="ID de usuario" />

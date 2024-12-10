@@ -33,8 +33,13 @@ namespace StockSphere
                             OcultarBotonesEmpleados();
 
                         }
+                        
                         else
                         {
+                            if (usuario.RolID == 2)
+                            {
+                                divActivo.Visible = false;
+                            }
                             empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
                             CargarDetallesEmpresa(empresaID);
 

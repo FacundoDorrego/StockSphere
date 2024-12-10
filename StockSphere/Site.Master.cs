@@ -15,6 +15,8 @@ namespace StockSphere
             if (Session["usuario"] != null)
             {
                 lnkLogin.Visible = false;
+                lnkEmpresas.Visible = true;
+                lnkInicio.Visible = true;
                 btnCerrar.Visible = true;
                 
                 var usuario = (Usuario)Session["usuario"];
@@ -29,6 +31,7 @@ namespace StockSphere
             }
             else
             {
+                lnkEmpresas.Visible = false;
                 btnCerrar.Visible = false;
                 lnkLogin.Visible = true;
                 phAdminMenu.Visible = false; 

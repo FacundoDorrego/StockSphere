@@ -126,9 +126,11 @@ namespace StockSphere
             if (dgvEmpleados.Visible == true)
             {
                 dgvEmpleados.Visible = false;
+                lblListaEmpleados.Visible = false;
             }
             else
             {
+                lblListaEmpleados.Visible = true;
                 dgvEmpleados.Visible = true;
             }
         }

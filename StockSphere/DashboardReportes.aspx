@@ -58,7 +58,7 @@
             }
         });
 </script>
-
+    <!--Hacer filtros--->
     <div class="container mt-4">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center">

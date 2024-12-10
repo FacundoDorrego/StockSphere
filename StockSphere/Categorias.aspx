@@ -24,6 +24,7 @@
     </script>
 
     <div class="container">
+        <!--Hacer diseño--->
         <asp:HiddenField ID="hiddenCategoriaID" runat="server" />
         <h2>Administrar Categorias</h2>
 

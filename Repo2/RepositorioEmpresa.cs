@@ -160,6 +160,7 @@ namespace Repositorios
             accesoDatos.SetearSp("ActualizarEmpresa");
             accesoDatos.SetearParametros("@EmpresaID", empresa.EmpresaID);
             accesoDatos.SetearParametros("@Nombre", empresa.Nombre);
+            accesoDatos.SetearParametros("Activa", empresa.Activa);
             accesoDatos.EjecutarAccion();
             accesoDatos.CerrarConexion();
         }

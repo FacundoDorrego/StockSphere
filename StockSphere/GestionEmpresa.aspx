@@ -24,7 +24,7 @@
                         <asp:Label ID="lblEmpresaFechaCreacion" runat="server" Text=""></asp:Label>
                     </p>
                 </div>
-                <div class="mb-3">
+                <div id="divActivo" class="mb-3" runat="server" >
                     <h5 class="card-title">Activo:</h5>
                     <p class="card-text">
                         <asp:Label ID="lblActivo" runat="server" Text=""></asp:Label>

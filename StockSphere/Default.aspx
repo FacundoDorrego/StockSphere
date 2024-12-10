@@ -14,8 +14,4 @@
             <asp:Button ID="btnIniciarSesion" runat="server" Text="Iniciar" CssClass="btn btn-primary" OnClick="btnIniciarSesion_Click" />
         </div>
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </asp:Content>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -16,7 +18,7 @@ namespace StockSphere
         private int empresaID;
         private int usuarioID;
         private int usuarioRolID;
-
+        private RepositorioProducto repoProducto = new RepositorioProducto();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -127,6 +129,10 @@ namespace StockSphere
                 ddlCategoriaProductoActualizar.DataTextField = "Nombre";
                 ddlCategoriaProductoActualizar.DataValueField = "CategoriaID";
                 ddlCategoriaProductoActualizar.DataBind();
+                ddlCategoriasFiltro.DataSource = categoriasEmpresa;
+                ddlCategoriasFiltro.DataTextField = "Nombre";
+                ddlCategoriasFiltro.DataValueField = "CategoriaID";
+                ddlCategoriasFiltro.DataBind();
             }
             catch (Exception ex)
             {
@@ -152,6 +158,10 @@ namespace StockSphere
                 ddlProveedor.DataTextField = "Nombre";
                 ddlProveedor.DataValueField = "ProveedorID";
                 ddlProveedor.DataBind();
+                ddlProveedoresFiltro.DataSource = proveedores;
+                ddlProveedoresFiltro.DataTextField = "Nombre";
+                ddlProveedoresFiltro.DataValueField = "ProveedorID";
+                ddlProveedoresFiltro.DataBind();
 
             }
             catch (Exception ex)
@@ -190,8 +200,6 @@ namespace StockSphere
             Empresa empresaSelec = (Empresa)Session["empresaSelec"];
             try
             {
-                RepositorioProducto repoProducto = new RepositorioProducto();
-
                 List<Producto> productos = repoProducto.ObtenerProductos();
                 List<Producto> productosxEmpresa = new List<Producto>();
                 ddlProductos.Items.Clear();
@@ -398,7 +406,6 @@ namespace StockSphere
                 {
                     int productoID = Convert.ToInt32(args[0]);
                     int stock = Convert.ToInt32(args[1]);
-                    RepositorioProducto repoProducto = new RepositorioProducto();
                     repoProducto.EliminarProducto(productoID);
                     int stockNegativo = stock * -1;
                     int empresaIDEliminar = Convert.ToInt32(Request.QueryString["empresaID"]);
@@ -422,11 +429,13 @@ namespace StockSphere
         {
             if (dgvProductos.Visible == true)
             {
+                divFiltros.Visible = false;
                 listprod.Visible = false;
                 dgvProductos.Visible = false;
             }
             else
             {
+                divFiltros.Visible = true;
                 listprod.Visible = true;
                 dgvProductos.Visible = true;
             }
@@ -480,7 +489,7 @@ namespace StockSphere
                     }
                     else
                     {
-                        RepositorioProducto repoProducto = new RepositorioProducto();
+
                         RepositorioMovimientoInventario repoMovInv = new RepositorioMovimientoInventario();
                         int stockAnterior = repoProducto.ObtenerStock(int.Parse(productoID));
                         int stockActual = stockAnterior + cantidadIngresada;
@@ -579,7 +588,7 @@ namespace StockSphere
         {
             string productoID = ddlProductos.SelectedValue;
             string nombreProducto = ddlProductos.SelectedItem.Text;
-            RepositorioProducto repoProducto = new RepositorioProducto();
+
             int stockAnterior = repoProducto.ObtenerStock(int.Parse(productoID));
             lblResultado.Text = $"Producto seleccionado: {nombreProducto} (ID: {productoID}) (Stock Anterior: {stockAnterior})";
             ClientScript.RegisterStartupScript(this.GetType(), "AgregarStock", "mostrarFormulario('divAgregarStock');", true);
@@ -588,7 +597,7 @@ namespace StockSphere
         protected void ddlProductosVenta_SelectedIndexChanged(object sender, EventArgs e)
         {
             int productoId = int.Parse(ddlProductosVenta.SelectedValue);
-            RepositorioProducto repoProducto = new RepositorioProducto();
+
             Producto productoSeleccionado = repoProducto.ObtenerProductoxID(productoId);
             if (productoSeleccionado != null)
             {
@@ -604,6 +613,293 @@ namespace StockSphere
             {
                 btnConfirmarVenta.Visible = true;
 
+            }
+        }
+
+        protected void dgvProductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int stock = Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "Stock"));
+                Label lblEstado = (Label)e.Row.FindControl("lblEstado");
+
+                if (stock == 0)
+                {
+                    e.Row.BorderColor = System.Drawing.Color.Red;
+                    e.Row.ForeColor = System.Drawing.Color.Red;
+                    e.Row.BorderStyle = BorderStyle.Double;
+                    lblEstado.Text = "Sin Stock";
+                    lblEstado.ForeColor = System.Drawing.Color.Red;
+                }
+                else if (stock <= 5)
+                {
+
+                    e.Row.BorderColor = System.Drawing.Color.Red;
+                    e.Row.ForeColor = System.Drawing.Color.Red;
+                    lblEstado.Text = "Stock Bajo - Restockear";
+                    e.Row.BorderStyle = BorderStyle.Double;
+                    lblEstado.ForeColor = System.Drawing.Color.Red;
+
+                }
+                else if (stock <= 10)
+                {
+                    e.Row.BorderColor = System.Drawing.Color.Orange;
+                    e.Row.ForeColor = System.Drawing.Color.Orange;
+                    lblEstado.Text = "Stock Medio";
+
+                    lblEstado.ForeColor = System.Drawing.Color.Orange;
+                }
+                else
+                {
+                    lblEstado.Text = "Normal";
+                    e.Row.BackColor = System.Drawing.Color.Transparent;
+                    lblEstado.ForeColor = System.Drawing.Color.Green;
+                    e.Row.BorderStyle = BorderStyle.Double;
+                    e.Row.BorderColor = System.Drawing.Color.Green;
+                }
+            }
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string filtro = ddlFiltro.SelectedValue;
+            int empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+            try
+            {
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    if (filtro == "Nombre")
+                    {
+                        string nombre = txtFiltro.Text;
+                        if(string.IsNullOrEmpty(nombre))
+                        {
+                            lblMensaje.Text = "Debe ingresar un nombre para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        List<Producto> productos = repoProducto.ObtenerProductos();
+                        List<Producto> productosxEmpresa = new List<Producto>();
+                        foreach (Producto producto in productos)
+                        {
+                            if (producto.EmpresaID == empresaID)
+                            {
+                                productosxEmpresa.Add(producto);
+                            }
+                        }
+                        List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.Nombre.Contains(nombre)).ToList();
+                        if (productosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay productos con ese nombre.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvProductos.DataSource = productosFiltrados;
+                        dgvProductos.DataBind();
+
+                    } else if (filtro == "Marca")
+                    {
+                        string marca = txtFiltro.Text;
+                        if (string.IsNullOrEmpty(marca))
+                        {
+                            lblMensaje.Text = "Debe ingresar un nombre para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        List<Producto> productos = repoProducto.ObtenerProductos();
+                        List<Producto> productosxEmpresa = new List<Producto>();
+                        foreach (Producto producto in productos)
+                        {
+                            if (producto.EmpresaID == empresaID)
+                            {
+                                productosxEmpresa.Add(producto);
+                            }
+                        }
+                        List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.Marca.Contains(marca)).ToList();
+                        if (productosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay productos con esa marca.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvProductos.DataSource = productosFiltrados;
+                        dgvProductos.DataBind();
+
+                    }
+                    else if (filtro == "ID")
+                    {
+                        int id = Convert.ToInt32(txtFiltro.Text);
+                        if (id<=0)
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        List<Producto> productos = repoProducto.ObtenerProductos();
+                        List<Producto> productosxEmpresa = new List<Producto>();
+                        foreach (Producto producto in productos)
+                        {
+                            if (producto.EmpresaID == empresaID)
+                            {
+                                productosxEmpresa.Add(producto);
+                            }
+                        }
+                        List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.ProductoID == id).ToList();
+                        if (productosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay productos con ese ID.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvProductos.DataSource = productosFiltrados;
+                        dgvProductos.DataBind();
+                    }
+                    else if (filtro == "Categoria")
+                    {
+                        int categoriaID = int.Parse(ddlCategoriasFiltro.SelectedValue);
+                        List<Producto> productos = repoProducto.ObtenerProductos();
+                        List<Producto> productosxEmpresa = new List<Producto>();
+                        foreach (Producto producto in productos)
+                        {
+                            if (producto.EmpresaID == empresaID)
+                            {
+                                productosxEmpresa.Add(producto);
+                            }
+                        }
+                        List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.CategoriaID == categoriaID).ToList();
+                        if (productosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay productos con esa categoria.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvProductos.DataSource = productosFiltrados;
+                        dgvProductos.DataBind();
+                    }
+                    else if(filtro == "Proveedores")
+                    {
+                        int proveedoresID = int.Parse(ddlProveedoresFiltro.SelectedValue);
+                        List<Producto> productos = repoProducto.ObtenerProductos();
+                        List<Producto> productosxEmpresa = new List<Producto>();
+                        foreach (Producto producto in productos)
+                        {
+                            if (producto.EmpresaID == empresaID)
+                            {
+                                productosxEmpresa.Add(producto);
+                            }
+                        }
+                        List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.ProveedorID == proveedoresID).ToList();
+                        if(productosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay productos con ese proveedor.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvProductos.DataSource = productosFiltrados;
+                        dgvProductos.DataBind();
+                    }
+                    else if (filtro == "Stock")
+                    {
+                        string orden = ddlStockFiltro.SelectedValue;
+                        List<Producto> productos = repoProducto.ObtenerProductos();
+                        List<Producto> productosxEmpresa = new List<Producto>();
+                        foreach (Producto producto in productos)
+                        {
+                            if (producto.EmpresaID == empresaID)
+                            {
+                                productosxEmpresa.Add(producto);
+                            }
+                        }
+                        if (orden == "ASC")
+                        {
+                            List<Producto> productosOrdenadosAsc = productosxEmpresa.OrderBy(producto => producto.Stock).ToList();
+                            dgvProductos.DataSource = productosOrdenadosAsc;
+                            dgvProductos.DataBind();
+
+                        } else if (orden == "DESC")
+                        {
+                            List<Producto> productosOrdenadosDesc = productosxEmpresa.OrderByDescending(producto => producto.Stock).ToList();
+                            dgvProductos.DataSource = productosOrdenadosDesc;
+                            dgvProductos.DataBind();
+                        }
+
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "Debe seleccionar un filtro.";
+                    CargarProductos();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al filtrar las empresas: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
+        }
+
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
+            ddlCategoriasFiltro.Visible = false;
+            ddlProveedoresFiltro.Visible = false;
+            lblMensaje.Visible = false;
+            lblStockFiltro.Visible = false;
+            ddlStockFiltro.Visible = false;
+            txtFiltro.Visible = true;
+
+            CargarProductos();
+        }
+
+        protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlFiltro.SelectedIndex == 4)
+            {
+                ddlCategoriasFiltro.Visible = true;
+                ddlProveedoresFiltro.Visible = false;
+                lblCateFiltro.Visible = true;
+                lblProvFiltro.Visible = false;
+                txtFiltro.Visible = false;
+                ddlStockFiltro.Visible = false;
+                lblStockFiltro.Visible = false;
+            }
+            else if (ddlFiltro.SelectedIndex == 5)
+            {
+                lblCateFiltro.Visible = false;
+                lblProvFiltro.Visible = true;
+                ddlCategoriasFiltro.Visible = false;
+                ddlProveedoresFiltro.Visible = true;
+                txtFiltro.Visible = false;
+                ddlStockFiltro.Visible = false;
+                lblStockFiltro.Visible = false;
+            } else if (ddlFiltro.SelectedIndex == 6)
+            {
+                lblCateFiltro.Visible = false;
+                lblProvFiltro.Visible = false;
+                ddlCategoriasFiltro.Visible = false;
+                ddlProveedoresFiltro.Visible = false;
+                txtFiltro.Visible = false;
+                ddlStockFiltro.Visible = true;
+                lblStockFiltro.Visible = true;
+            }
+            else
+            {
+                lblStockFiltro.Visible = false;
+                lblCateFiltro.Visible = false;
+                lblProvFiltro.Visible = false;
+                ddlStockFiltro.Visible = false;
+                ddlCategoriasFiltro.Visible = false;
+                ddlProveedoresFiltro.Visible = false;
+                txtFiltro.Visible = true;
             }
         }
     }

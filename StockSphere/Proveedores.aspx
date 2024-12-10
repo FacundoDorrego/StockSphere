@@ -24,6 +24,7 @@
     </script>
 
     <div class="container">
+        <!--Hacer diseño y filtros--->
         <asp:HiddenField ID="hiddenProveedorID" runat="server" />
         <h2>Administrar Proveedores</h2>
 

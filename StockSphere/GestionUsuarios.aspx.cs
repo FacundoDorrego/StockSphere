@@ -11,6 +11,7 @@ namespace StockSphere
 {
     public partial class GestionUsuarios : System.Web.UI.Page
     {
+        private RepositorioUsuario repoUsuario = new RepositorioUsuario();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["usuario"] == null)
@@ -35,7 +36,6 @@ namespace StockSphere
 
         protected void CargarUsuarios()
         {
-            RepositorioUsuario repoUsuario = new RepositorioUsuario();
             List<Usuario> usuarios = repoUsuario.ObtenerUsuarios();
             dgvUsuarios.DataSource = usuarios;
             dgvUsuarios.DataBind();
@@ -70,11 +70,13 @@ namespace StockSphere
             {
                 dgvUsuarios.Visible = false;
                 listUsuarios.Visible = false;
+                divFiltros.Visible = false;
             }
             else
             {
                 dgvUsuarios.Visible = true;
                 listUsuarios.Visible = true;
+                divFiltros.Visible = true;
             }
         }
 
@@ -106,7 +108,6 @@ namespace StockSphere
             int usuarioID = Convert.ToInt32(hiddenUsuarioIDEliminar.Value);
             try
             {
-                RepositorioUsuario repoUsuario = new RepositorioUsuario();
                 repoUsuario.EliminarUsuario(usuarioID);
                 lblMensaje.Text = "Usuario eliminado con éxito";
                 lblMensaje.CssClass = "alert alert-success";
@@ -138,7 +139,6 @@ namespace StockSphere
                     int rolID = ddlIDRolModificar.SelectedIndex + 1;
                     Usuario usuario = new Usuario(nombreUsuario, correoElectronico, contraseña, rolID);
                     usuario.UsuarioID = Convert.ToInt32(txtUsuarioIDModificar.Text);
-                    RepositorioUsuario repoUsuario = new RepositorioUsuario();
                     repoUsuario.ModificarUsuario(usuario);
                     lblMensaje.Text = "Usuario modificado con éxito";
                     lblMensaje.CssClass = "alert alert-success";
@@ -164,8 +164,7 @@ namespace StockSphere
                 }
                 else
                 {
-                    int rolID = ddlIDRolAgregar.SelectedIndex +1; //Correccion de index
-                    RepositorioUsuario repoUsuario = new RepositorioUsuario();
+                    int rolID = ddlIDRolAgregar.SelectedIndex + 1; //Correccion de index
                     Usuario usuario = new Usuario(txtNombreUsuarioAgregar.Text, txtCorreoElectronicoAgregar.Text, txtContraseñaUsuarioAgregar.Text, rolID);
                     repoUsuario.CrearUsuario(usuario);
                     lblMensaje.Text = "Usuario creado con éxito";
@@ -178,6 +177,54 @@ namespace StockSphere
                 lblMensaje.Text = ex.Message;
                 lblMensaje.CssClass = "alert alert-danger";
             }
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string filtro = ddlFiltro.SelectedValue;
+            try
+            {
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    if (filtro == "Nombre")
+                    {
+                        string nombre = txtFiltro.Text;
+                        List<Usuario> usuarios = repoUsuario.ObtenerUsuarios();
+                        List<Usuario> usuariosFiltrados = usuarios.Where(usuario => usuario.NombreUsuario.Contains(nombre)).ToList();
+                        dgvUsuarios.DataSource = usuariosFiltrados;
+                        dgvUsuarios.DataBind();
+
+                    }
+                    else if (filtro == "ID")
+                    {
+                        int id = Convert.ToInt32(txtFiltro.Text);
+                        List<Usuario> usuarios = repoUsuario.ObtenerUsuarios();
+                        List<Usuario> usuariosFiltrados = usuarios.Where(usuario => usuario.UsuarioID == id).ToList();
+                        dgvUsuarios.DataSource = usuariosFiltrados;
+                        dgvUsuarios.DataBind();
+                    }
+
+
+                }
+                else
+                {
+                    lblMensaje.Text = "Debe seleccionar un filtro.";
+                    CargarUsuarios();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al filtrar las empresas: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
+        }
+
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
+            CargarUsuarios();
         }
     }
 }

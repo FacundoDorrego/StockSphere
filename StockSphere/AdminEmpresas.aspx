@@ -68,6 +68,11 @@
 
                             <label for="txtNombreEmpresaActualizar">Nuevo Nombre de la Empresa</label>
                             <asp:TextBox ID="txtNombreEmpresaActualizar" runat="server" class="form-control" Placeholder="Nuevo nombre de la empresa" />
+                            <label for="ddlActivaActualizar">Estado de la Empresa</label>   
+                            <asp:DropDownList ID="ddlActivaActualizar" runat="server" class="form-control mt-3">
+                                <asp:ListItem Text="Activa" Value="True" />
+                                <asp:ListItem Text="Inactiva" Value="False" />
+                                </asp:DropDownList>
                         </div>
                         <div class="d-flex justify-content-center">
                             <asp:Button ID="btnActualizarEmpresa" runat="server" Text="Actualizar Empresa" CssClass="btn btn-warning" OnClick="btnActualizarEmpresa_Click" />
@@ -83,7 +88,29 @@
 
 
                 <div class="container my-4">
-                    <h4>Listado de empresas</h4>
+                    <h4 class="text-center">Listado de empresas</h4>
+                    <div id="divFiltros" class="row mb-3 justify-content-center" runat="server">
+                        <div class="col-md-4">
+                            <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" Placeholder="Buscar"></asp:TextBox>
+                        </div>
+                        <div class="col-md-2">
+
+
+                            <asp:DropDownList ID="ddlFiltro" class="btn btn-secondary dropdown-toggle" runat="server" CssClass="form-control">
+                                <asp:ListItem Text="Seleccione un filtro" Value="" />
+                                <asp:ListItem Text="Nombre" Value="Nombre" />
+                                <asp:ListItem Text="ID" Value="ID">
+                                </asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Button ID="btnLimpiarFiltro" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltro_Click" />
+                        </div>
+
+                    </div>
                     <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                         <asp:GridView ID="dgvEmpresas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered align-items-center" OnRowCommand="dgvEmpresas_RowCommand" OnRowEditing="dgvEmpresas_RowEditing" DataKeyNames="EmpresaID">
                             <Columns>
@@ -102,7 +129,6 @@
                                         <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClientClick='<%# "abrirModalEliminar(" + Eval("EmpresaID") + "); return false;" %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-
                             </Columns>
                         </asp:GridView>
                     </div>

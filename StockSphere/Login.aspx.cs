@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.UI;
 using Repositorios;
 using Clases;
+using System.Text.RegularExpressions;
 
 namespace StockSphere
 {
@@ -25,30 +26,44 @@ namespace StockSphere
 
             try
             {
-                
-                usuario = new Usuario(txtUsername.Text, txtPassword.Text);
-                
-                
+
+                usuario = new Usuario(txtCorreoElectronico.Text, txtPassword.Text);
+                if (usuario.CorreoElectronico == "" || usuario.Clave == "")
+                {
+
+                    lblMensaje.Visible = true;
+                    lblMensaje.Text = "Por favor, complete todos los campos.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
+
+                }
+                // Validar formato del correo
+                if (!Regex.IsMatch(txtCorreoElectronico.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un correo valido.";
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 if (repousuario.Loguear(usuario))
                 {
-                    
+
                     Session.Add("usuario", usuario);
-                    if(usuario.RolID == 3)
+                    if (usuario.RolID == 3)
                     {
                         Empleado empleado = repoEmpleado.ObtenerEmpleadoxIDUsu(usuario.UsuarioID);
                         Session.Add("empleado", empleado);
-                        Response.Redirect("GestionEmpresa.aspx?empresaID=" + empleado.Empresa.EmpresaID,false);
+                        Response.Redirect("GestionEmpresa.aspx?empresaID=" + empleado.Empresa.EmpresaID, false);
                     }
                     else
                     {
-                    Response.Redirect("AdminEmpresas.aspx",false);
+                        Response.Redirect("AdminEmpresas.aspx", false);
 
                     }
                     Context.ApplicationInstance.CompleteRequest();
                 }
                 else
                 {
-                   
+
                     lblMensaje.Visible = true;
                     lblMensaje.Text = "Credenciales incorrectas. Por favor, intente de nuevo.";
                     lblMensaje.ForeColor = System.Drawing.Color.Red;
@@ -56,13 +71,12 @@ namespace StockSphere
             }
             catch (Exception ex)
             {
-                
+
                 lblMensaje.Visible = true;
                 lblMensaje.Text = "Error: " + ex.Message;
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
         }
 
-       
     }
 }

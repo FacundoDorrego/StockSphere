@@ -159,6 +159,15 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Label lblMensajeMod;
 
         /// <summary>
+        /// Control lblListaEmpleados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblListaEmpleados;
+
+        /// <summary>
         /// Control dgvEmpleados.
         /// </summary>
         /// <remarks>

@@ -23,7 +23,7 @@ namespace StockSphere
             {
                 Response.Redirect("Login.aspx");
             }
-            
+
             else
             {
                 Usuario usuario = (Usuario)Session["usuario"];
@@ -126,6 +126,7 @@ namespace StockSphere
         {
             int empresaID = Convert.ToInt32(dgvEmpresas.DataKeys[e.NewEditIndex].Value);
             txtNombreEmpresaActualizar.Text = dgvEmpresas.Rows[e.NewEditIndex].Cells[1].Text;
+            ddlActivaActualizar.SelectedValue = dgvEmpresas.Rows[e.NewEditIndex].Cells[3].Text;
             hiddenEmpresaID.Value = empresaID.ToString();
             dgvEmpresas.EditIndex = -1;
             ClientScript.RegisterStartupScript(this.GetType(), "MostrarActualizar", "mostrarFormulario('divActualizarEmpresa');", true);
@@ -145,25 +146,28 @@ namespace StockSphere
                     {
                         lblMensaje.Text = "Debe ingresar un nombre para la empresa.";
                         lblMensaje.Visible = true;
+                        dgvEmpresas.EditIndex = -1;
                         return;
                     }
                     RepositorioEmpresa repositorioEmpresa = new RepositorioEmpresa();
                     Empresa auxfecha = repositorioEmpresa.ObtenerEmpresaxID(empresaID);
                     DateTime fechaCreacion = auxfecha.FechaCreacion;
                     string nombrenuevo = txtNombreEmpresaActualizar.Text;
+                    bool activa = Convert.ToBoolean(ddlActivaActualizar.SelectedValue);
                     Empresa auxEmpresa = new Empresa
                     {
                         EmpresaID = empresaID,
                         Nombre = nombrenuevo,
                         UsuarioID = usuarioID,
                         FechaCreacion = auxfecha.FechaCreacion,
-                        Activa = true
+                        Activa = activa
                     };
 
                     repositorioEmpresa.ActualizarEmpresa(auxEmpresa);
                     dgvEmpresas.EditIndex = -1;
                     CargarEmpresas();
                 }
+                dgvEmpresas.EditIndex = -1;
             }
             catch (Exception ex)
             {
@@ -192,6 +196,77 @@ namespace StockSphere
                 lblMensaje.Text = "Error al eliminar la empresa: " + ex.Message;
                 lblMensaje.CssClass = "alert alert-danger";
             }
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string filtro = ddlFiltro.SelectedValue;
+            try
+            {
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    if (filtro == "Nombre")
+                    {
+                        string nombre = txtFiltro.Text;
+                        if (usuarioRol == 1)
+                        {
+                            List<Empresa> empresasAdmin = repositorioEmpresa.ObtenerEmpresasAdmin();
+                            List<Empresa> empresasFiltradasAdmin = empresasAdmin.Where(empresa => empresa.Nombre.Contains(nombre)).ToList();
+                            dgvEmpresas.DataSource = empresasFiltradasAdmin;
+                            dgvEmpresas.DataBind();
+                        }
+                        else
+                        {
+                            List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasPorUsuario(usuarioID);
+                            List<Empresa> empresasActivas = empresas.Where(empresa => empresa.Activa).ToList();
+                            List<Empresa> empresasFiltradas = empresasActivas.Where(empresa => empresa.Nombre.Contains(nombre)).ToList();
+                            dgvEmpresas.DataSource = empresasFiltradas;
+                            dgvEmpresas.DataBind();
+                        }
+                    }
+                    else if (filtro == "ID")
+                    {
+                        int id = Convert.ToInt32(txtFiltro.Text);
+                        if (usuarioRol == 1)
+                        {
+                            List<Empresa> empresasAdmin = repositorioEmpresa.ObtenerEmpresasAdmin();
+                            List<Empresa> empresasFiltradasAdmin = empresasAdmin.Where(empresa => empresa.EmpresaID == id).ToList();
+                            dgvEmpresas.DataSource = empresasFiltradasAdmin;
+                            dgvEmpresas.DataBind();
+                        }
+                        else
+                        {
+                            List<Empresa> empresas = repositorioEmpresa.ObtenerEmpresasPorUsuario(usuarioID);
+                            List<Empresa> empresasActivas = empresas.Where(empresa => empresa.Activa).ToList();
+                            List<Empresa> empresasFiltradas = empresasActivas.Where(empresa => empresa.EmpresaID == id).ToList();
+                            dgvEmpresas.DataSource = empresasFiltradas;
+                            dgvEmpresas.DataBind();
+
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    lblMensaje.Text = "Debe seleccionar un filtro.";
+                    CargarEmpresas();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al filtrar las empresas: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
+
+        }
+
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
+            CargarEmpresas();
         }
     }
 }

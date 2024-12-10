@@ -19,7 +19,7 @@
 
                         <div class="form-group mb-4">
                             <label for="txtUsername" class="form-label">Correo electrónico</label>
-                            <asp:TextBox ID="txtCorreo" runat="server" class="form-control mx-auto" Placeholder="Correo electrónico" />
+                            <asp:TextBox ID="txtCorreoElectronico" runat="server" class="form-control mx-auto" Placeholder="Ejemplo@gmail.com" />
                         </div>
 
                         <div class="form-group mb-4">
@@ -30,10 +30,11 @@
                         <div class="d-flex justify-content-center card-body">
                             <asp:Button ID="btnRegistrar" runat="server" class="btn btn-primary" Text="Registrarse" OnClick="btnRegistrar_Click" />
                         </div>
-
-
-                        <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Visible="false" class="mt-3"></asp:Label>
+                        <asp:Label ID="lblMensaje" runat="server" Visible="false" class="mt-3"></asp:Label>
                     </div>
+                    <div id="divRedireccion" class="card-footer text-center" runat="server" visible="false">
+                        <small id="lblRedireccion" runat="server" visible="false">Ya puedes loguearte. <a href="Login.aspx">Click aqui para redirigirte</a></small>
+                        </div>
                 </div>
             </div>
         </div>
