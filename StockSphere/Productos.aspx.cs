@@ -61,7 +61,7 @@ namespace StockSphere
             {
                 btnActualizarProducto.Visible = false;
                 btnMostrarMovimientos.Visible = false;
-                dgvProductos.Columns[8].Visible = false;
+                dgvProductos.Columns[9].Visible = false;
             }
         }
         private void CargarDivs()
@@ -448,11 +448,14 @@ namespace StockSphere
             {
                 movstock.Visible = false;
                 dgvMovimientos.Visible = false;
+                divFiltrosMovimientos.Visible = false;
             }
             else
             {
                 movstock.Visible = true;
                 dgvMovimientos.Visible = true;
+                divFiltrosMovimientos.Visible = true;
+                txtFechaFiltro.Text= DateTime.Now.ToString("yyyy-MM-dd");
             }
         }
 
@@ -536,6 +539,11 @@ namespace StockSphere
                     }
                     else
                     {
+                        if(usuarioRolID==3)
+                        {
+                            lblMensaje.Text = "No tiene permisos para realizar ventas.";
+                            return;
+                        }
                         RepositorioProducto repoProducto = new RepositorioProducto();
                         RepositorioMovimientoInventario repoMovInv = new RepositorioMovimientoInventario();
                         RepositorioVenta repoVenta = new RepositorioVenta();
@@ -901,6 +909,16 @@ namespace StockSphere
                 ddlProveedoresFiltro.Visible = false;
                 txtFiltro.Visible = true;
             }
+        }
+
+        protected void btnFiltrarMovimientos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnLimpiarFiltroMovimientos_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

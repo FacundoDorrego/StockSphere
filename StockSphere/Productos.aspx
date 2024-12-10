@@ -63,7 +63,7 @@
                 __doPostBack(ddl.id, '');
             }
         }
-        </script>
+    </script>
     <div class="container">
         <!--Hacer diseño--->
         <div class="d-flex justify-content-center my-4">
@@ -76,7 +76,6 @@
             <asp:Button ID="btnMostrarMovimientos" runat="server" Text="Movimientos de Stock" CssClass="btn btn-primary mx-2" OnClick="btnMostrarMovimientos_Click" />
             <asp:Button ID="btnRegistrarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-info mx-2" OnClientClick="mostrarFormulario('divRegistrarVenta'); return false;" />
         </div>
-
         <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
         <div id="divAgregarProducto" class="card shadow-lg mb-4" style="display: none;">
             <div class="card-header">
@@ -109,7 +108,6 @@
                 </div>
             </div>
         </div>
-
         <div id="divActualizarProducto" class="card shadow-lg mb-4" style="display: none;">
             <div class="card-header">
                 <h4>Actualizar Producto</h4>
@@ -163,8 +161,6 @@
                 </div>
             </div>
         </div>
-
-
         <div id="divRegistrarVenta" class="card shadow-lg mb-4" style="display: none;">
             <div class="card-header">
                 <h4>Registrar Venta</h4>
@@ -206,27 +202,20 @@
                 </div>
             </div>
         </div>
-
-
-
         <asp:HiddenField ID="hiddenProductoIDEliminar" runat="server" />
         <asp:HiddenField ID="hiddenStockEliminar" runat="server" />
         <div class="container my-4">
             <h4 id="listprod" runat="server" visible="false">Lista de Productos</h4>
             <div id="divFiltros" class="row mb-3 justify-content-center" runat="server" visible="false">
                 <div class="col-md-4">
-
                     <asp:Label ID="lblStockFiltro" Text="Seleccione el orden" Visible="false" runat="server"></asp:Label>
                     <asp:DropDownList ID="ddlStockFiltro" runat="server" CssClass="form-control" Visible="false">
                         <asp:ListItem Text="Mayor - Menor" Value="DESC" />
                         <asp:ListItem Text="Menor - Mayor" Value="ASC" />
                     </asp:DropDownList>
-
                     <asp:Label ID="lblCateFiltro" Text="Seleccione la categoria a filtrar" Visible="false" runat="server"></asp:Label>
                     <asp:DropDownList ID="ddlCategoriasFiltro" runat="server" CssClass="form-control" Visible="false">
                     </asp:DropDownList>
-
-
                     <asp:Label ID="lblProvFiltro" Text="Seleccione el proveedor a filtrar" Visible="false" runat="server"></asp:Label>
                     <asp:DropDownList ID="ddlProveedoresFiltro" runat="server" CssClass="form-control" Visible="false">
                     </asp:DropDownList>
@@ -252,8 +241,6 @@
                     <asp:Button ID="btnLimpiarFiltro" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltro_Click" />
                 </div>
             </div>
-
-
             <div class="table-responsive" style="max-height: 520px; overflow-y: auto;">
                 <asp:GridView ID="dgvProductos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" OnRowCommand="dgvProductos_RowCommand" OnRowEditing="dgvProductos_RowEditing" OnRowDataBound="dgvProductos_RowDataBound" DataKeyNames="ProductoID,Stock">
                     <Columns>
@@ -280,23 +267,43 @@
                 </asp:GridView>
             </div>
             <h4 id="movstock" runat="server" visible="false">Movimientos de Stock</h4>
-            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                <asp:GridView ID="dgvMovimientos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered">
-                    <Columns>
-                        <asp:BoundField DataField="MovimientoID" HeaderText="ID" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="EmpresaID" HeaderText="Empresa" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="UsuarioID" HeaderText="Usuario" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="ProductoID" HeaderText="Producto" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="TipoMovimiento" HeaderText="Tipo de Movimiento" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                        <asp:BoundField DataField="Observaciones" HeaderText="Observaciones" HeaderStyle-CssClass="text-center sticky-top bg-light" />
-                    </Columns>
-                </asp:GridView>
+            <div id="divFiltrosMovimientos" class="row mb-3 justify-content-center" runat="server" visible="false">
+                <div class="col-md-6">
+                    <asp:Label ID="lblFecha" Text="Fecha: " runat="server"></asp:Label>
+                    <asp:TextBox runat="server" ID="txtFechaFiltro" TextMode="Date" />
+                    <div class="col-sm-6">
+                        <asp:Label ID="lblTipoMovimiento" Text="Tipo de movimiento" runat="server"></asp:Label>
+                        <asp:DropDownList ID="ddlTipoMovimiento" runat="server" CssClass="form-control">
+                            <asp:ListItem Text="Seleccione un tipo de movimiento" Value="" />
+                            <asp:ListItem Text="Agregar" Value="Agregar" />
+                            <asp:ListItem Text="Venta" Value="Venta" />
+                            <asp:ListItem Text="Ingreso de Stock" Value="Ingreso" />
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                    <div class="col-md-2">
+                        <asp:Button ID="btnFiltrarMovimientos" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrarMovimientos_Click" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Button ID="btnLimpiarFiltroMovimientos" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltroMovimientos_Click" />
+                    </div>
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <asp:GridView ID="dgvMovimientos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered">
+                        <Columns>
+                            <asp:BoundField DataField="MovimientoID" HeaderText="ID" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="EmpresaID" HeaderText="Empresa" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="UsuarioID" HeaderText="Usuario" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="ProductoID" HeaderText="Producto" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="TipoMovimiento" HeaderText="Tipo de Movimiento" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                            <asp:BoundField DataField="Observaciones" HeaderText="Observaciones" HeaderStyle-CssClass="text-center sticky-top bg-light" />
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
-
-            <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
         </div>
+        <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
     </div>
 </asp:Content>
 
