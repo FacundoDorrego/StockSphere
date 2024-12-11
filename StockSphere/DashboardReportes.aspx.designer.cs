@@ -33,6 +33,24 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Label lblTotalVentas;
 
         /// <summary>
+        /// Control hfChartData.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfChartData;
+
+        /// <summary>
+        /// Control hfChartDataMensual.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfChartDataMensual;
+
+        /// <summary>
         /// Control listVentas.
         /// </summary>
         /// <remarks>
@@ -58,14 +76,5 @@ namespace StockSphere
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegresar;
-
-        /// <summary>
-        /// Control hfChartData.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfChartData;
     }
 }

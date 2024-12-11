@@ -33,11 +33,11 @@ namespace StockSphere
         {
             RepositorioVenta repoVenta = new RepositorioVenta();
             List<Venta> ventas = repoVenta.ObtenerVentasxEmpresa(empresaID);
+
             if (ventas.Count > 0)
             {
                 dgvVentas.DataSource = ventas;
                 dgvVentas.DataBind();
-
                 var resumenVentas = ventas.GroupBy(v => v.Producto.Nombre)
                     .Select(g => new
                     {
@@ -45,18 +45,27 @@ namespace StockSphere
                         TotalVentas = g.Sum(v => v.Monto)
                     })
                     .ToList();
-                
+                var resumenMensual = ventas.GroupBy(v => new { Mes = v.FechaVenta.Month, NombreMes = v.FechaVenta.ToString("MMMM") }).Select
+                    (g => new
+                    {
+                        Mes = g.Key.NombreMes,
+                        MesNumero = g.Key.Mes,
+                        TotalVentas = g.Sum(v => v.Monto)
+                    }).OrderBy(g => g.MesNumero).ToList();
                 decimal totalVentas = ventas.Sum(v => v.Monto);
                 lblTotalVentas.Text = "Total Ventas: $" + totalVentas.ToString("F2");
-                hfChartData.Value = Newtonsoft.Json.JsonConvert.SerializeObject(resumenVentas);
+                hfChartData.Value = Newtonsoft.Json.JsonConvert.SerializeObject(resumenVentas); 
+                hfChartDataMensual.Value = Newtonsoft.Json.JsonConvert.SerializeObject(resumenMensual); 
             }
             else
             {
-                
+               
                 hfChartData.Value = string.Empty;
+                hfChartDataMensual.Value = string.Empty;
                 lblTotalVentas.Text = "No hay ventas registradas.";
             }
         }
+
 
         protected void btnMostrarVentas_Click(object sender, EventArgs e)
         {

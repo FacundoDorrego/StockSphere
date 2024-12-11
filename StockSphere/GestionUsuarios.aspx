@@ -89,28 +89,28 @@
                     </div>
                 </div>
             </div>
-            <asp:Label ID="lblMensaje" runat="server" />
             <div class="container my-4">
-                    <h4 id="listUsuarios" runat="server" visible="false" class="text-center">Lista de usuarios registrados en el sistema</h4>
-                    <div id="divFiltros" class="row mb-3 justify-content-center" runat="server" visible="false">
-                        <div class="col-md-4">
-                            <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" Placeholder="Buscar"></asp:TextBox>
-                        </div>
-                        <div class="col-md-2">
-                            <asp:DropDownList ID="ddlFiltro" runat="server" CssClass="form-control">
-                                <asp:ListItem Text="Seleccione un filtro" Value="" />
-                                <asp:ListItem Text="Nombre de usuario" Value="Nombre" />
-                                <asp:ListItem Text="ID de usuario" Value="ID">
-                                </asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                        <div class="col-md-2">
-                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
-                        </div>
-                        <div class="col-md-2">
-                            <asp:Button ID="btnLimpiarFiltro" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltro_Click" />
-                        </div>
+                <h4 id="listUsuarios" runat="server" visible="false" class="text-center">Lista de usuarios registrados en el sistema</h4>
+                <div id="divFiltros" class="row mb-3 justify-content-center" runat="server" visible="false">
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" Placeholder="Buscar"></asp:TextBox>
                     </div>
+                    <div class="col-md-2">
+                        <asp:DropDownList ID="ddlFiltro" runat="server" CssClass="form-control">
+                            <asp:ListItem Text="Seleccione un filtro" Value="" />
+                            <asp:ListItem Text="Nombre de usuario" Value="Nombre" />
+                            <asp:ListItem Text="ID de usuario" Value="ID">
+                            </asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Button ID="btnLimpiarFiltro" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltro_Click" />
+                    </div>
+                </div>
+                <asp:Label ID="lblMensaje" runat="server" />
                 <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                     <asp:GridView ID="dgvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered" Visible="false" OnRowCommand="dgvUsuarios_RowCommand" OnRowEditing="dgvUsuarios_RowEditing" DataKeyNames="UsuarioID">
                         <Columns>
@@ -134,6 +134,7 @@
             <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
         </div>
     </div>
+
 
     <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">

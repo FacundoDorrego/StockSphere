@@ -3,6 +3,7 @@ using Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -74,6 +75,13 @@ namespace StockSphere
                     lblMensaje.Text = "Debe completar todos los campos";
                     lblMensaje.Visible = true;
                 }
+                else if (!Regex.IsMatch(txtEmailProv.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un correo valido.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 else
                 {
 
@@ -96,7 +104,7 @@ namespace StockSphere
             }
         }
 
-        
+
 
         protected void dgvProveedores_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -111,12 +119,12 @@ namespace StockSphere
                 RepositorioProveedor repositorioProveedor = new RepositorioProveedor();
                 repositorioProveedor.EliminarProveedor(proveedorID);
                 lblMensaje.Text = "¡Eliminado!";
-                
+
             }
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al eliminar el proveedor: " + ex.Message;
-                
+
                 lblMensaje.Visible = true;
 
             }
@@ -136,6 +144,13 @@ namespace StockSphere
                     string.IsNullOrWhiteSpace(txtDireccionProveedorActualizar.Text))
                 {
                     lblMensaje.Text = "Debe completar todos los campos.";
+                    lblMensaje.Visible = true;
+                    return;
+                }
+                else if (!Regex.IsMatch(txtEmailProveedorActualizar.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un correo valido.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
                     lblMensaje.Visible = true;
                     return;
                 }
@@ -181,6 +196,69 @@ namespace StockSphere
         {
             int empresaIDVolver = Convert.ToInt32(Request.QueryString["empresaID"]);
             Response.Redirect("GestionEmpresa.aspx?empresaID=" + empresaIDVolver);
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string filtro = ddlFiltro.SelectedValue;
+            int empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+            try
+            {
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    if (filtro == "Nombre")
+                    {
+                        string nombre = txtFiltro.Text;
+                        List<Proveedor> proveedores = repositorioProveedor.ObtenerProveedoresxEmpresa(empresaID);
+                        List<Proveedor> proveedoresFiltrados = proveedores.Where(proveedor => proveedor.Nombre.Contains(nombre)).ToList();
+                        dgvProveedores.DataSource = proveedoresFiltrados;
+                        dgvProveedores.DataBind();
+
+                    }
+                    else if (filtro == "ID")
+                    {
+                        int id = Convert.ToInt32(txtFiltro.Text);
+                        List<Proveedor> proveedores = repositorioProveedor.ObtenerProveedoresxEmpresa(empresaID);
+                        List<Proveedor> proveedoresFiltrados = proveedores.Where(proveedor => proveedor.ProveedorID == id).ToList();
+                        dgvProveedores.DataSource = proveedoresFiltrados;
+                        dgvProveedores.DataBind();
+                    }
+
+
+                }
+                else
+                {
+                    lblMensaje.Text = "Debe seleccionar un filtro.";
+                    CargarProveedores(empresaID);
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al filtrar los proveedores: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
+        }
+
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
+            CargarProveedores(Convert.ToInt32(Request.QueryString["empresaID"]));
+        }
+
+
+
+        protected void btnMostrarListado_Click(object sender, EventArgs e)
+        {
+            if (divDgvProveedores.Visible == true)
+            {
+                divDgvProveedores.Visible = false;
+            }
+            else
+            {
+                divDgvProveedores.Visible = true;
+            }
         }
     }
 }

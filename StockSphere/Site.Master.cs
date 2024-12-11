@@ -19,7 +19,7 @@ namespace StockSphere
                 lnkInicio.Visible = true;
                 btnCerrar.Visible = true;
                 
-                var usuario = (Usuario)Session["usuario"];
+                Usuario usuario = (Usuario)Session["usuario"];
                 if (usuario != null && usuario.RolID == 1)
                 {
                     phAdminMenu.Visible = true; 

@@ -171,5 +171,80 @@ namespace StockSphere
             empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
             Response.Redirect("GestionEmpresa.aspx?empresaID=" + empresaID);
         }
+
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            lblMensaje.Visible = false;
+            CargarCategorias(empresaID);
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string filtro = ddlFiltro.SelectedValue;
+            int empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+            RepositorioCategoria repoCategoria = new RepositorioCategoria();
+            List<Categoria> categorias = repoCategoria.ObtenerCategorias();
+            List<Categoria> categoriasEmpresa = new List<Categoria>();
+            try
+            {
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    if (filtro == "Nombre")
+                    {
+                        string nombre = txtFiltro.Text;
+                        foreach (Categoria categoria in categorias)
+                        {
+                            if (categoria.Nombre.Contains(nombre) && categoria.EmpresaID == empresaID)
+                            {
+                                categoriasEmpresa.Add(categoria);
+                            }
+                        }
+
+                    }
+                    else if (filtro == "ID")
+                    {
+                        int id = Convert.ToInt32(txtFiltro.Text);
+                        foreach (Categoria categoria in categorias)
+                        {
+                            if (categoria.CategoriaID==id && categoria.EmpresaID == empresaID)
+                            {
+                                categoriasEmpresa.Add(categoria);
+                            }
+                        }
+                    }
+                    if (categoriasEmpresa.Count == 0)
+                    {
+                        lblMensaje.Text = "No se encontraron coincidencias";
+                        lblMensaje.Visible = true;
+                        dgvCategorias.Visible = false;
+                    }
+                    else
+                    {
+                        dgvCategorias.DataSource = categoriasEmpresa;
+                        dgvCategorias.DataBind();
+                        dgvCategorias.Visible = true;
+                        lblMensaje.Visible = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = ex.Message;
+                lblMensaje.Visible = true;
+            }
+        }
+
+        protected void btnMostrarListado_Click(object sender, EventArgs e)
+        {
+            if(divDgvCategorias.Visible == true)
+            {
+                divDgvCategorias.Visible = false;
+            }
+            else
+            {
+                divDgvCategorias.Visible = true;
+            }
+        }
     }
 }

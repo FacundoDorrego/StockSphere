@@ -753,20 +753,20 @@ namespace StockSphere
                         List<Producto> productosxEmpresa = new List<Producto>();
                         foreach (Producto producto in productos)
                         {
-                            if (producto.EmpresaID == empresaID)
+                            if (producto.EmpresaID == empresaID && producto.ProductoID == id)
                             {
                                 productosxEmpresa.Add(producto);
                             }
                         }
-                        List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.ProductoID == id).ToList();
-                        if (productosFiltrados.Count == 0)
+                    
+                        if (productosxEmpresa.Count == 0)
                         {
                             lblMensaje.Text = "No hay productos con ese ID.";
                             lblMensaje.Visible = true;
                             lblMensaje.CssClass = "alert alert-danger";
                             return;
                         }
-                        dgvProductos.DataSource = productosFiltrados;
+                        dgvProductos.DataSource = productosxEmpresa;
                         dgvProductos.DataBind();
                     }
                     else if (filtro == "Categoria")

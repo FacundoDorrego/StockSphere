@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Repositorios;
 using Clases;
+using System.Text.RegularExpressions;
 
 namespace StockSphere
 {
@@ -131,6 +132,13 @@ namespace StockSphere
                     lblMensaje.CssClass = "alert alert-danger";
                     return;
                 }
+                else if (!Regex.IsMatch(txtCorreoElectronicoModificar.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un correo valido.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 else
                 {
                     string nombreUsuario = txtNombreUsuarioModificar.Text;
@@ -162,6 +170,13 @@ namespace StockSphere
                     lblMensaje.Text = "Debe completar todos los campos.";
                     lblMensaje.CssClass = "alert alert-danger";
                 }
+                else if (!Regex.IsMatch(txtCorreoElectronicoAgregar.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un correo valido.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 else
                 {
                     int rolID = ddlIDRolAgregar.SelectedIndex + 1; //Correccion de index
@@ -192,6 +207,11 @@ namespace StockSphere
                         string nombre = txtFiltro.Text;
                         List<Usuario> usuarios = repoUsuario.ObtenerUsuarios();
                         List<Usuario> usuariosFiltrados = usuarios.Where(usuario => usuario.NombreUsuario.Contains(nombre)).ToList();
+                        if(usuariosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron usuarios con ese nombre.";
+                            lblMensaje.Visible = true;
+                        }
                         dgvUsuarios.DataSource = usuariosFiltrados;
                         dgvUsuarios.DataBind();
 
@@ -201,6 +221,11 @@ namespace StockSphere
                         int id = Convert.ToInt32(txtFiltro.Text);
                         List<Usuario> usuarios = repoUsuario.ObtenerUsuarios();
                         List<Usuario> usuariosFiltrados = usuarios.Where(usuario => usuario.UsuarioID == id).ToList();
+                        if (usuariosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron usuarios con ese ID.";
+                            lblMensaje.Visible = true;
+                        }
                         dgvUsuarios.DataSource = usuariosFiltrados;
                         dgvUsuarios.DataBind();
                     }
