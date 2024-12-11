@@ -483,6 +483,15 @@ namespace StockSphere
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltrosMovimientos;
 
         /// <summary>
+        /// Control txtFiltroMov.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroMov;
+
+        /// <summary>
         /// Control lblFecha.
         /// </summary>
         /// <remarks>
@@ -517,6 +526,33 @@ namespace StockSphere
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoMovimiento;
+
+        /// <summary>
+        /// Control divDllFiltroFecha.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDllFiltroFecha;
+
+        /// <summary>
+        /// Control ddlFiltroFecha.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroFecha;
+
+        /// <summary>
+        /// Control ddlFiltroMov.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroMov;
 
         /// <summary>
         /// Control btnFiltrarMovimientos.

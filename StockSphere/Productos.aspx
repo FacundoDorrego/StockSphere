@@ -205,7 +205,7 @@
         <asp:HiddenField ID="hiddenProductoIDEliminar" runat="server" />
         <asp:HiddenField ID="hiddenStockEliminar" runat="server" />
         <div class="container my-4">
-            <h4 id="listprod" runat="server" visible="false">Lista de Productos</h4>
+            <h4 id="listprod" runat="server" visible="false" class="text-center">Lista de Productos</h4>
             <div id="divFiltros" class="row mb-3 justify-content-center" runat="server" visible="false">
                 <div class="col-md-4">
                     <asp:Label ID="lblStockFiltro" Text="Seleccione el orden" Visible="false" runat="server"></asp:Label>
@@ -266,27 +266,54 @@
                     </Columns>
                 </asp:GridView>
             </div>
-            <h4 id="movstock" runat="server" visible="false">Movimientos de Stock</h4>
+            <h4 id="movstock" runat="server" visible="false" class="text-center">Movimientos de Stock</h4>
             <div id="divFiltrosMovimientos" class="row mb-3 justify-content-center" runat="server" visible="false">
-                <div class="col-md-6">
-                    <asp:Label ID="lblFecha" Text="Fecha: " runat="server"></asp:Label>
-                    <asp:TextBox runat="server" ID="txtFechaFiltro" TextMode="Date" />
-                    <div class="col-sm-6">
-                        <asp:Label ID="lblTipoMovimiento" Text="Tipo de movimiento" runat="server"></asp:Label>
-                        <asp:DropDownList ID="ddlTipoMovimiento" runat="server" CssClass="form-control">
+                <div class="col-sm-4">
+                    <div>
+                        <asp:TextBox ID="txtFiltroMov" runat="server" CssClass="form-control" Placeholder="Buscar"></asp:TextBox>
+                    </div>
+
+                    <div class="col-sm-auto">
+                        <div class="align-content-between">
+                            <asp:Label ID="lblFecha" Text="Introducir a partir de que fecha desea buscar: " runat="server" Visible="false"></asp:Label>
+                            <asp:TextBox runat="server" ID="txtFechaFiltro" TextMode="Date" Visible="false" />
+                        </div>
+                    </div>
+                    <div>
+                        <asp:Label ID="lblTipoMovimiento" Text="Tipo de movimiento" runat="server" Visible="false"></asp:Label>
+                        <asp:DropDownList ID="ddlTipoMovimiento" runat="server" CssClass="form-control" Visible="false">
                             <asp:ListItem Text="Seleccione un tipo de movimiento" Value="" />
                             <asp:ListItem Text="Agregar" Value="Agregar" />
                             <asp:ListItem Text="Venta" Value="Venta" />
                             <asp:ListItem Text="Ingreso de Stock" Value="Ingreso" />
+                            <asp:ListItem Text="Eliminar" Value="Eliminar" />
                         </asp:DropDownList>
                     </div>
                 </div>
-                    <div class="col-md-2">
-                        <asp:Button ID="btnFiltrarMovimientos" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrarMovimientos_Click" />
-                    </div>
-                    <div class="col-md-2">
-                        <asp:Button ID="btnLimpiarFiltroMovimientos" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltroMovimientos_Click" />
-                    </div>
+                <div id="divDllFiltroFecha" class="col-sm-2" runat="server" visible="false">
+                    <asp:DropDownList ID="ddlFiltroFecha" runat="server" CssClass="form-control" Visible="false">
+                        <asp:ListItem Text="Filtro de fecha:" Value="" />
+                        <asp:ListItem Text="Mayor a" Value="MayorA" />
+                        <asp:ListItem Text="Igual a" Value="IgualA" />
+                        <asp:ListItem Text="Menor a" Value="MenorA" />
+                    </asp:DropDownList>
+                </div>
+                <div class="col-sm-2">
+                    <asp:DropDownList ID="ddlFiltroMov" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlFiltroMov_SelectedIndexChanged">
+                        <asp:ListItem Text="Seleccione un filtro:" Value="" />
+                        <asp:ListItem Text="ID de movimiento" Value="IDmov" />
+                        <asp:ListItem Text="ID de usuario" Value="IDusu" />
+                        <asp:ListItem Text="ID de producto" Value="IDprod" />
+                        <asp:ListItem Text="Fecha" Value="Fecha" />
+                        <asp:ListItem Text="Tipo de movimiento" Value="TipoMovimiento" />
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-2">
+                    <asp:Button ID="btnFiltrarMovimientos" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrarMovimientos_Click" />
+                </div>
+                <div class="col-md-2">
+                    <asp:Button ID="btnLimpiarFiltroMovimientos" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltroMovimientos_Click" />
+                </div>
                 <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
                     <asp:GridView ID="dgvMovimientos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered">
                         <Columns>
@@ -302,8 +329,8 @@
                     </asp:GridView>
                 </div>
             </div>
+            <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
         </div>
-        <asp:Button ID="btnRegresar" runat="server" Text="Regresar" CssClass="btn btn-secondary mx-2" class="btn btn-info" OnClick="btnRegresar_Click" />
     </div>
 </asp:Content>
 

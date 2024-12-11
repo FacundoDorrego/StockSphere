@@ -455,7 +455,7 @@ namespace StockSphere
                 movstock.Visible = true;
                 dgvMovimientos.Visible = true;
                 divFiltrosMovimientos.Visible = true;
-                txtFechaFiltro.Text= DateTime.Now.ToString("yyyy-MM-dd");
+                txtFechaFiltro.Text = DateTime.Now.ToString("yyyy-MM-dd");
             }
         }
 
@@ -539,7 +539,7 @@ namespace StockSphere
                     }
                     else
                     {
-                        if(usuarioRolID==3)
+                        if (usuarioRolID == 3)
                         {
                             lblMensaje.Text = "No tiene permisos para realizar ventas.";
                             return;
@@ -680,7 +680,7 @@ namespace StockSphere
                     if (filtro == "Nombre")
                     {
                         string nombre = txtFiltro.Text;
-                        if(string.IsNullOrEmpty(nombre))
+                        if (string.IsNullOrEmpty(nombre))
                         {
                             lblMensaje.Text = "Debe ingresar un nombre para filtrar.";
                             lblMensaje.Visible = true;
@@ -707,7 +707,8 @@ namespace StockSphere
                         dgvProductos.DataSource = productosFiltrados;
                         dgvProductos.DataBind();
 
-                    } else if (filtro == "Marca")
+                    }
+                    else if (filtro == "Marca")
                     {
                         string marca = txtFiltro.Text;
                         if (string.IsNullOrEmpty(marca))
@@ -741,7 +742,7 @@ namespace StockSphere
                     else if (filtro == "ID")
                     {
                         int id = Convert.ToInt32(txtFiltro.Text);
-                        if (id<=0)
+                        if (id <= 0)
                         {
                             lblMensaje.Text = "Debe ingresar un ID para filtrar.";
                             lblMensaje.Visible = true;
@@ -791,7 +792,7 @@ namespace StockSphere
                         dgvProductos.DataSource = productosFiltrados;
                         dgvProductos.DataBind();
                     }
-                    else if(filtro == "Proveedores")
+                    else if (filtro == "Proveedores")
                     {
                         int proveedoresID = int.Parse(ddlProveedoresFiltro.SelectedValue);
                         List<Producto> productos = repoProducto.ObtenerProductos();
@@ -804,7 +805,7 @@ namespace StockSphere
                             }
                         }
                         List<Producto> productosFiltrados = productosxEmpresa.Where(producto => producto.ProveedorID == proveedoresID).ToList();
-                        if(productosFiltrados.Count == 0)
+                        if (productosFiltrados.Count == 0)
                         {
                             lblMensaje.Text = "No hay productos con ese proveedor.";
                             lblMensaje.Visible = true;
@@ -832,7 +833,8 @@ namespace StockSphere
                             dgvProductos.DataSource = productosOrdenadosAsc;
                             dgvProductos.DataBind();
 
-                        } else if (orden == "DESC")
+                        }
+                        else if (orden == "DESC")
                         {
                             List<Producto> productosOrdenadosDesc = productosxEmpresa.OrderByDescending(producto => producto.Stock).ToList();
                             dgvProductos.DataSource = productosOrdenadosDesc;
@@ -889,7 +891,8 @@ namespace StockSphere
                 txtFiltro.Visible = false;
                 ddlStockFiltro.Visible = false;
                 lblStockFiltro.Visible = false;
-            } else if (ddlFiltro.SelectedIndex == 6)
+            }
+            else if (ddlFiltro.SelectedIndex == 6)
             {
                 lblCateFiltro.Visible = false;
                 lblProvFiltro.Visible = false;
@@ -913,12 +916,293 @@ namespace StockSphere
 
         protected void btnFiltrarMovimientos_Click(object sender, EventArgs e)
         {
+            string filtro = ddlFiltroMov.SelectedValue;
+            int empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+            try
+            {
+                RepositorioMovimientoInventario repomov = new RepositorioMovimientoInventario();
+                List<MovimientoInventario> movimientoInventarios = repomov.ObtenerMovimientos();
+                List<MovimientoInventario> movimientosxEmpresa = new List<MovimientoInventario>();
+                if (!string.IsNullOrEmpty(filtro))
+                {
+
+                    if (filtro == "TipoMovimiento")
+                    {
+                        string tipo = ddlTipoMovimiento.SelectedValue;
+                        if (string.IsNullOrEmpty(tipo))
+                        {
+                            lblMensaje.Text = "Debe seleccionar un tipo de movimiento.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        foreach (MovimientoInventario movimiento in movimientoInventarios)
+                        {
+                            if (movimiento.EmpresaID == empresaID)
+                            {
+                                movimientosxEmpresa.Add(movimiento);
+                            }
+                        }
+                        List<MovimientoInventario> movimientosFiltrados = movimientosxEmpresa.Where(movimiento => movimiento.TipoMovimiento.Contains(tipo)).ToList();
+                        dgvMovimientos.DataSource = movimientosFiltrados;
+                        dgvMovimientos.DataBind();
+                    }
+
+                    else if (filtro == "IDmov")
+                    {
+                        if (string.IsNullOrEmpty(txtFiltroMov.Text))
+                        {
+
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        int id = Convert.ToInt32(txtFiltroMov.Text);
+                        if (id <= 0)
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        foreach (MovimientoInventario movimiento in movimientoInventarios)
+                        {
+                            if (movimiento.EmpresaID == empresaID)
+                            {
+                                movimientosxEmpresa.Add(movimiento);
+                            }
+                        }
+                        List<MovimientoInventario> movimientosFiltrados = movimientosxEmpresa.Where(movimiento => movimiento.MovimientoID == id).ToList();
+                        if (movimientosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay movimientos con ese ID.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvMovimientos.DataSource = movimientosFiltrados;
+                        dgvMovimientos.DataBind();
+                    }
+                    else if (filtro == "IDusu")
+                    {
+                        if (string.IsNullOrEmpty(txtFiltroMov.Text))
+                        {
+
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        int id = Convert.ToInt32(txtFiltroMov.Text);
+                        if (id <= 0)
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        foreach (MovimientoInventario movimiento in movimientoInventarios)
+                        {
+                            if (movimiento.EmpresaID == empresaID)
+                            {
+                                movimientosxEmpresa.Add(movimiento);
+                            }
+                        }
+                        List<MovimientoInventario> movimientosFiltrados = movimientosxEmpresa.Where(movimiento => movimiento.UsuarioID == id).ToList();
+                        if (movimientosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay movimientos con ese ID de usuario.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvMovimientos.DataSource = movimientosFiltrados;
+                        dgvMovimientos.DataBind();
+                    }
+                    else if (filtro == "IDprod")
+                    {
+                        if (string.IsNullOrEmpty(txtFiltroMov.Text))
+                        {
+
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        int id = Convert.ToInt32(txtFiltroMov.Text);
+
+                        if (id <= 0)
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        foreach (MovimientoInventario movimiento in movimientoInventarios)
+                        {
+                            if (movimiento.EmpresaID == empresaID)
+                            {
+                                movimientosxEmpresa.Add(movimiento);
+                            }
+                        }
+                        List<MovimientoInventario> movimientosFiltrados = movimientosxEmpresa.Where(movimiento => movimiento.ProductoID == id).ToList();
+                        if (movimientosFiltrados.Count == 0)
+                        {
+                            lblMensaje.Text = "No hay movimientos con ese ID de producto.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
+                        dgvMovimientos.DataSource = movimientosFiltrados;
+                        dgvMovimientos.DataBind();
+                    }
+                    else if (filtro == "Fecha")
+                    {
+                        DateTime fecha = DateTime.Parse(txtFechaFiltro.Text);
+                        foreach (MovimientoInventario movimiento in movimientoInventarios)
+                        {
+                            if (movimiento.EmpresaID == empresaID)
+                            {
+                                movimientosxEmpresa.Add(movimiento);
+                            }
+                        }
+                        switch (ddlFiltroFecha.SelectedIndex)
+                        {
+                            case 1:
+                                List<MovimientoInventario> movimientosFiltradosMayorA = movimientosxEmpresa.Where(movimiento => movimiento.Fecha.Date > fecha.Date).ToList();
+                                if (movimientosFiltradosMayorA.Count == 0)
+                                {
+                                    lblMensaje.Text = "No hay movimientos en esa fecha.";
+                                    lblMensaje.Visible = true;
+                                    lblMensaje.CssClass = "alert alert-danger";
+                                    return;
+                                }
+                                dgvMovimientos.DataSource = movimientosFiltradosMayorA;
+                                dgvMovimientos.DataBind();
+                                break;
+                            case 2:
+                                List<MovimientoInventario> movimientosFiltradosIgualA = movimientosxEmpresa.Where(movimiento => movimiento.Fecha.Date == fecha.Date).ToList();
+                                if (movimientosFiltradosIgualA.Count == 0)
+                                {
+                                    lblMensaje.Text = "No hay movimientos en esa fecha.";
+                                    lblMensaje.Visible = true;
+                                    lblMensaje.CssClass = "alert alert-danger";
+                                    return;
+                                }
+                                dgvMovimientos.DataSource = movimientosFiltradosIgualA;
+                                dgvMovimientos.DataBind();
+                                break;
+                            case 3:
+                                List<MovimientoInventario> movimientosFiltradosMenorA = movimientosxEmpresa.Where(movimiento => movimiento.Fecha.Date < fecha.Date).ToList();
+                                if (movimientosFiltradosMenorA.Count == 0)
+                                {
+                                    lblMensaje.Text = "No hay movimientos en esa fecha.";
+                                    lblMensaje.Visible = true;
+                                    lblMensaje.CssClass = "alert alert-danger";
+                                    return;
+                                }
+                                dgvMovimientos.DataSource = movimientosFiltradosMenorA;
+                                dgvMovimientos.DataBind();
+                                break;
+                            default:
+                                lblMensaje.Text = "Debe seleccionar un filtro de fecha.";
+                                lblMensaje.Visible = true;
+                                lblMensaje.CssClass = "alert alert-danger";
+                                return;
+                        }
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "Debe seleccionar un filtro.";
+                    CargarMovimientos();
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al filtrar los movimientos: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
 
         }
 
         protected void btnLimpiarFiltroMovimientos_Click(object sender, EventArgs e)
         {
+            ddlFiltroMov.SelectedIndex = 0;
+            txtFiltroMov.Text = "";
+            txtFechaFiltro.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            ddlTipoMovimiento.Visible = false;
+            txtFiltroMov.Visible = true;
+            txtFechaFiltro.Visible = false;
+            lblMensaje.Visible = false;
+            ddlFiltroFecha.Visible = false;
+            lblFecha.Visible = false;
+            divDllFiltroFecha.Visible = false;
+            CargarMovimientos();
+        }
 
+        protected void ddlFiltroMov_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (ddlFiltroMov.SelectedIndex)
+            {
+                case 0:
+                    txtFiltroMov.Visible = true;
+                    ddlTipoMovimiento.Visible = false;
+                    txtFechaFiltro.Visible = false;
+                    ddlFiltroFecha.Visible = false;
+                    lblFecha.Visible = false;
+                    divDllFiltroFecha.Visible = false;
+                    break;
+                case 1:
+                    txtFiltroMov.Visible = true;
+                    ddlTipoMovimiento.Visible = false;
+                    txtFechaFiltro.Visible = false;
+                    ddlFiltroFecha.Visible = false;
+                    lblFecha.Visible = false;
+                    divDllFiltroFecha.Visible = false;
+                    break;
+                case 2:
+                    txtFiltroMov.Visible = true;
+                    ddlTipoMovimiento.Visible = false;
+                    txtFechaFiltro.Visible = false;
+                    ddlFiltroFecha.Visible = false;
+                    lblFecha.Visible = false;
+                    divDllFiltroFecha.Visible = false;
+                    break;
+                case 3:
+                    txtFiltroMov.Visible = true;
+                    ddlTipoMovimiento.Visible = false;
+                    txtFechaFiltro.Visible = false;
+                    ddlFiltroFecha.Visible = false;
+                    lblFecha.Visible = false;
+                    divDllFiltroFecha.Visible = false;
+                    break;
+                case 4:
+                    txtFiltroMov.Visible = false;
+                    ddlTipoMovimiento.Visible = false;
+                    txtFechaFiltro.Visible = true;
+                    ddlFiltroFecha.Visible = true;
+                    lblFecha.Visible = true;
+                    divDllFiltroFecha.Visible = true;
+                    break;
+                case 5:
+                    txtFiltroMov.Visible = false;
+                    ddlTipoMovimiento.Visible = true;
+                    txtFechaFiltro.Visible = false;
+                    ddlFiltroFecha.Visible = false;
+                    lblFecha.Visible = false;
+                    divDllFiltroFecha.Visible = false;
+                    break;
+                default:
+                    txtFiltroMov.Visible = true;
+                    ddlTipoMovimiento.Visible = false;
+                    txtFechaFiltro.Visible = false;
+                    ddlFiltroFecha.Visible = false;
+                    lblFecha.Visible = false;
+                    divDllFiltroFecha.Visible = false;
+                    break;
+            }
         }
     }
 }
