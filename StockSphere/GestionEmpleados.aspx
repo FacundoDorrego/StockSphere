@@ -131,8 +131,8 @@
                             <asp:BoundField DataField="Empresa.EmpresaID" HeaderText="ID de la empresa" />
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditar" runat="server" Text="Editar" CssClass="btn btn-outline-primary mx-2" CommandName="Edit" CommandArgument='<%# Eval("EmpleadoID") %>' />
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger mx-2" CommandName="Eliminar" OnClientClick='<%# "abrirModalEliminar(" + Eval("EmpleadoID") + "); return false;" %>' />
+                                    <asp:Button ID="btnEditar" runat="server" CssClass="btn btn-outline-primary mx-2" CommandName="Edit"   CommandArgument='<%# Eval("EmpleadoID") %>' />
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger mx-2" CommandName="Eliminar" OnClientClick='<%# "abrirModalEliminar(" + Eval("EmpleadoID") + "); return false;" %>'  />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

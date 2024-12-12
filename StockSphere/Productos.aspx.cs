@@ -871,7 +871,7 @@ namespace StockSphere
         }
 
         protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {    
             if (ddlFiltro.SelectedIndex == 4)
             {
                 ddlCategoriasFiltro.Visible = true;
