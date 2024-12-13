@@ -41,12 +41,12 @@
                             <label for="txtTelefonoProv">Teléfono</label>
                             <asp:TextBox ID="txtTelefonoProv" runat="server" class="form-control" Placeholder="Teléfono" />
                             <label for="txtDireccProv">Dirección</label>
-                            <asp:TextBox ID="txtDireccProv" runat="server" class="form-control" Placeholder="Dirección" />
+                            <asp:TextBox ID="txtDireccProv" runat="server" class="form-control" Placeholder="Dirección"  />
                             <label for="txtEmailProv">Email</label>
                             <asp:TextBox ID="txtEmailProv" runat="server" class="form-control" Placeholder="Email" />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="Button1" runat="server" Text="Agregar Proveedor" CssClass="btn btn-success" OnClick="btnAgregarProveedor_Click" />
+                            <asp:Button ID="btnAgregarProveedor" runat="server" Text="Agregar Proveedor" CssClass="btn btn-success" OnClick="btnAgregarProveedor_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divAgregarProveedor')">Cerrar</button>
@@ -64,14 +64,14 @@
                             <label for="txtNombreProveedorActualizar">Nombre del proveedor</label>
                             <asp:TextBox ID="txtNombreProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo nombre del proveedor" />
                             <label for="txtTelefonoProveedorActualizar">Teléfono</label>
-                            <asp:TextBox ID="txtTelefonoProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo teléfono" />
+                            <asp:TextBox ID="txtTelefonoProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo teléfono"  />
                             <label for="txtDireccionProveedorActualizar">Dirección</label>
                             <asp:TextBox ID="txtDireccionProveedorActualizar" runat="server" class="form-control" Placeholder="Nueva dirección" />
                             <label for="txtEmailProveedorActualizar">Email</label>
                             <asp:TextBox ID="txtEmailProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo email" />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnActualizarProveedor" runat="server" Text="Actualizar Proveedor" CssClass="btn btn-warning" OnClick="btnActualizarProveedor_Click" />
+                            <asp:Button ID="btnActualizarProveedor" runat="server" Text="Actualizar Proveedor" CssClass="btn btn-success" OnClick="btnActualizarProveedor_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divActualizarProveedor')">Cerrar</button>

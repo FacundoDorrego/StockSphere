@@ -18,6 +18,7 @@ namespace StockSphere
                 lnkEmpresas.Visible = true;
                 lnkInicio.Visible = true;
                 btnCerrar.Visible = true;
+                lnkCuenta.Visible = true;
                 
                 Usuario usuario = (Usuario)Session["usuario"];
                 if (usuario != null && usuario.RolID == 1)
@@ -35,6 +36,7 @@ namespace StockSphere
                 btnCerrar.Visible = false;
                 lnkLogin.Visible = true;
                 phAdminMenu.Visible = false; 
+                lnkCuenta.Visible = false;
             }
         }
 

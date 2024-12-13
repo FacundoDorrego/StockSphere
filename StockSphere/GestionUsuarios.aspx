@@ -56,7 +56,7 @@
                         </asp:DropDownList>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <asp:Button ID="btnModificarUsuario" runat="server" Text="Modificar Usuario" CssClass="btn btn-warning" OnClick="btnModificarUsuario_Click" />
+                        <asp:Button ID="btnModificarUsuario" runat="server" Text="Modificar Usuario" CssClass="btn btn-warning" OnClick="btnModificarUsuario_Click" onkeydown="return event.key != 'Enter';" />
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divModificarUsuario')">Cerrar</button>
@@ -82,7 +82,7 @@
                         </asp:DropDownList>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <asp:Button ID="btnAgregarUsuario" runat="server" Text="Agregar Usuario" CssClass="btn btn-warning" OnClick="btnAgregarUsuario_Click" />
+                        <asp:Button ID="btnAgregarUsuario" runat="server" Text="Agregar Usuario" CssClass="btn btn-warning" OnClick="btnAgregarUsuario_Click" onkeydown="return event.key != 'Enter';" />
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divAgregarUsuario')">Cerrar</button>

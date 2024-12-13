@@ -78,15 +78,6 @@ namespace StockSphere
         protected global::System.Web.UI.WebControls.Button btnGestionEmpleados;
 
         /// <summary>
-        /// Control btnDashboardReportes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDashboardReportes;
-
-        /// <summary>
         /// Control btnProveedores.
         /// </summary>
         /// <remarks>
@@ -103,6 +94,15 @@ namespace StockSphere
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCategorias;
+
+        /// <summary>
+        /// Control btnDashboardReportes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDashboardReportes;
 
         /// <summary>
         /// Control btnRegresar.

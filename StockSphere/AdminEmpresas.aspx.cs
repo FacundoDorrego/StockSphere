@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Repositorios;
 using Clases;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace StockSphere
 {
@@ -61,6 +62,7 @@ namespace StockSphere
                 catch (Exception ex)
                 {
                     lblMensaje.Text = "Error al cargar las empresas: " + ex.Message;
+                    lblMensaje.CssClass = "alert alert-danger";
                     lblMensaje.Visible = true;
                 }
             }
@@ -76,6 +78,7 @@ namespace StockSphere
                 catch (Exception ex)
                 {
                     lblMensaje.Text = "Error al cargar las empresas: " + ex.Message;
+                    lblMensaje.CssClass = "alert alert-danger";
                     lblMensaje.Visible = true;
                 }
             }
@@ -104,6 +107,7 @@ namespace StockSphere
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al agregar la empresa: " + ex.Message;
+                lblMensaje.CssClass = "alert alert-danger";
                 lblMensaje.Visible = true;
             }
 
@@ -145,6 +149,7 @@ namespace StockSphere
                     if (string.IsNullOrEmpty(txtNombreEmpresaActualizar.Text))
                     {
                         lblMensaje.Text = "Debe ingresar un nombre para la empresa.";
+                        lblMensaje.CssClass = "alert alert-danger";
                         lblMensaje.Visible = true;
                         dgvEmpresas.EditIndex = -1;
                         return;
@@ -172,6 +177,7 @@ namespace StockSphere
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al actualizar la empresa: " + ex.Message;
+                lblMensaje.CssClass = "alert alert-danger";
                 lblMensaje.Visible = true;
             }
 
@@ -200,6 +206,7 @@ namespace StockSphere
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
+            lblMensaje.Visible = false;
             string filtro = ddlFiltro.SelectedValue;
             try
             {
@@ -209,6 +216,13 @@ namespace StockSphere
                     if (filtro == "Nombre")
                     {
                         string nombre = txtFiltro.Text;
+                        if(string.IsNullOrEmpty(nombre))
+                        {
+                            lblMensaje.Text = "Debe ingresar un nombre para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
                         if (usuarioRol == 1)
                         {
                             List<Empresa> empresasAdmin = repositorioEmpresa.ObtenerEmpresasAdmin();
@@ -227,6 +241,13 @@ namespace StockSphere
                     }
                     else if (filtro == "ID")
                     {
+                        if(string.IsNullOrEmpty(txtFiltro.Text))
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
                         int id = Convert.ToInt32(txtFiltro.Text);
                         if (usuarioRol == 1)
                         {
@@ -251,12 +272,15 @@ namespace StockSphere
                 else
                 {
                     lblMensaje.Text = "Debe seleccionar un filtro.";
+                    lblMensaje.Visible = true;
+                    lblMensaje.CssClass = "alert alert-danger";
                     CargarEmpresas();
                 }
             }
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al filtrar las empresas: " + ex.Message;
+                lblMensaje.CssClass = "alert alert-danger";
                 lblMensaje.Visible = true;
             }
 
@@ -266,6 +290,7 @@ namespace StockSphere
         {
             txtFiltro.Text = "";
             ddlFiltro.SelectedIndex = 0;
+            lblMensaje.Visible = false;
             CargarEmpresas();
         }
     }

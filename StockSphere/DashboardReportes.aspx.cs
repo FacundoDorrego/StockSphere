@@ -25,9 +25,20 @@ namespace StockSphere
                 }
                 else
                 {
+
                     Usuario usuario = (Usuario)Session["usuario"];
                     empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
-                    CargarVentas(empresaID);
+                    RepositorioEmpresa repoEmpresa = new RepositorioEmpresa();
+                    Empresa empresa = repoEmpresa.ObtenerEmpresaxID(empresaID);
+                    if (empresa.UsuarioID != usuario.UsuarioID)
+                    {
+                        Response.Redirect("Login.aspx");
+                    }
+                    else
+                    {
+                        CargarVentas(empresaID);
+
+                    }
 
                 }
             }
@@ -219,6 +230,12 @@ namespace StockSphere
                         RepositorioVenta repoVenta = new RepositorioVenta();
                         List<Venta> ventas = repoVenta.ObtenerVentasxEmpresa(empresaID);
                         List<Venta> ventasFiltradas = ventas.Where(v => v.VentasID == id).ToList();
+                        if (ventasFiltradas.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron ventas con ese ID.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         dgvVentas.DataSource = ventasFiltradas;
                         dgvVentas.DataBind();
                     }
@@ -240,6 +257,12 @@ namespace StockSphere
                         RepositorioVenta repoVenta = new RepositorioVenta();
                         List<Venta> ventas = repoVenta.ObtenerVentasxEmpresa(empresaID);
                         List<Venta> ventasFiltradas = ventas.Where(v => v.Usuario.UsuarioID == id).ToList();
+                        if (ventasFiltradas.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron usuarios con ese ID.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         dgvVentas.DataSource = ventasFiltradas;
                         dgvVentas.DataBind();
                     }
@@ -261,6 +284,12 @@ namespace StockSphere
                         RepositorioVenta repoVenta = new RepositorioVenta();
                         List<Venta> ventas = repoVenta.ObtenerVentasxEmpresa(empresaID);
                         List<Venta> ventasFiltradas = ventas.Where(v => v.Producto.ProductoID == id).ToList();
+                        if (ventasFiltradas.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron productos con ese ID.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         dgvVentas.DataSource = ventasFiltradas;
                         dgvVentas.DataBind();
                     }
@@ -291,6 +320,12 @@ namespace StockSphere
                         RepositorioVenta repoVenta = new RepositorioVenta();
                         List<Venta> ventas = repoVenta.ObtenerVentasxEmpresa(empresaID);
                         List<Venta> ventasFiltradas = ventas.Where(v => v.Producto.Nombre.Contains(nombre)).ToList();
+                        if (ventasFiltradas.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron ventas con ese producto.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         dgvVentas.DataSource = ventasFiltradas;
                         dgvVentas.DataBind();
                     }
@@ -306,6 +341,12 @@ namespace StockSphere
                         RepositorioVenta repoVenta = new RepositorioVenta();
                         List<Venta> ventas = repoVenta.ObtenerVentasxEmpresa(empresaID);
                         List<Venta> ventasFiltradas = ventas.Where(v => v.Categoria.CategoriaID == categoriaID).ToList();
+                        if (ventasFiltradas.Count == 0)
+                        {
+                            lblMensaje.Text = "No se encontraron ventas con esa categoria.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         dgvVentas.DataSource = ventasFiltradas;
                         dgvVentas.DataBind();
                     }

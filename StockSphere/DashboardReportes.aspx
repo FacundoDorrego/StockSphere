@@ -122,8 +122,6 @@
             }
         });
 </script>
-
-    <!--Hacer filtros--->
     <div class="container mt-4">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center">
@@ -213,10 +211,16 @@
                                 </Columns>
                             </asp:GridView>
                         </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2 mx-auto p-4 text-center">
+
+                                    <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-success w-100" OnClick="btnExportarExcel_Click" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 justify-content-center">
-                        <asp:Button ID="btnExportarExcel" runat="server" Text="Exportar a Excel" CssClass="btn btn-success w-100" OnClick="btnExportarExcel_Click" />
-                    </div>
+
                 </div>
                 <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
             </div>

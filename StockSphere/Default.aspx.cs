@@ -13,10 +13,5 @@ namespace StockSphere
         {
 
         }
-
-        protected void btnIniciarSesion_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Login.aspx");
-        }
     }
 }

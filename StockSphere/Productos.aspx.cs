@@ -266,10 +266,23 @@ namespace StockSphere
         {
             try
             {
-
                 string nombre = txtNombreProducto.Text;
                 string descripcion = txtDescripcionProducto.Text;
+                if (!Regex.IsMatch(txtPrecioProducto.Text, @"^\d*$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un precio valido.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 decimal precio = decimal.Parse(txtPrecioProducto.Text);
+                if (!Regex.IsMatch(txtStockProducto.Text, @"^\d*$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un precio valido.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 int stock = int.Parse(txtStockProducto.Text);
                 int categoriaID = int.Parse(ddlCategoriaProducto.SelectedValue);
                 int proveedorID = int.Parse(ddlProveedor.SelectedValue);
@@ -321,7 +334,21 @@ namespace StockSphere
                 int productoID = Convert.ToInt32(hiddenProductoIDEliminar.Value);
                 string nombre = txtNombreProductoActualizar.Text;
                 string descripcion = txtDescripcionProductoActualizar.Text;
+                if (!Regex.IsMatch(txtPrecioProductoActualizar.Text, @"^\d*$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un precio valido.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 decimal precio = decimal.Parse(txtPrecioProductoActualizar.Text);
+                if (!Regex.IsMatch(txtStockProductoActualizar.Text, @"^\d*$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un precio valido.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 int stock = int.Parse(txtStockProductoActualizar.Text);
                 int categoriaID = int.Parse(ddlCategoriaProductoActualizar.SelectedValue);
                 int proveedorID = int.Parse(ddlProveedorActualizar.SelectedValue);
@@ -670,13 +697,16 @@ namespace StockSphere
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
+            lblMensaje.Visible = false;
             string filtro = ddlFiltro.SelectedValue;
             int empresaID = Convert.ToInt32(Request.QueryString["empresaID"]);
+
             try
             {
 
                 if (!string.IsNullOrEmpty(filtro))
                 {
+
                     if (filtro == "Nombre")
                     {
                         string nombre = txtFiltro.Text;
@@ -741,6 +771,13 @@ namespace StockSphere
                     }
                     else if (filtro == "ID")
                     {
+                        if (string.IsNullOrEmpty(txtFiltro.Text))
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
                         int id = Convert.ToInt32(txtFiltro.Text);
                         if (id <= 0)
                         {
@@ -758,7 +795,7 @@ namespace StockSphere
                                 productosxEmpresa.Add(producto);
                             }
                         }
-                    
+
                         if (productosxEmpresa.Count == 0)
                         {
                             lblMensaje.Text = "No hay productos con ese ID.";
@@ -846,6 +883,8 @@ namespace StockSphere
                 else
                 {
                     lblMensaje.Text = "Debe seleccionar un filtro.";
+                    lblMensaje.Visible = true;
+                    lblMensaje.CssClass = "alert alert-danger";
                     CargarProductos();
                 }
             }
@@ -853,6 +892,7 @@ namespace StockSphere
             {
                 lblMensaje.Text = "Error al filtrar las empresas: " + ex.Message;
                 lblMensaje.Visible = true;
+                lblMensaje.CssClass = "alert alert-danger";
             }
         }
 
@@ -871,7 +911,7 @@ namespace StockSphere
         }
 
         protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
-        {    
+        {
             if (ddlFiltro.SelectedIndex == 4)
             {
                 ddlCategoriasFiltro.Visible = true;

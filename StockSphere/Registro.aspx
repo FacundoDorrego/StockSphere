@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="d-flex justify-content-center card-body">
-                            <asp:Button ID="btnRegistrar" runat="server" class="btn btn-primary" Text="Registrarse" OnClick="btnRegistrar_Click" />
+                            <asp:Button ID="btnRegistrar" runat="server" class="btn btn-primary" Text="Registrarse" OnClick="btnRegistrar_Click"  />
                         </div>
                         <asp:Label ID="lblMensaje" runat="server" Visible="false" class="mt-3"></asp:Label>
                     </div>

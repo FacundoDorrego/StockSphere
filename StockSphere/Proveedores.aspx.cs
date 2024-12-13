@@ -41,6 +41,7 @@ namespace StockSphere
             if (proveedores.Count == 0 || proveedores == null)
             {
                 lblMensaje.Text = "No hay proveedores para esta empresa";
+                lblMensaje.CssClass = "alert alert-danger";
                 lblMensaje.Visible = true;
                 dgvProveedores.Visible = false;
             }
@@ -73,14 +74,24 @@ namespace StockSphere
                 if (txtNombreProv.Text == "" || txtTelefonoProv.Text == "" || txtEmailProv.Text == "" || txtDireccProv.Text == "")
                 {
                     lblMensaje.Text = "Debe completar todos los campos";
+                    lblMensaje.CssClass = "alert alert-danger";
                     lblMensaje.Visible = true;
                 }
-                else if (!Regex.IsMatch(txtEmailProv.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                if (!Regex.IsMatch(txtEmailProv.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                 {
                     lblMensaje.Text = "Por favor, ingrese un correo valido.";
-                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.CssClass = "alert alert-danger";
                     lblMensaje.Visible = true;
                     return;
+                }
+                string telefono = txtTelefonoProv.Text;
+                if (!Regex.IsMatch(telefono, @"^\d*$"))
+                {
+
+                    txtTelefonoProv.Text = Regex.Replace(telefono, @"\D", "");
+                    lblMensaje.Text = "Por favor, ingrese un telefono valido.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
                 }
                 else
                 {
@@ -138,22 +149,33 @@ namespace StockSphere
         {
             try
             {
+                dgvProveedores.EditIndex = -1;
                 if (string.IsNullOrWhiteSpace(txtNombreProveedorActualizar.Text) ||
                     string.IsNullOrWhiteSpace(txtTelefonoProveedorActualizar.Text) ||
                     string.IsNullOrWhiteSpace(txtEmailProveedorActualizar.Text) ||
                     string.IsNullOrWhiteSpace(txtDireccionProveedorActualizar.Text))
                 {
                     lblMensaje.Text = "Debe completar todos los campos.";
+                    lblMensaje.CssClass = "alert alert-danger";
                     lblMensaje.Visible = true;
                     return;
                 }
-                else if (!Regex.IsMatch(txtEmailProveedorActualizar.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                if (!Regex.IsMatch(txtEmailProveedorActualizar.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                 {
                     lblMensaje.Text = "Por favor, ingrese un correo valido.";
-                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.CssClass = "alert alert-danger";
                     lblMensaje.Visible = true;
                     return;
                 }
+                string telefono = txtTelefonoProveedorActualizar.Text;
+                if (!Regex.IsMatch(telefono, @"^\d*$"))
+                {
+                    lblMensaje.Text = "Por favor, ingrese un telefono valido.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
+                    return;
+                }
+
                 else
                 {
                     int proveedorID = Convert.ToInt32(hiddenProveedorID.Value);
@@ -210,6 +232,13 @@ namespace StockSphere
                     if (filtro == "Nombre")
                     {
                         string nombre = txtFiltro.Text;
+                        if(nombre == "")
+                        {
+                            lblMensaje.Text = "Debe ingresar un nombre para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
                         List<Proveedor> proveedores = repositorioProveedor.ObtenerProveedoresxEmpresa(empresaID);
                         List<Proveedor> proveedoresFiltrados = proveedores.Where(proveedor => proveedor.Nombre.Contains(nombre)).ToList();
                         dgvProveedores.DataSource = proveedoresFiltrados;
@@ -219,6 +248,13 @@ namespace StockSphere
                     else if (filtro == "ID")
                     {
                         int id = Convert.ToInt32(txtFiltro.Text);
+                        if(id <= 0)
+                        {
+                            lblMensaje.Text = "Debe ingresar un ID para filtrar.";
+                            lblMensaje.Visible = true;
+                            lblMensaje.CssClass = "alert alert-danger";
+                            return;
+                        }
                         List<Proveedor> proveedores = repositorioProveedor.ObtenerProveedoresxEmpresa(empresaID);
                         List<Proveedor> proveedoresFiltrados = proveedores.Where(proveedor => proveedor.ProveedorID == id).ToList();
                         dgvProveedores.DataSource = proveedoresFiltrados;
@@ -230,6 +266,8 @@ namespace StockSphere
                 else
                 {
                     lblMensaje.Text = "Debe seleccionar un filtro.";
+                    lblMensaje.Visible = true;
+                    lblMensaje.CssClass = "alert alert-danger";
                     CargarProveedores(empresaID);
                 }
             }
@@ -243,7 +281,8 @@ namespace StockSphere
         protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
         {
             txtFiltro.Text = "";
-            ddlFiltro.SelectedIndex = 0;
+            ddlFiltro.SelectedIndex = 0; 
+            lblMensaje.Visible = false;
             CargarProveedores(Convert.ToInt32(Request.QueryString["empresaID"]));
         }
 
@@ -260,6 +299,10 @@ namespace StockSphere
                 divDgvProveedores.Visible = true;
             }
         }
+
+      
+
+       
     }
 }
 

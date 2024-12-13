@@ -61,7 +61,7 @@
                             <asp:TextBox ID="txtPassword" runat="server" class="form-control mx-auto" TextMode="Password" Placeholder="Contraseña" />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnAgregarEmpleado" runat="server" Text="Agregar Empleado" CssClass="btn btn-outline-success mx-2" OnClick="btnAgregarEmpleado_Click" />
+                            <asp:Button ID="btnAgregarEmpleado" runat="server" Text="Agregar Empleado" CssClass="btn btn-outline-success mx-2" OnClick="btnAgregarEmpleado_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
 
@@ -93,7 +93,7 @@
                             <asp:TextBox ID="txtPasswordMod" runat="server" class="form-control mx-auto" Placeholder="Contraseña" />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnModificarEmpleado" runat="server" Text="Modificar Empleado" CssClass="btn btn-outline-success mx-2" OnClick="btnModificarEmpleado_Click" />
+                            <asp:Button ID="btnModificarEmpleado" runat="server" Text="Modificar Empleado" CssClass="btn btn-outline-success mx-2" OnClick="btnModificarEmpleado_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
 
@@ -131,7 +131,7 @@
                             <asp:BoundField DataField="Empresa.EmpresaID" HeaderText="ID de la empresa" />
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditar" runat="server" CssClass="btn btn-outline-primary mx-2" CommandName="Edit"   CommandArgument='<%# Eval("EmpleadoID") %>' />
+                                    <asp:Button ID="btnEditar" runat="server" Text="Editar" CssClass="btn btn-outline-primary mx-2" CommandName="Edit"   CommandArgument='<%# Eval("EmpleadoID") %>' />
                                     <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger mx-2" CommandName="Eliminar" OnClientClick='<%# "abrirModalEliminar(" + Eval("EmpleadoID") + "); return false;" %>'  />
                                 </ItemTemplate>
                             </asp:TemplateField>

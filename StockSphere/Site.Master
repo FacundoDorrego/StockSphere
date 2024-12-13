@@ -19,7 +19,7 @@
     <form runat="server">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand d-inline align-content-center" href="/AdminEmpresas.aspx">
+                <a class="navbar-brand d-inline align-content-center" href="Default.aspx">
                     <img src="/Icono.png" alt="Icono" width="50" height="50" class="d-inline-block">
                     StockSphere
                 </a>
@@ -30,6 +30,9 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-content-center">
                         <li class="nav-item">
                             <a class="nav-link" id="lnkLogin" runat="server" href="~/Login">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="lnkCuenta" runat="server" href="~/Cuenta">Mi cuenta</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="lnkInicio" runat="server" href="~/">Inicio</a>

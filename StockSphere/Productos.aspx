@@ -102,7 +102,7 @@
                             </asp:DropDownList>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnAgregarProducto" runat="server" Text="Agregar Producto" CssClass="btn btn-success" OnClick="btnAgregarProducto_Click" />
+                            <asp:Button ID="btnAgregarProducto" runat="server" Text="Agregar Producto" CssClass="btn btn-success" OnClick="btnAgregarProducto_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divAgregarProducto')">Cerrar</button>
@@ -133,7 +133,7 @@
                             </asp:DropDownList>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnActualizarProducto" runat="server" Text="Actualizar Producto" CssClass="btn btn-warning" OnClick="btnActualizarProducto_Click" />
+                            <asp:Button ID="btnActualizarProducto" runat="server" Text="Actualizar Producto" CssClass="btn btn-warning" OnClick="btnActualizarProducto_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divActualizarProducto')">Cerrar</button>
@@ -154,7 +154,7 @@
                             </div>
                             <div
                                 class="d-flex justify-content-center">
-                                <asp:Button ID="btnConfirmarAgregarStock" runat="server" Text="Agregar Stock" CssClass="btn btn-success" OnClick="btnConfirmarAgregarStock_Click" />
+                                <asp:Button ID="btnConfirmarAgregarStock" runat="server" Text="Agregar Stock" CssClass="btn btn-success" OnClick="btnConfirmarAgregarStock_Click" onkeydown="return event.key != 'Enter';" />
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3">
@@ -196,7 +196,7 @@
                             <asp:TextBox ID="txtStockProdVenta" runat="server" class="form-control" Placeholder="Stock del producto" ReadOnly="True" BackColor="LightGray"></asp:TextBox>
                         </div>
                         <div class="d-flex justify-content-center mt-3">
-                            <asp:Button ID="btnConfirmarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-danger" OnClick="btnConfirmarVenta_Click" Visible="false" />
+                            <asp:Button ID="btnConfirmarVenta" runat="server" Text="Registrar Venta" CssClass="btn btn-danger" OnClick="btnConfirmarVenta_Click" Visible="false" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divRegistrarVenta')">Cerrar</button>
@@ -236,10 +236,10 @@
                             </asp:DropDownList>
                         </div>
                         <div class="col-md-2">
-                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" />
+                            <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary w-100" OnClick="btnFiltrar_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="col-md-2">
-                            <asp:Button ID="btnLimpiarFiltro" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltro_Click" />
+                            <asp:Button ID="btnLimpiarFiltro" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltro_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                     </div>
                     <div class="table-responsive" style="max-height: 520px; overflow-y: auto;">

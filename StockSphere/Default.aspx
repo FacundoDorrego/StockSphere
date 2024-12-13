@@ -9,9 +9,18 @@
             <h1 class="display-4">StockSphere</h1>
             <h2 class="display-4">Gestion de inventario</h2>
             <p class="lead">Tu stock bajo una misma esfera</p>
+            <div class="mt-4">
+                <a href="Login.aspx" class="btn btn-outline-info">Entrar</a>
+            </div>
         </div>
-        <div class="mt-4">
-            <asp:Button ID="btnIniciarSesion" runat="server" Text="Iniciar" CssClass="btn btn-primary" OnClick="btnIniciarSesion_Click" />
+        <div class="card mt-4">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Un programa adaptado a vos y a tus necesidades.</p>
+                    <footer class="blockquote-footer">StockSphere <cite title="Source Title">2024</cite></footer>
+                </blockquote>
+            </div>
         </div>
     </div>
+
 </asp:Content>

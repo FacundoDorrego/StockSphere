@@ -30,6 +30,10 @@
                 <div class="card-header bg-primary text-white text-center">
                     <h2>Módulo de Gestión - Categorias</h2>
                 </div>
+                <div class="d-flex justify-content-center my-4">
+                    <asp:Button ID="btnMostrarAgregar" runat="server" Text="Agregar Categoria" CssClass="btn btn-success mx-2" OnClientClick="mostrarFormulario('divAgregarCategoria'); return false;" />
+                    <asp:Button ID="btnMostrarListado" runat="server" Text="Listado de Categorias" CssClass="btn btn-outline-primary mx-2" OnClick="btnMostrarListado_Click" />
+                </div>
 
 
                 <div id="divAgregarCategoria" class="card shadow-lg mb-4" style="display: none;">
@@ -45,7 +49,7 @@
 
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar Categoria" CssClass="btn btn-success" OnClick="btnAgregarCategoria_Click" />
+                            <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar Categoria" CssClass="btn btn-success" OnClick="btnAgregarCategoria_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divAgregarProveedor')">Cerrar</button>
@@ -66,7 +70,7 @@
                             <asp:TextBox ID="txtDescCatActualizar" runat="server" class="form-control" Placeholder="Descripcion" />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnActualizarCategoria" runat="server" Text="Actualizar Categoria" CssClass="btn btn-warning" OnClick="btnActualizarCategoria_Click" />
+                            <asp:Button ID="btnActualizarCategoria" runat="server" Text="Actualizar Categoria" CssClass="btn btn-warning" OnClick="btnActualizarCategoria_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divActualizarCategoria')">Cerrar</button>
@@ -75,10 +79,6 @@
                 </div>
 
 
-                <div class="d-flex justify-content-center my-4">
-                    <asp:Button ID="btnMostrarAgregar" runat="server" Text="Agregar Categoria" CssClass="btn btn-success mx-2" OnClientClick="mostrarFormulario('divAgregarCategoria'); return false;" />
-                    <asp:Button ID="btnMostrarListado" runat="server" Text="Listado de Categorias" CssClass="btn btn-outline-primary mx-2" OnClick="btnMostrarListado_Click" />
-                </div>
 
                 <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
                 <div id="divDgvCategorias" class="container my-4" runat="server" visible="false">

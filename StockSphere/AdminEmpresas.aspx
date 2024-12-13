@@ -37,7 +37,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-center my-4">
 
-                    <asp:Button ID="btnMostrarCrear" runat="server" Text="Agregar Empresa" CssClass="btn btn-primary" OnClientClick="mostrarFormulario('divCrearEmpresa'); return false;" />
+                    <asp:Button ID="btnMostrarCrear" runat="server" Text="Agregar Empresa" CssClass="btn btn-outline-success mx-2" OnClientClick="mostrarFormulario('divCrearEmpresa'); return false;" />
                 </div>
 
 
@@ -48,10 +48,10 @@
                     <div class="card-body">
                         <div class="form-group mb-3">
                             <label for="txtNombreEmpresa">Nombre de la Empresa</label>
-                            <asp:TextBox ID="txtNombreEmpresa" runat="server" class="form-control" Placeholder="Nombre de la empresa" />
+                            <asp:TextBox ID="txtNombreEmpresa" runat="server" class="form-control" Placeholder="Nombre de la empresa" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnCrearEmpresa" runat="server" Text="Crear Empresa" CssClass="btn btn-success" OnClick="btnCrearEmpresa_Click" />
+                            <asp:Button ID="btnCrearEmpresa" runat="server" Text="Crear Empresa" CssClass="btn btn-success" OnClick="btnCrearEmpresa_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divCrearEmpresa')">Cerrar</button>
@@ -67,15 +67,15 @@
                         <div class="form-group mb-3">
 
                             <label for="txtNombreEmpresaActualizar">Nuevo Nombre de la Empresa</label>
-                            <asp:TextBox ID="txtNombreEmpresaActualizar" runat="server" class="form-control" Placeholder="Nuevo nombre de la empresa" />
-                            <label for="ddlActivaActualizar">Estado de la Empresa</label>   
+                            <asp:TextBox ID="txtNombreEmpresaActualizar" runat="server" class="form-control" Placeholder="Nuevo nombre de la empresa" onkeydown="return event.key != 'Enter';" />
+                            <label for="ddlActivaActualizar">Estado de la Empresa</label>
                             <asp:DropDownList ID="ddlActivaActualizar" runat="server" class="form-control mt-3">
                                 <asp:ListItem Text="Activa" Value="True" />
                                 <asp:ListItem Text="Inactiva" Value="False" />
-                                </asp:DropDownList>
+                            </asp:DropDownList>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <asp:Button ID="btnActualizarEmpresa" runat="server" Text="Actualizar Empresa" CssClass="btn btn-warning" OnClick="btnActualizarEmpresa_Click" />
+                            <asp:Button ID="btnActualizarEmpresa" runat="server" Text="Actualizar Empresa" CssClass="btn btn-warning" OnClick="btnActualizarEmpresa_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divActualizarEmpresa')">Cerrar</button>
@@ -91,7 +91,7 @@
                     <h4 class="text-center">Listado de empresas</h4>
                     <div id="divFiltros" class="row mb-3 justify-content-center" runat="server">
                         <div class="col-md-4">
-                            <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" Placeholder="Buscar"></asp:TextBox>
+                            <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" Placeholder="Buscar" onkeydown="return event.key != 'Enter';"></asp:TextBox>
                         </div>
                         <div class="col-md-2">
 
@@ -132,7 +132,9 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+
                 </div>
+                    <asp:Label ID="lblMensaje" runat="server"></asp:Label>
             </div>
         </div>
         <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -156,6 +158,5 @@
         </div>
 
 
-        <asp:Label ID="lblMensaje" runat="server"></asp:Label>
     </div>
 </asp:Content>
