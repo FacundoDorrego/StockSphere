@@ -316,6 +316,9 @@
                             <asp:Button ID="btnLimpiarFiltroMovimientos" runat="server" Text="Limpiar" CssClass="btn btn-secondary w-100" OnClick="btnLimpiarFiltroMovimientos_Click" />
                         </div>
                     </div>
+                    <div class="mt-3">
+                        <asp:Label ID="lblMensajeMovimientos" runat="server"></asp:Label>
+                    </div>
                     <div class="table-responsive" style="max-height: 520px; overflow-y: auto;">
                         <asp:GridView ID="dgvMovimientos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-bordered">
                             <Columns>

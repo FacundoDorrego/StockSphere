@@ -44,6 +44,7 @@ namespace StockSphere
             if (categoriasEmpresa.Count == 0 || categoriasEmpresa == null)
             {
                 lblMensaje.Text = "No hay categorias para esta empresa";
+                lblMensaje.CssClass = "alert alert-warning";
                 lblMensaje.Visible = true;
                 dgvCategorias.Visible = false;
             }
@@ -153,7 +154,9 @@ namespace StockSphere
             {
                 RepositorioCategoria repoCategoria = new RepositorioCategoria();
                 repoCategoria.EliminarCategoria(categoriaID);
-                lblMensaje.Text = "¡Eliminado!";
+                lblMensaje.Text = "Categoria eliminada con exito.";
+                lblMensaje.Visible = true;
+                lblMensaje.CssClass = "alert alert-success";
             }
             catch (Exception ex)
             {
@@ -193,6 +196,12 @@ namespace StockSphere
                     if (filtro == "Nombre")
                     {
                         string nombre = txtFiltro.Text;
+                        if (string.IsNullOrEmpty(txtFiltro.Text))
+                        {
+                            lblMensaje.Text = "Debe ingresar un valor para filtrar.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         foreach (Categoria categoria in categorias)
                         {
                             if (categoria.Nombre.Contains(nombre) && categoria.EmpresaID == empresaID)
@@ -204,6 +213,12 @@ namespace StockSphere
                     }
                     else if (filtro == "ID")
                     {
+                        if (string.IsNullOrEmpty(txtFiltro.Text))
+                        {
+                            lblMensaje.Text = "Debe ingresar un valor para filtrar.";
+                            lblMensaje.Visible = true;
+                            return;
+                        }
                         int id = Convert.ToInt32(txtFiltro.Text);
                         foreach (Categoria categoria in categorias)
                         {

@@ -41,7 +41,7 @@
                             <label for="txtTelefonoProv">Teléfono</label>
                             <asp:TextBox ID="txtTelefonoProv" runat="server" class="form-control" Placeholder="Teléfono" />
                             <label for="txtDireccProv">Dirección</label>
-                            <asp:TextBox ID="txtDireccProv" runat="server" class="form-control" Placeholder="Dirección"  />
+                            <asp:TextBox ID="txtDireccProv" runat="server" class="form-control" Placeholder="Dirección" />
                             <label for="txtEmailProv">Email</label>
                             <asp:TextBox ID="txtEmailProv" runat="server" class="form-control" Placeholder="Email" />
                         </div>
@@ -64,7 +64,7 @@
                             <label for="txtNombreProveedorActualizar">Nombre del proveedor</label>
                             <asp:TextBox ID="txtNombreProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo nombre del proveedor" />
                             <label for="txtTelefonoProveedorActualizar">Teléfono</label>
-                            <asp:TextBox ID="txtTelefonoProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo teléfono"  />
+                            <asp:TextBox ID="txtTelefonoProveedorActualizar" runat="server" class="form-control" Placeholder="Nuevo teléfono" />
                             <label for="txtDireccionProveedorActualizar">Dirección</label>
                             <asp:TextBox ID="txtDireccionProveedorActualizar" runat="server" class="form-control" Placeholder="Nueva dirección" />
                             <label for="txtEmailProveedorActualizar">Email</label>
@@ -84,8 +84,9 @@
                     <asp:Button ID="btnMostrarAgregar" runat="server" Text="Agregar Proveedor" CssClass="btn btn-success mx-2" OnClientClick="mostrarFormulario('divAgregarProveedor'); return false;" />
                     <asp:Button ID="btnMostrarListado" runat="server" Text="Listado de Proveedores" CssClass="btn btn-outline-primary mx-2" OnClick="btnMostrarListado_Click" />
                 </div>
-
-                <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
+                <div class="mt-4">
+                    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
+                </div>
                 <div id="divDgvProveedores" class="container my-4" runat="server" visible="false">
                     <h4 class="text-center">Listado de Proveedores</h4>
                     <div id="divFiltros" class="row mb-3 justify-content-center" runat="server">

@@ -68,15 +68,20 @@ namespace StockSphere
                     }).OrderBy(g => g.MesNumero).ToList();
                 decimal totalVentas = ventas.Sum(v => v.Monto);
                 lblTotalVentas.Text = "Total Ventas: $" + totalVentas.ToString("F2");
+                lblVentasMes.Text = "Ventas por mes";
                 hfChartData.Value = Newtonsoft.Json.JsonConvert.SerializeObject(resumenVentas);
                 hfChartDataMensual.Value = Newtonsoft.Json.JsonConvert.SerializeObject(resumenMensual);
             }
             else
             {
-
+                lblMensaje.Text = "No hay ventas registradas.";
+                lblMensaje.CssClass = "alert alert-warning";
+                lblMensaje.Visible = true;
+                dgvVentas.Visible = false;
                 hfChartData.Value = string.Empty;
                 hfChartDataMensual.Value = string.Empty;
                 lblTotalVentas.Text = "No hay ventas registradas.";
+                lblVentasMes.Text = "No hay ventas registradas.";
             }
         }
 

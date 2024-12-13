@@ -143,6 +143,7 @@
 
                     <div class="col-md-6 my-4">
                         <h4 class="text-center">Ventas Totales por Mes</h4>
+                           <asp:Label ID="lblVentasMes" runat="server" CssClass="h4 text-primary text-center d-block mb-4"></asp:Label>
                         <canvas id="chartVentasMensuales" style="width: 100%; max-width: 600px; margin: auto;"></canvas>
                         <asp:HiddenField ID="hfChartDataMensual" runat="server" />
                     </div>

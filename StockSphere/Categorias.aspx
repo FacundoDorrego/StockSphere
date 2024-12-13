@@ -52,7 +52,7 @@
                             <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar Categoria" CssClass="btn btn-success" OnClick="btnAgregarCategoria_Click" onkeydown="return event.key != 'Enter';" />
                         </div>
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divAgregarProveedor')">Cerrar</button>
+                            <button type="button" class="btn btn-secondary" onclick="cerrarFormulario('divAgregarCategoria')">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -79,8 +79,10 @@
                 </div>
 
 
+                <div class="mt-4">
+                    <asp:Label ID="lblMensaje" runat="server"></asp:Label>
 
-                <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
+                </div>
                 <div id="divDgvCategorias" class="container my-4" runat="server" visible="false">
                     <h4 class="text-center">Listado de Categorias</h4>
                     <div id="divFiltros" class="row mb-3 justify-content-center" runat="server">

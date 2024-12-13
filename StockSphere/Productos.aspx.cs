@@ -97,13 +97,17 @@ namespace StockSphere
                 }
                 else
                 {
-                    lblMensaje.Text = "No hay Movimientos para mostrar.";
+                    lblMensajeMovimientos.Text = "No hay Movimientos para mostrar.";
+                    lblMensajeMovimientos.Visible = true;
+                    lblMensajeMovimientos.CssClass = "alert alert-danger";
                 }
 
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Hubo un error al cargar los Movimientos." + ex;
+                lblMensajeMovimientos.Text = "Hubo un error al cargar los Movimientos." + ex;
+                lblMensajeMovimientos.Visible = true;
+                lblMensajeMovimientos.CssClass = "alert alert-danger";
                 dgvMovimientos.Visible = false;
             }
         }
