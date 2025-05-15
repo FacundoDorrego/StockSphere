@@ -1,6 +1,6 @@
 # 📦 StockSphere
 
-**StockSphere** es una aplicación web de gestión para empresas, desarrollada como proyecto personal con fines educativos y prácticos. Permite administrar múltiples entidades como productos, proveedores, ventas, usuarios y stock, todo desde una interfaz web funcional.
+**StockSphere** es una aplicación web de gestión para empresas, desarrollada como proyecto personal con fines educativos y prácticos. Permite administrar múltiples entidades como productos, proveedores, ventas, usuarios,empleados y stock, todo desde una interfaz web funcional.
 
 ## 🧩 Tecnologías utilizadas
 
