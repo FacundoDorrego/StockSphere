@@ -43,7 +43,7 @@ Este sistema fue desarrollado como parte de mi formación en la **Tecnicatura Un
 - Separación de responsabilidades en el código
 - Creación de soluciones web escalables desde cero
 
-## 👨‍💻 Autor
+## Autor
 
 **Facundo Nehuen Dorrego**  
 Estudiante de UTN FRGP - Tecnicatura en Programación  
