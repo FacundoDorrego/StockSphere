@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Data.SqlClient;
 
 namespace Repositorios
@@ -15,7 +15,7 @@ namespace Repositorios
 
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=FACU; database=StockSphere; Integrated Security=True; Encrypt=False;");
+            conexion = new SqlConnection("server=localhost; database=StockSphereNueva; Integrated Security=True; Encrypt=False;");
             //conexion = new SqlConnection("server=FACUHP; database=StockSphere; Integrated Security=True; Encrypt=False;");
             comando = new SqlCommand();
         }
